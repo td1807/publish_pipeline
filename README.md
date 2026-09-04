@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 40 tests, ~15s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 41 tests, ~15s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -317,19 +317,35 @@ imports into another package.
   is already buffered can stand alone; a line naming no crop always continues
   the run, because table rows rarely repeat their crop.
 
+  A crop change can strand a tail too short to survive `MIN_PASSAGE_CHARS`, so
+  a run under that length is folded back into its neighbour. That is not
+  cosmetic: the Karnataka bulletin ends a rain-impact list with "lodging of
+  Banana plant." — 24 characters, and the document's only mention of that crop.
+  Without the fold it was dropped and Banana disappeared from the catalogue.
+  Keeping two crops in one passage is a far smaller cost than losing a line.
+
   Measured across the three bulletins: passages 357 → 506, passages carrying a
   resolved subject **208 → 341**, and passages carrying more than one crop
-  **133 → 84**. Text coverage is unchanged (97–100%), and no district was lost —
-  the *percentage* placed in a district falls for UP and Rajasthan only because
-  the denominator grew; the absolute counts are 76 → 77 and 16 → 16.
+  **133 → 84**. Text coverage is unchanged (97–100%). Nothing was lost from the
+  catalogue: same crops, same topics, same area codes per bulletin, and 74 → 83
+  resources. The *percentage* placed in a district falls for UP and Rajasthan
+  only because the denominator grew; the absolute counts are 76 → 77 and
+  16 → 16.
 
-  What it did **not** clearly improve is retrieval. On an eight-query set over
-  the Rajasthan bulletin, MRR@5 went 0.875 → 0.833: pomegranate wilt improved
-  from rank 2 to rank 1, while two queries slipped to rank 3 behind short,
-  generic "spray during rain" fragments that finer chunking leaves competing on
-  their own. The scores are within ~1% of each other, so on a set this small
-  that is noise rather than a regression — but it is not evidence of a win
-  either. The demonstrated gain is in labelling, not ranking.
+  What it did **not** clearly improve is retrieval. Measured over all three
+  bulletins with 14 farmer questions in Hindi and English, checked against the
+  passage each answer must come from: **12 unchanged, 1 better, 1 worse**
+  (MRR@5 0.655 → 0.643). Fall armyworm in maize improved from rank 3 to 2;
+  "wilt in bengal gram" fell out of the top 5, into a cluster of black-gram and
+  green-gram passages scoring 0.797–0.807 — a near-tie shuffle, not a
+  structural loss. **The demonstrated gain is in labelling, not ranking.**
+
+  Three of those 14 questions fail in *both* versions, and they are worth more
+  attention than the chunking: `okra yellow mosaic virus, what to spray`,
+  `pomegranate wilt disease treatment` and `how to protect livestock during
+  heavy rain` return nothing relevant in the top 5, while the *same questions
+  asked in Hindi* all rank first. English queries against Hindi passages are
+  the real retrieval weakness here, and no chunking rule addresses it.
 
 * **PDF is what these bulletins arrive as, but not what the code is limited
   to.** Ingestion goes through MuPDF, which reads **PDF, DOCX, TXT, HTML, EPUB

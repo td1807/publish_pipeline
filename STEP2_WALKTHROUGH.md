@@ -700,6 +700,6 @@ EMBEDDING_BACKEND=lexical .venv/bin/python main.py --all --fresh
 #   → the whole flow in ~0.4s with no model. Branch 2a output is byte-identical;
 #     every retrieval result is stamped semantic=False.
 
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 40 passed, 15s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 41 passed, 15s
 .venv/bin/pytest tests/test_v4.py -q -m semantic        # 1 passed, 52s
 ```

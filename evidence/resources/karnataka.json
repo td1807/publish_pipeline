@@ -161,6 +161,14 @@
         "geographicGranularity": "State",
         "agricultureSubjects": [
           {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BANANA",
+              "name": "Banana"
+            }
+          },
+          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
             "subjectType": "Crop",
             "descriptor": {
@@ -3797,6 +3805,22 @@
             "descriptor": {
               "code": "GREEN_GRAM",
               "name": "Green gram"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GROUNDNUT",
+              "name": "Groundnut"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MAIZE",
+              "name": "Maize"
             }
           }
         ],

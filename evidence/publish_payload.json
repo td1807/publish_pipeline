@@ -3,9 +3,9 @@
     "domain": "agriculture",
     "action": "publish",
     "version": "2.0.0",
-    "transactionId": "a2e96897-dcc4-4858-9e01-5e7267f8e89f",
-    "messageId": "ed99d3ce-d380-4b85-afbc-0b1785ddd0db",
-    "timestamp": "2026-09-04T09:32:55Z",
+    "transactionId": "8dc608c1-87b3-42b6-a6c8-c79f8f5a805a",
+    "messageId": "bbdfa748-96a4-41e6-a025-eaa6edecc9f2",
+    "timestamp": "2026-09-04T09:50:51Z",
     "schemaContext": [
       "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld#openagrinet:CropAdvisoryCapability",
       "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld#openagrinet:HorticultureAdvisoryCapability",
@@ -32,8 +32,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T09:32:08Z",
-          "endDate": "2027-09-04T09:32:08Z"
+          "startDate": "2026-09-04T09:50:03Z",
+          "endDate": "2027-09-04T09:50:03Z"
         },
         "resources": [
           {
@@ -159,6 +159,14 @@
               ],
               "geographicGranularity": "State",
               "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "BANANA",
+                    "name": "Banana"
+                  }
+                },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
                   "subjectType": "Crop",
@@ -3797,6 +3805,22 @@
                     "code": "GREEN_GRAM",
                     "name": "Green gram"
                   }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "GROUNDNUT",
+                    "name": "Groundnut"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "MAIZE",
+                    "name": "Maize"
+                  }
                 }
               ],
               "topics": [
@@ -5461,8 +5485,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T09:32:28Z",
-          "endDate": "2027-09-04T09:32:28Z"
+          "startDate": "2026-09-04T09:50:23Z",
+          "endDate": "2027-09-04T09:50:23Z"
         },
         "resources": [
           {
@@ -7133,8 +7157,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T09:32:52Z",
-          "endDate": "2027-09-04T09:32:52Z"
+          "startDate": "2026-09-04T09:50:47Z",
+          "endDate": "2027-09-04T09:50:47Z"
         },
         "resources": [
           {

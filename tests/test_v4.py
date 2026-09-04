@@ -492,6 +492,24 @@ def test_a_line_naming_no_crop_stays_with_its_run(vocab):
     assert len(_split_on_crop_change(block, vocab)) == 1
 
 
+def test_a_short_tail_is_folded_back_not_stranded(vocab):
+    """A crop change must not strand a line too short to survive the minimum.
+
+    The Karnataka bulletin ends a heavy-rain impact list with "lodging of
+    Banana plant." -- 24 characters, and the only mention of that crop in the
+    document. Split off on its own it falls under MIN_PASSAGE_CHARS and is
+    dropped, losing both the advice and the crop from the catalogue.
+    """
+    block = (
+        "Likely impacts of heavy rainfall. Temporary disruption of electricity in some "
+        "areas, minor traffic snarls, and possible uprooting of weak tree branches.\n"
+        "lodging of Banana plant."
+    )
+    runs = _split_on_crop_change(block, vocab)
+    assert len(runs) == 1, "a 24-character tail must not become its own passage"
+    assert "Banana" in runs[0]
+
+
 def test_splitting_never_drops_text(vocab):
     """Every character of a block survives the split, minus line breaks."""
     doc = read_document(DATA_DIR / "imd_rajasthan_agromet.pdf")

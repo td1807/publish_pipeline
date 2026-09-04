@@ -216,7 +216,21 @@ def _split_on_crop_change(piece: str, vocab: Vocabulary) -> list[str]:
         crops |= line_crops
     if buf:
         runs.append("\n".join(buf))
-    return [r for r in runs if r.strip()]
+
+    # A crop change can strand a tail too short to survive _blocks's minimum --
+    # "lodging of Banana plant." is 24 characters, and dropping it would lose
+    # both the advice and the only mention of that crop in the bulletin. Fold
+    # any such run back into its neighbour: keeping two crops together is a far
+    # smaller cost than losing a line outright.
+    folded: list[str] = []
+    for run in (r for r in runs if r.strip()):
+        if folded and len(run) < MIN_PASSAGE_CHARS:
+            folded[-1] = f"{folded[-1]}\n{run}"
+        elif folded and len(folded[-1]) < MIN_PASSAGE_CHARS:
+            folded[-1] = f"{folded[-1]}\n{run}"
+        else:
+            folded.append(run)
+    return folded
 
 
 def _blocks(text: str, vocab: Vocabulary) -> list[str]:
