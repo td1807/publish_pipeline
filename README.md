@@ -341,14 +341,15 @@ imports into another package.
   Without the fold it was dropped and Banana disappeared from the catalogue.
   Keeping two crops in one passage is a far smaller cost than losing a line.
 
-  Measured across the three bulletins: passages 357 → 510, passages carrying a
-  resolved subject **208 → 344**, passages carrying more than one crop
-  **133 → 68**, and passages placed in a district 243 → 330. Text coverage is
-  unchanged at 99.5% (per bulletin: 99.5% / 99.7% / 97.2%). Nothing was lost
-  from the catalogue: same crops, same topics, same area codes per bulletin,
-  and 74 → 84 resources. The *percentage* placed in a district falls for UP and
-  Rajasthan only because the denominator grew; those absolute counts are
-  76 → 77 and 16 → 16.
+  Measured across the three bulletins, before this change against today:
+  passages 357 → 510, passages carrying a resolved subject **208 → 344**,
+  passages carrying more than one crop **133 → 68**, and passages placed in a
+  district 243 → 331. Text coverage is unchanged at 99.5% (per bulletin:
+  99.5% / 99.7% / 97.2%). Nothing was lost from the catalogue: same crops, same
+  topics, same area codes per bulletin, and resources 74 → 84 at the time of
+  this change (85 today, after Rajasthan's district list was completed — see
+  below). The *percentage* placed in a district falls for UP only because the
+  denominator grew; that absolute count is 76 → 77.
 
   What it did **not** clearly improve is retrieval. Measured over all three
   bulletins with 14 farmer questions in Hindi and English: **12 unchanged, 1
