@@ -3,9 +3,9 @@
     "domain": "agriculture",
     "action": "publish",
     "version": "2.0.0",
-    "transactionId": "1798f758-39b5-44cc-8732-8c653c6d68bc",
-    "messageId": "f77de1a6-d848-454a-aa73-d94ed444bdd9",
-    "timestamp": "2026-09-04T10:20:28Z",
+    "transactionId": "dca2d867-3118-4a8c-a98f-867723c05081",
+    "messageId": "48129d86-1e16-43ad-9494-2111a8f4ede8",
+    "timestamp": "2026-09-04T10:32:33Z",
     "schemaContext": [
       "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld#openagrinet:CropAdvisoryCapability",
       "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld#openagrinet:HorticultureAdvisoryCapability",
@@ -32,8 +32,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T10:19:41Z",
-          "endDate": "2027-09-04T10:19:41Z"
+          "startDate": "2026-09-04T10:31:49Z",
+          "endDate": "2027-09-04T10:31:49Z"
         },
         "resources": [
           {
@@ -5425,8 +5425,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T10:20:00Z",
-          "endDate": "2027-09-04T10:20:00Z"
+          "startDate": "2026-09-04T10:32:06Z",
+          "endDate": "2027-09-04T10:32:06Z"
         },
         "resources": [
           {
@@ -7089,8 +7089,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T10:20:24Z",
-          "endDate": "2027-09-04T10:20:24Z"
+          "startDate": "2026-09-04T10:32:29Z",
+          "endDate": "2027-09-04T10:32:29Z"
         },
         "resources": [
           {

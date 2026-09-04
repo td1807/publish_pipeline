@@ -7,6 +7,7 @@ embeddings    local · intfloat/multilingual-e5-large · 1024d
 vector store  Qdrant embedded (in-process) · collection=agri_passages_v4
 network node  in-process NetworkNode stand-in
 vocabulary    64 subjects, 138 districts across 3 states, 13 topics
+
 ==============================================================================
 step 1 + 2 — ingest, then branch 2a and 2b in parallel
 ==============================================================================
@@ -15,67 +16,75 @@ vector store  Qdrant embedded (in-process)
               payload indexes: resource_id, area_code, language, category, document
               embedder: local sentence-transformers · intfloat/multilingual-e5-large · 1024d · device=mps · normalized · prefixes 'passage: '/'query: ' · semantic=True
               note: embedded mode evaluates filters by scanning (payload indexes are ignored). Correct results, but do not quote its latency as production. 
+
 imd_karnataka_agromet.pdf
   state        IN-KA (Karnataka)
   pages        53
-  passages     155
-  subjects     80.6% of passages resolved to the taxonomy
-  districts    97.4% of passages placed in a district (31 distinct)
-  languages    en=154, hi=1
-  categories   Crop=75, Horticulture=26, Livestock=27, Weather=27
+  passages     241
+  subjects     83.4% of passages resolved to the taxonomy
+  districts    98.3% of passages placed in a district (31 distinct)
+  languages    en=240, hi=1
+  categories   Crop=105, Horticulture=69, Livestock=31, Weather=36
   encoding     usable Unicode: 3 function-word hits over 58 Devanagari chars (51.7 per 1k)
-  2a          61 resources across 4 capability types
+  2a          71 resources across 4 capability types
                   22  CropAdvisoryCapability
-                  13  HorticultureAdvisoryCapability
+                  20  HorticultureAdvisoryCapability
                   14  LivestockAdvisoryCapability
-                  12  WeatherAdvisoryCapability
-  2b          155 vectors, 1024d, cosine
-  2b tokens   tokens: max=254 mean=161 — all 155 passages fit inside the 512-token window
-  parallel    2a 0.018s · 2b 83.573s · wall 83.609s — no measurable saving — 2b is 4,541x slower than 2a, so wall clock is simply 2b
+                  15  WeatherAdvisoryCapability
+  2b          241 vectors, 1024d, cosine
+  2b tokens   tokens: max=254 mean=105 — all 241 passages fit inside the 512-token window
+  parallel    2a 0.002s · 2b 16.018s · wall 16.021s — no measurable saving — 2b is 9,601x slower than 2a, so wall clock is simply 2b
+
 imd_up_agromet.pdf
   state        IN-UP (Uttar Pradesh)
   pages        45
-  passages     177
-  subjects     45.2% of passages resolved to the taxonomy
-  districts    42.9% of passages placed in a district (75 distinct)
-  languages    en=62, hi=115
-  categories   Crop=53, Horticulture=11, Livestock=20, Weather=93
+  passages     240
+  subjects     56.7% of passages resolved to the taxonomy
+  districts    32.1% of passages placed in a district (75 distinct)
+  languages    en=100, hi=140
+  categories   Crop=91, Horticulture=29, Livestock=16, Weather=104
   encoding     usable Unicode: 1702 function-word hits over 33523 Devanagari chars (50.8 per 1k)
   2a          8 resources across 4 capability types
                    2  CropAdvisoryCapability
                    1  HorticultureAdvisoryCapability
                    2  LivestockAdvisoryCapability
                    3  WeatherAdvisoryCapability
-  2b          177 vectors, 1024d, cosine
-  2b tokens   tokens: max=314 mean=197 — all 177 passages fit inside the 512-token window
-  parallel    2a 0.011s · 2b 111.686s · wall 111.736s — no measurable saving — 2b is 9,769x slower than 2a, so wall clock is simply 2b
+  2b          240 vectors, 1024d, cosine
+  2b tokens   tokens: max=299 mean=146 — all 240 passages fit inside the 512-token window
+  parallel    2a 0.001s · 2b 22.703s · wall 22.704s — no measurable saving — 2b is 27,678x slower than 2a, so wall clock is simply 2b
+
 imd_rajasthan_agromet.pdf
   state        IN-RJ (Rajasthan)
   pages        30
-  passages     25
-  subjects     12.0% of passages resolved to the taxonomy
-  districts    64.0% of passages placed in a district (32 distinct)
-  languages    en=2, hi=23
-  categories   Horticulture=3, Livestock=1, Weather=21
-  encoding     usable Unicode: 409 function-word hits over 8272 Devanagari chars (49.4 per 1k)
-  2a          4 resources across 3 capability types
+  passages     29
+  subjects     24.1% of passages resolved to the taxonomy
+  districts    55.2% of passages placed in a district (32 distinct)
+  languages    en=2, hi=27
+  categories   Crop=2, Horticulture=5, Livestock=1, Weather=21
+  encoding     usable Unicode: 408 function-word hits over 8203 Devanagari chars (49.7 per 1k)
+  2a          5 resources across 4 capability types
+                   1  CropAdvisoryCapability
                    1  HorticultureAdvisoryCapability
                    1  LivestockAdvisoryCapability
                    2  WeatherAdvisoryCapability
-  2b          25 vectors, 1024d, cosine
-  2b tokens   tokens: max=305 mean=210 — all 25 passages fit inside the 512-token window
-  parallel    2a 0.037s · 2b 21.254s · wall 21.311s — no measurable saving — 2b is 568x slower than 2a, so wall clock is simply 2b
-  ! Only 3/25 passages resolved to a taxonomy subject. Crop coverage claims for this state are thin.
+  2b          29 vectors, 1024d, cosine
+  2b tokens   tokens: max=314 mean=178 — all 29 passages fit inside the 512-token window
+  parallel    2a 0.001s · 2b 3.437s · wall 3.439s — no measurable saving — 2b is 2,325x slower than 2a, so wall clock is simply 2b
+  encoding fix applied — 9 more vocabulary term(s) now match (28 → 37)
+  ! Only 7/29 passages resolved to a taxonomy subject. Crop coverage claims for this state are thin.
+
+
 ==============================================================================
 step 3 — /catalog/publish to the network layer
 ==============================================================================
 target        in-process NetworkNode stand-in
-validation    spec valid: 3 catalogue(s), 73 resource(s), 73 resourceAttributes object(s) checked
-payload       154,599 bytes
-ack           ACCEPTED — 3 catalogue(s), 73 resource(s) indexed, 121,198 bytes of resourceAttributes held
+validation    spec valid: 3 catalogue(s), 84 resource(s), 84 resourceAttributes object(s) checked
+payload       161,020 bytes
+ack           ACCEPTED — 3 catalogue(s), 84 resource(s) indexed, 123,219 bytes of resourceAttributes held
 round-trip    verified — every resourceAttributes field held as published
+
 what the network layer now holds (resourceAttributes only):
-  resources            73
+  resources            84
   subject_uris         51
   area_codes           141
   topics               13
@@ -85,24 +94,32 @@ what the network layer now holds (resourceAttributes only):
   advisory text 'NAA'              present in network layer: False
   advisory text 'moisture stress'  present in network layer: False
   advisory text 'ml/litre'         present in network layer: False
+
 ==============================================================================
 branch 2b is usable later — retrieval smoke check
 ==============================================================================
 query: 'pigeon pea flowers dropping, what should I spray'
-  0.888  imd_karnataka_agromet.pdf p.16         res-imd-agromet-agriculture-crop-in-ka-koppal
+  0.892  imd_up_agromet.pdf p.39                res-imd-agromet-agriculture-crop-in-up
+         Pigeon Pea (Flowering) At flowering, scout for Helicoverpa larvae and damaged flowers. Ifinfestation warrants control, spray Emamectin benzoate 5 SG @...
+  0.892  imd_karnataka_agromet.pdf p.16         res-imd-agromet-agriculture-crop-in-ka-koppal
          Redgram Flowering  Nipping in Pigeon pea at 50 days after sowing to enhance branches, pods per plant and yield.  Dropping of flower in pigeon pea du...
-  0.855  imd_karnataka_agromet.pdf p.22         res-imd-agromet-agriculture-crop-in-ka-bagalkote
-         Pigeon pea Vegetative  For efficient nutrient uptake and for better crop growth, 35-45 days after sowing apply 3 kg/ha Zinc Sulphate with 6 t FYM on ...
-  0.843  imd_up_agromet.pdf p.39                res-imd-agromet-agriculture-crop-in-up
-         At flowering, scout for Helicoverpa larvae and damaged flowers. Ifinfestation warrants control, spray Emamectin benzoate 5 SG @ 200 g/ha orSpinosad 45...
+  0.851  imd_karnataka_agromet.pdf p.13         res-imd-agromet-agriculture-crop-in-ka-kalaburagi
+         Pigeon pea Developmental stage Farmers are advised to go for nipping of 5-6 cm apical bud and spray 10 gm 19:19:19 during 50-55 days old crop for enha...
+
 ==============================================================================
 totals
 ==============================================================================
 documents onboarded   3
 documents refused     0
-passages extracted    357
-resources published   73
-vectors indexed       357
-publish payload       154,599 bytes
-branch timings        karnataka: 2a 0.02s / 2b 83.57s / wall 83.61s | up: 2a 0.01s / 2b 111.69s / wall 111.74s | rajasthan: 2a 0.04s / 2b 21.25s / wall 21.31s
-wrote evidence/publish_payload.json (278,123 bytes)
+passages extracted    510
+resources published   84
+vectors indexed       510
+publish payload       161,020 bytes
+branch timings        karnataka: 2a 0.00s / 2b 16.02s / wall 16.02s | up: 2a 0.00s / 2b 22.70s / wall 22.70s | rajasthan: 2a 0.00s / 2b 3.44s / wall 3.44s
+
+wrote evidence/publish_payload.json (287,026 bytes)  — the combined /catalog/publish body
+
+per-document resourceAttributes:
+  evidence/resources/karnataka.json   IN-KA   71 resources   171,702 bytes
+  evidence/resources/up.json          IN-UP    8 resources    51,777 bytes
+  evidence/resources/rajasthan.json   IN-RJ    5 resources    16,933 bytes

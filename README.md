@@ -181,13 +181,15 @@ signal rather than a bug:
 
 ```
 query: "pigeon pea flowers dropping, what should I spray"
-  0.888  imd_karnataka_agromet.pdf p.16   res-…-crop-in-ka-koppal
-         "Redgram Flowering  Nipping in Pigeon pea at 50 days after sowing…
-          Dropping of flower in pigeon pea du…"
+  0.892  imd_up_agromet.pdf        p.39   res-…-crop-in-up
+         "Pigeon Pea (Flowering) At flowering, scout for Helicoverpa larvae…
+          spray Emamectin benzoate 5 SG @ 200 g/ha…"
+  0.892  imd_karnataka_agromet.pdf p.16   res-…-crop-in-ka-koppal
+  0.851  imd_karnataka_agromet.pdf p.13   res-…-crop-in-ka-kalaburagi
 ```
 
-The word "tur" never appears in that bulletin — it says "Redgram" and "Pigeon
-pea". A query using "tur" still finds it (there is a test for exactly that),
+The word "tur" never appears in either bulletin — they say "Redgram" and
+"Pigeon pea". A query using "tur" still finds it (there is a test for exactly that),
 which is what the 1024-d multilingual model is buying. A Hindi query
 (`धान की फसल में सिंचाई`) returns Hindi passages from the UP bulletin.
 
@@ -215,7 +217,7 @@ which is what the 1024-d multilingual model is buying. A Hindi query
 | `publish.py` | step 3 | validate-then-deliver |
 | `scenario1.py` | `onboard()`, `publish_all()`, branch timings | the orchestration |
 | `run_scenario1.py` | runnable, narrated | just run it |
-| `tests/test_v4.py` | 30 tests | most claims above, as assertions |
+| `tests/test_v4.py` | 43 tests | most claims above, as assertions |
 | `tools/md2pdf.py` | optional doc → PDF renderer | regenerating `docs_pdf/` |
 
 Nothing here imports from `pipeline.*`, from `pipeline_beckn_v2` or from
@@ -338,7 +340,7 @@ imports into another package.
   Without the fold it was dropped and Banana disappeared from the catalogue.
   Keeping two crops in one passage is a far smaller cost than losing a line.
 
-  Measured across the three bulletins: passages 357 → 506, passages carrying a
+  Measured across the three bulletins: passages 357 → 510, passages carrying a
   resolved subject **208 → 341**, and passages carrying more than one crop
   **133 → 84** (counted before the `gram` alias fix below; the direction is
   unchanged). Text coverage is unchanged (97–100%). Nothing was lost from the

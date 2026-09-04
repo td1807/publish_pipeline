@@ -18,17 +18,17 @@ for illustration. Re-run it yourself with:
 ```
    ┌── step 1 ──────────────────────────────────────────────────┐
    │  a PDF arrives. Nobody has asked a question.               │
-   │  extract text → 155 passages, ONCE                         │
+   │  extract text → 241 passages, ONCE                         │
    └────────────────────────┬───────────────────────────────────┘
-                            │  the same 155 Passage objects
+                            │  the same 241 Passage objects
               ┌─────────────┴─────────────┐
               ▼                           ▼
    ┌── step 2a ──────────────┐  ┌── step 2b ─────────────────────┐
    │ Beckn metadata          │  │ vector DB                      │
-   │ 155 passages → 61       │  │ 155 passages → 155 vectors     │
+   │ 241 passages → 71       │  │ 241 passages → 241 vectors     │
    │ resources               │  │ 1024-d, cosine                 │
    │ ~0.01 s                 │  │ 15-186 s (see §5)              │
-   │ ~155 KB, leaves the     │  │ stays with the provider,        │
+   │ ~161 KB, leaves the     │  │ stays with the provider,        │
    │ building                │  │ never leaves                    │
    └───────────┬─────────────┘  └────────────────────────────────┘
                ▼
@@ -51,7 +51,7 @@ with two different lifetimes.
 |---|---|---|
 | answers | "**who** can help me?" | "**what** should I do?" |
 | audience | the network layer, and every consumer app on it | this provider's own node, on direct request |
-| size | 155 KB for three states | 357 vectors × 1024 floats |
+| size | 161 KB for three states | 510 vectors × 1024 floats |
 | leaves the building? | **yes** — published | **no** — never published |
 | goes stale? | slowly (coverage changes rarely) | n/a — read live at answer time |
 | contains advisory text? | **never** | that is its entire job |
@@ -87,6 +87,55 @@ class Passage:
     resource_id: str               # ← THE JOIN between the two branches
     point_id: str
 ```
+
+### 2.1 What step 1 refuses, and what it repairs
+
+Three things happen before a single passage exists, and each one changes what
+the two branches can honestly claim.
+
+**A document is either read or refused — never partially trusted.** Ingestion
+goes through MuPDF, so PDF, DOCX, TXT, HTML, EPUB and XPS all read; a DOCX
+bulletin reaches the catalogue exactly as a PDF does, and a test covers it.
+Anything no extractor opens — the legacy `.doc` binary, a spreadsheet, an
+archive — raises `UnusableDocument`, as does a scan with no text layer and a
+bulletin from a state the vocabulary does not cover (`UnknownState`). All three
+print a `REFUSED` line naming the reason and let the run continue to the next
+document. None of them can produce a resource claiming coverage nobody read.
+
+**A mis-mapped font is repaired, but only when that provably helps.** The
+Rajasthan bulletin's producer swapped `ब` and `ि` in the font's ToUnicode table
+and emitted the i-matra at the position it is *drawn* rather than in logical
+order, so `सिरोही` arrived as `बसरोही` and `बैंगन` as `िैंगन`. Common function
+words were untouched — which is why the encoding check called the file healthy —
+but crop and district names were not, and those are precisely the words that
+decide what the catalogue can advertise.
+
+`repair_devanagari()` undoes it; `repair_encoding()` decides whether to believe
+the result by scoring both versions against the crop and district vocabulary:
+
+```
+Rajasthan   28 → 37 known terms   applied
+UP         121 → 78 known terms   refused (different defect; the same
+                                  transform would destroy this file)
+Karnataka    0 →  0               refused (no Devanagari)
+```
+
+The catalogue for Rajasthan went from advertising 4 crops to 8, from text it
+always held. A repair that fires prints `encoding fix applied — …` on the run.
+
+**Passages are cut on crop boundaries, not only on length.** An advisory table
+runs one crop's advice straight into the next with no blank line, so a
+size-only split produced passages about two crops and therefore precisely about
+neither. `_split_on_crop_change()` starts a new passage at a line naming crops
+the current run does not share; a line naming no crop continues the run, since
+table rows rarely repeat their crop; and a run too short to survive
+`MIN_PASSAGE_CHARS` is folded back into its neighbour rather than dropped.
+
+Measured across the three bulletins: passages 357 → 510, passages carrying a
+resolved subject 208 → 341, passages carrying more than one crop 133 → 84, text
+coverage unchanged at 97–100%. Retrieval barely moved (14 farmer questions: 12
+unchanged, 1 better, 1 worse) — **the gain is in labelling, not ranking**, and
+§4.9 records that honestly.
 
 ### Why this matters more than it looks
 
@@ -163,7 +212,7 @@ Four properties of doing this with rules rather than an LLM:
 * **free** — no inference cost per passage
 * **auditable** — every resolution traces to one alias in one JSON file
 * **honest** — a term the rules cannot resolve stays unresolved and is
-  *counted* (Karnataka: 80.6% of passages resolved; Rajasthan: 12.0%)
+  *counted* (Karnataka: 83.4% of passages resolved; Rajasthan: 24.1%)
 
 **No code path may mint a subject URI.** `validate.py` re-checks every
 `subjectId` in the finished payload against the vocabulary, so even a future LLM
@@ -180,7 +229,7 @@ cannot help, and nothing downstream can tell.
 Passages are grouped by **(primary area × category)**:
 
 ```
-155 passages  ──group──▶  61 resources
+241 passages  ──group──▶  71 resources
 ```
 
 One resource is *"crop advisory for Koppal"* — 8 passages from pages 14–17.
@@ -196,7 +245,7 @@ res-imd-agromet-agriculture-crop-in-ka-koppal
 ```
 
 Nothing about the bulletin issue appears in it. **Next Friday's bulletin 70/2026
-therefore updates these same 61 resources instead of creating 61 more.** If the
+therefore updates these same 71 resources instead of creating 71 more.** If the
 id carried the issue number, every publish would duplicate the catalogue and
 every consumer's cache would fill with near-identical resources.
 (`test_resource_id_is_stable_and_document_independent`)
@@ -302,7 +351,7 @@ flag. Membership resolves that cleanly where a regex could not.
 **No prose.** Every remaining string is scanned for advisory markers (dosages,
 `ml/l`, `@ 4`, imperatives like "apply"/"carry out") and for sentence-length
 runs. If prose appears anywhere, the publish is refused rather than downgraded.
-`test_no_advisory_text_in_payload` greps the finished 155 KB payload for real
+`test_no_advisory_text_in_payload` greps the finished 161 KB payload for real
 sentences taken from the source bulletins — `"NAA"`, `"moisture stress"`,
 `"ml/litre"` — and all three are absent.
 
@@ -320,7 +369,7 @@ caught a live bug*, and it is a good example of why the per-document JSON view
 >
 > `subjectCategories` is now the union of the capability's declared categories
 > and the subject types present, so `livestock-in-ka-bidar` declares
-> `["Crop", "Livestock"]`. Re-audit: 0 of 73 incoherent.
+> `["Crop", "Livestock"]`. Re-audit: 0 of 84 incoherent.
 
 The aggregate statistics could never have shown this. Reading one document's
 resources as JSON showed it immediately.
@@ -413,9 +462,9 @@ would go unnoticed in a demo built on English documents only:
 So `MAX_PASSAGE_CHARS = 700`, and every run *measures* rather than assumes:
 
 ```
-Karnataka   tokens: max=254 mean=161 — all 155 passages fit inside the 512-token window
-UP          tokens: max=314 mean=197 — all 177 passages fit inside the 512-token window
-Rajasthan   tokens: max=305 mean=210 — all  25 passages fit inside the 512-token window
+Karnataka   tokens: max=254 mean=105 — all 241 passages fit inside the 512-token window
+UP          tokens: max=299 mean=146 — all 240 passages fit inside the 512-token window
+Rajasthan   tokens: max=314 mean=178 — all  29 passages fit inside the 512-token window
 ```
 
 Note UP and Rajasthan run ~25% higher tokens-per-character than Karnataka — that
@@ -437,7 +486,7 @@ changes.
 
 ### 4.4 What is stored per passage
 
-One point per passage. 357 points for the three bulletins.
+One point per passage. 510 points for the three bulletins.
 
 | payload field | purpose |
 |---|---|
@@ -485,10 +534,10 @@ point_id = uuid5(NAMESPACE, f"{provider}:{document}:{page}:{ordinal}")
 ```
 
 Notably **not** a hash of the text. Re-onboarding the same PDF therefore
-*upserts* the same 155 points rather than appending a second copy of every
+*upserts* the same 241 points rather than appending a second copy of every
 passage — and an edited passage updates in place instead of leaving its stale
 predecessor in the index. Verified by `test_reingest_is_idempotent`: the count
-before and after a second run is identical (357 → 357).
+before and after a second run is identical (510 → 510).
 
 ### 4.7 Filters
 
@@ -498,7 +547,7 @@ Payload indexes are declared on `resource_id`, `area_code`, `language`,
 ⚠️ **Embedded Qdrant ignores payload indexes and evaluates filters by scanning.**
 Results are correct — but a latency figure measured here must not be quoted as a
 production one. `VectorIndex.describe()` prints which mode it is in for exactly
-this reason. That honesty is the point: at 357 passages scanning is free; at a
+this reason. That honesty is the point: at 510 passages scanning is free; at a
 few million it is not.
 
 ### 4.8 It actually retrieves
@@ -506,11 +555,11 @@ few million it is not.
 ```
 query: "pigeon pea flowers dropping, what should I spray"
 
-0.888  imd_karnataka_agromet.pdf p.16  res-…-crop-in-ka-koppal
-       "Redgram Flowering  Nipping in Pigeon pea at 50 days after sowing…
-        Dropping of flower in pigeon pea due to continuous cloudy condition…"
-0.855  imd_karnataka_agromet.pdf p.22  res-…-crop-in-ka-bagalkote
-0.843  imd_up_agromet.pdf        p.39  res-…-crop-in-up
+0.892  imd_up_agromet.pdf        p.39  res-…-crop-in-up
+       "Pigeon Pea (Flowering) At flowering, scout for Helicoverpa larvae and
+        damaged flowers… spray Emamectin benzoate 5 SG @ 200 g/ha…"
+0.892  imd_karnataka_agromet.pdf p.16  res-…-crop-in-ka-koppal
+0.851  imd_karnataka_agromet.pdf p.13  res-…-crop-in-ka-kalaburagi
 ```
 
 And the semantic claim, tested rather than asserted — the word **"tur" never
@@ -554,6 +603,38 @@ worth stating rather than discovering later:
 
 This is a single spot measurement on one resource, not a benchmark. No
 recall@k number should be quoted from it.
+
+A wider measurement, run when the crop-boundary chunking of §2.1 landed: 14
+farmer questions in Hindi and English, across all three bulletins, each scored
+against the passage its answer must come from.
+
+```
+                            before chunking   after
+MRR@5                             0.821       0.857 (with the alias fix below)
+unchanged                            12
+better                                1        fall armyworm on maize, #3 → #2
+worse                                 1        "wilt in bengal gram" left the top 5
+```
+
+Two things that measurement exposed, both worth more attention than the MRR:
+
+* **An alias must not be a whole word inside another crop's name.** `gram` was
+  an alias for Bengal gram, and India grows black, green, horse and red gram.
+  Karnataka and UP were publishing Bengal gram coverage from bulletins that
+  never mention chickpea. Removing the alias withdrew both false claims — one
+  fewer subject URI on the network, and a correct one.
+* **A subject filter is tempting and was left out.** Every passage already
+  stores `subject_uris`, and an English question resolves through the same
+  taxonomy, so filtering by subject is a two-line change that moved one query
+  from rank 2 to rank 1. It also returns an *empty set* when the query names a
+  crop the corpus does not cover — worse than an imperfect answer — and would
+  need a fallback to be safe. One rank on fourteen queries did not justify it.
+
+An English question, incidentally, does not fail against this corpus. It
+returns correct English advice — often from a different state's bulletin, since
+nothing in a bare semantic query says where the farmer is. Scoping to the right
+provider is discovery's job (`area_code`, then `resource_ids` on the follow-up
+leg), not retrieval's.
 
 ---
 
@@ -611,10 +692,10 @@ the two branches together.
 
 ```
 target        in-process NetworkNode stand-in
-validation    spec valid: 3 catalogue(s), 73 resource(s), 73 resourceAttributes checked
+validation    spec valid: 3 catalogue(s), 84 resource(s), 84 resourceAttributes checked
 payload       154,599 bytes
-ack           ACCEPTED — 3 catalogue(s), 73 resource(s) indexed,
-                         121,198 bytes of resourceAttributes held
+ack           ACCEPTED — 3 catalogue(s), 84 resource(s) indexed,
+                         123,219 bytes of resourceAttributes held
 round-trip    verified — every resourceAttributes field held as published
 ```
 
@@ -622,7 +703,7 @@ What the network layer now holds, and it is worth reading as a list of what it
 *can* match a question against:
 
 ```
-resources 73 · subject URIs 51 · area codes 141 · topics 13
+resources 84 · subject URIs 51 · area codes 141 · topics 13
 subject categories 4 · weather parameters 7 · languages 2
 ```
 
@@ -635,7 +716,7 @@ advisory text 'ml/litre'        present in network layer: False
 ```
 
 Stated in the right order: **the network layer holds the complete
-`resourceAttributes` of all 73 resources — 121 KB of it. What it does not hold
+`resourceAttributes` of all 84 resources — 123 KB of it. What it does not hold
 is document text.** That single asymmetry is why a consumer has to make two
 hops, and why this pipeline has two branches.
 
@@ -684,7 +765,7 @@ Honest gaps, so they come from me rather than from the room:
 #   → prints one resource's full resourceAttributes to stdout
 
 .venv/bin/python main.py \
-       --pdf imd_karnataka_district_kannada.pdf
+       --file imd_karnataka_district_kannada.pdf
 #   → REFUSED: a scanned PDF publishes nothing rather than a resource
 #     claiming coverage we never read
 
