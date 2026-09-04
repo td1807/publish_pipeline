@@ -96,7 +96,7 @@ without running anything:
 
 * [`evidence/SCENARIO_1_TRANSCRIPT.txt`](evidence/SCENARIO_1_TRANSCRIPT.txt)
 * [`evidence/publish_payload.json`](evidence/publish_payload.json) — the actual
-  `/catalog/publish` body (161 KB as published, 280 KB pretty-printed here)
+  `/catalog/publish` body (157 KB as published, 280 KB pretty-printed here)
 * **[`evidence/resources/`](evidence/resources/) — one JSON file per bulletin**,
   each carrying that document's resources with their full `resourceAttributes`.
   Usually the more useful view: "what did *this* bulletin claim?" without
