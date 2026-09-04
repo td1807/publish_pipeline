@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 33 tests, ~9s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 37 tests, ~10s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -378,10 +378,30 @@ imports into another package.
   under `OPENAGRI-DISTRICT` with a readable code we can vouch for. Swapping in
   LGD is a two-field change in `taxonomy/vocab.py`.
 
-* **Devanagari in these files has a small encoding defect.** The fonts are
-  proper Unicode (Nirmala UI, Mangal), but the producing tool mis-maps a few
-  glyphs: the UP bulletin emits `प्रदेि` where `प्रदेश` belongs. Measured rate:
-  **0.7% of Devanagari words in UP, 0.1% in Rajasthan**. Embedding is robust to
+* **Devanagari in these files has an encoding defect, and the two files have
+  different ones.** The fonts are proper Unicode (Nirmala UI, Mangal), but the
+  producing tool mis-maps glyphs. The UP bulletin emits `प्रदेि` where `प्रदेश`
+  belongs. The Rajasthan bulletin has a worse and more systematic defect: `ब`
+  and `ि` are swapped, and the i-matra is emitted at the position it is *drawn*
+  — left of its consonant — rather than in logical order, so `सिरोही` arrives as
+  `बसरोही` and `बैंगन` as `िैंगन`. Because the words it corrupts are crop and
+  district names, it cost real coverage: the catalogue advertised 4 crops for a
+  bulletin that discusses 8.
+
+  `repair_devanagari()` in `ingest/language.py` undoes it, and `repair_encoding()`
+  in `scenario1.py` decides whether to trust the result — it scores both versions
+  against the crop and district vocabulary and keeps the repair only if more
+  known terms match. Measured: **Rajasthan 28 → 37 terms, applied; UP 121 → 78,
+  refused.** The same transform run over the UP bulletin would destroy it, which
+  is exactly why the gate exists rather than a blanket "fix Devanagari" pass. A
+  repair that fires says so on every run:
+
+  ```
+  encoding fix applied — 9 more vocabulary term(s) now match (28 → 37)
+  ```
+
+  Measured defect rate before repair: **0.7% of Devanagari words in UP, 0.1% in
+  Rajasthan**. Embedding is robust to
   it; exact-term lookup on an affected word is not. The alias tables absorb the
   specific corrupted spellings that appear, and `check_devanagari_encoding()`
   reports density on every run so a genuinely legacy-font file would be caught.

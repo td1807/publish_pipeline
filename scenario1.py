@@ -29,7 +29,8 @@ from .beckn.envelope import build_envelope
 from .beckn.models import Catalog, PublishEnvelope
 from .config import DOMAIN, PROVIDER_ID
 from .ingest.passages import ExtractionReport, Passage, extract, detect_state
-from .ingest.document_text import Document, read_document
+from .ingest.document_text import Document, Page, read_document
+from .ingest.language import RepairReading, repair_devanagari, score_terms
 from .publish import PublishResult, publish
 from .taxonomy.vocab import Vocabulary, load_vocabulary
 from .vectors.embeddings import Embedder, TokenReport, get_embedder
@@ -91,6 +92,7 @@ class Onboarding:
     index_result: IndexResult # branch 2b
     tokens: TokenReport | None
     timing: BranchTiming
+    repair: RepairReading
 
     def resources_json(self) -> dict:
         """This document's resources and their full resourceAttributes.
@@ -161,6 +163,26 @@ class Onboarding:
         )
 
 
+
+def repair_encoding(doc: Document, vocab: Vocabulary) -> tuple[Document, RepairReading]:
+    """Repair a mis-mapped Devanagari font, but only when it demonstrably helps.
+
+    The transform is scored against the vocabulary rather than trusted: text
+    that is already sound, or broken in some other way, scores no better
+    repaired and is returned untouched. See ingest/language.py for the defect.
+    """
+    terms = vocab.devanagari_terms()
+    before = score_terms("\n".join(p.text for p in doc.pages), terms)
+    repaired_pages = tuple(
+        Page(number=p.number, text=repair_devanagari(p.text)) for p in doc.pages
+    )
+    after = score_terms("\n".join(p.text for p in repaired_pages), terms)
+    if after <= before:
+        return doc, RepairReading(applied=False, terms_before=before, terms_after=after)
+    repaired = Document(path=doc.path, pages=repaired_pages, extractor=doc.extractor)
+    return repaired, RepairReading(applied=True, terms_before=before, terms_after=after)
+
+
 def onboard(
     doc_path: str,
     *,
@@ -174,6 +196,11 @@ def onboard(
 
     # --- step 1 -------------------------------------------------------------
     doc = read_document(doc_path)
+    # Before anything reads the text: a document whose font mis-maps Devanagari
+    # is repaired if -- and only if -- the repair makes more known crop and
+    # district names match. Both branches consume the result, so 2a's coverage
+    # claims and 2b's vectors are built from the same repaired text.
+    doc, repair = repair_encoding(doc, vocab)
     state_code = detect_state(doc, vocab)
     state_name = vocab.state(state_code).name
 
@@ -218,6 +245,7 @@ def onboard(
 
     return Onboarding(
         document=doc,
+        repair=repair,
         passages=passages,
         extraction=report,
         state_code=state_code,

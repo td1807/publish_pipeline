@@ -22,6 +22,7 @@ they appear inside otherwise-English government text and carry no signal.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass
 
 from ..config import LANG_MIN_CHARS, LANG_MIN_RATIO
@@ -143,3 +144,64 @@ def check_devanagari_encoding(text: str) -> EncodingReading:
         markers_per_1k=per_1k,
         healthy=(dev == 0) or (per_1k >= _HEALTHY_MARKERS_PER_1K),
     )
+
+# --- repairing a mis-mapped Devanagari font ----------------------------------
+#
+# Some producers embed a Devanagari font whose ToUnicode table maps two glyphs
+# to each other's code points, and emit the i-matra glyph at its *drawn*
+# position -- to the left of the consonant it belongs to -- rather than in
+# logical order. Extraction then yields text that looks like Hindi, renders as
+# nonsense, and matches nothing: सिरोही arrives as बसरोही, बैंगन as िैंगन.
+#
+# The repair is a swap and a reorder, which is cheap. Deciding *whether* to
+# apply it is the part that has to be careful, because the same transform run
+# over healthy text destroys it -- measured, not assumed: on the UP bulletin it
+# would lose 43 of 121 recognisable vocabulary terms. So repair_devanagari()
+# only transforms; the caller scores both versions against known terms and
+# keeps the repaired one only when it strictly wins. A document with a
+# different defect, or none, is left exactly as it was.
+
+_GLYPH_SWAP = str.maketrans({"ब": "ि", "ि": "ब"})
+_LEADING_I_MATRA = re.compile(r"ि([\u0915-\u0939])")
+# The same producer also emits a spurious ii-matra before an anusvara, and a
+# spurious virama before a final ii-matra: संभावना arrives as सींभावना, भिंडी as
+# भिींड्ी once the swap is undone. Undoing these is not free -- a word that
+# legitimately ends in "ीं", such as नहीं, is damaged by the first rule. That is
+# the whole reason the caller scores the result instead of trusting it: on a
+# document with this defect the crop and district names recovered outnumber the
+# words harmed, and on any other document the transform loses and is discarded.
+_SPURIOUS = (("ीं", "ं"), ("्ी", "ी"))
+
+
+def repair_devanagari(text: str) -> str:
+    """Undo the swapped-glyph, visual-order i-matra defect. Pure transform."""
+    out = _LEADING_I_MATRA.sub(r"\1ि", text.translate(_GLYPH_SWAP))
+    for wrong, right in _SPURIOUS:
+        out = out.replace(wrong, right)
+    return out
+
+
+@dataclass(frozen=True)
+class RepairReading:
+    """Whether the repair was applied, and what it was worth."""
+
+    applied: bool
+    terms_before: int
+    terms_after: int
+
+    @property
+    def recovered(self) -> int:
+        return self.terms_after - self.terms_before
+
+    def summary(self) -> str:
+        if not self.applied:
+            return "not needed (no gain in recognisable terms)"
+        return (
+            f"applied — {self.recovered} more vocabulary term(s) now match "
+            f"({self.terms_before} → {self.terms_after})"
+        )
+
+
+def score_terms(text: str, terms: Iterable[str]) -> int:
+    """How many known terms occur in this text. The repair's only judge."""
+    return sum(1 for t in terms if t in text)

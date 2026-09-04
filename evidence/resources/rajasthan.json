@@ -23,34 +23,35 @@
     },
     "categories": {
       "Weather": 21,
-      "Horticulture": 3,
+      "Crop": 2,
+      "Horticulture": 1,
       "Livestock": 1
     },
     "warnings": [
       "Only 3/25 passages resolved to a taxonomy subject. Crop coverage claims for this state are thin."
     ]
   },
-  "resourceCount": 4,
+  "resourceCount": 5,
   "capabilityTypes": {
+    "CropAdvisoryCapability": 1,
     "HorticultureAdvisoryCapability": 1,
     "LivestockAdvisoryCapability": 1,
     "WeatherAdvisoryCapability": 2
   },
   "resources": [
     {
-      "id": "res-imd-agromet-agriculture-horticulture-in-rj",
+      "id": "res-imd-agromet-agriculture-crop-in-rj",
       "descriptor": {
-        "code": "HORTICULTURE-IN-RJ",
-        "name": "Horticulture advisory, Rajasthan",
-        "shortDesc": "Horticulture advisory at state granularity for Rajasthan",
-        "longDesc": "Horticulture advisory capability covering Rajasthan, standing on 3 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "code": "CROP-IN-RJ",
+        "name": "Crop advisory, Rajasthan",
+        "shortDesc": "Crop advisory at state granularity for Rajasthan",
+        "longDesc": "Crop advisory capability covering Rajasthan, standing on 2 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
-        "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
-        "@type": "openagrinet:HorticultureAdvisoryCapability",
+        "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:CropAdvisoryCapability",
         "subjectCategories": [
-          "Crop",
-          "Horticulture"
+          "Crop"
         ],
         "languages": [
           "hi"
@@ -79,6 +80,12 @@
             "areaCode": "IN-RJ-JAIPUR",
             "areaLevel": "District",
             "areaName": "Jaipur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-TONK",
+            "areaLevel": "District",
+            "areaName": "Tonk"
           }
         ],
         "geographicGranularity": "State",
@@ -100,11 +107,101 @@
             }
           },
           {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "OKRA",
+              "name": "Okra"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/pearl-millet",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "PEARL_MILLET",
+              "name": "Pearl millet"
+            }
+          },
+          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
             "subjectType": "Crop",
             "descriptor": {
               "code": "POMEGRANATE",
               "name": "Pomegranate"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/sesame",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "SESAME",
+              "name": "Sesame"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Irrigation",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture",
+          "Spraying"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 2,
+          "pageRange": [
+            12,
+            12
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-horticulture-in-rj",
+      "descriptor": {
+        "code": "HORTICULTURE-IN-RJ",
+        "name": "Horticulture advisory, Rajasthan",
+        "shortDesc": "Horticulture advisory at state granularity for Rajasthan",
+        "longDesc": "Horticulture advisory capability covering Rajasthan, standing on 1 indexed passage (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:HorticultureAdvisoryCapability",
+        "subjectCategories": [
+          "Crop",
+          "Horticulture"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-RJ",
+            "areaLevel": "State",
+            "areaName": "Rajasthan"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BRINJAL",
+              "name": "Brinjal"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "OKRA",
+              "name": "Okra"
             }
           },
           {
@@ -121,15 +218,14 @@
           "Drainage",
           "Irrigation",
           "LivestockCare",
-          "NutrientManagement",
           "PestManagement",
-          "SoilMoisture"
+          "Spraying"
         ],
         "evidence": {
           "sourceDocuments": [
             "imd_rajasthan_agromet.pdf"
           ],
-          "passageCount": 3,
+          "passageCount": 1,
           "pageRange": [
             12,
             12

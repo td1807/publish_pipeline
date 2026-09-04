@@ -86,6 +86,19 @@ class Vocabulary:
     horticulture_slugs: frozenset[str]
 
     # -- resolution ---------------------------------------------------------
+    def devanagari_terms(self) -> frozenset[str]:
+        """Every alias written in Devanagari, across crops and districts.
+
+        Used to judge a proposed encoding repair: a repair is worth applying
+        only if more of these actually appear afterwards.
+        """
+        terms = set(self.subjects)
+        for table in self.districts.values():
+            terms.update(table)
+        return frozenset(
+            t for t in terms if any(0x0900 <= ord(c) <= 0x097F for c in t)
+        )
+
     def subjects_in(self, text: str) -> list[Subject]:
         """Every crop/animal mentioned, de-duplicated, in stable slug order."""
         found = {

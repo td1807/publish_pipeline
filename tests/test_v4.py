@@ -20,7 +20,8 @@ from ..beckn import validate
 from ..beckn.catalog import build_catalog
 from ..beckn.envelope import build_envelope
 from ..config import DATA_DIR, EVIDENCE_DIR
-from ..ingest.language import check_devanagari_encoding, detect
+from ..scenario1 import repair_encoding
+from ..ingest.language import check_devanagari_encoding, detect, repair_devanagari, score_terms
 from ..ingest.passages import UnknownState, detect_state, extract
 from ..ingest.document_text import Document, Page, UnusableDocument, read_document
 from ..network_node import NetworkNode
@@ -463,6 +464,50 @@ def test_document_from_an_uncovered_state_is_refused_not_crashed(vocab):
         detect_state(doc, vocab)
     assert "coverage" in str(exc.value)
     assert isinstance(exc.value, UnusableDocument)
+
+
+# --- 9a. repairing a mis-mapped Devanagari font ------------------------------
+
+
+def test_repair_recovers_crop_and_district_names():
+    """The defect, at word level: two glyphs swapped, the i-matra drawn first."""
+    assert repair_devanagari("बसरोही") == "सिरोही"      # Sirohi, a district
+    assert repair_devanagari("िैंगन") == "बैंगन"        # brinjal
+    assert repair_devanagari("बभींड्ी") == "भिंडी"      # okra
+
+
+def test_repair_is_applied_to_the_document_that_needs_it(vocab):
+    doc = read_document(DATA_DIR / "imd_rajasthan_agromet.pdf")
+    repaired, reading = repair_encoding(doc, vocab)
+    assert reading.applied
+    assert reading.recovered > 0
+    text = "\n".join(p.text for p in repaired.pages)
+    for term in ("भिंडी", "बैंगन", "सिरोही", "बाजरा"):
+        assert term in text, f"{term} should be readable after the repair"
+
+
+def test_repair_is_refused_on_a_document_it_would_damage(vocab):
+    """The UP bulletin is broken differently. The same transform loses 43 of its
+    121 recognisable terms, so the scoring gate must reject it and leave the
+    document untouched."""
+    doc = read_document(DATA_DIR / "imd_up_agromet.pdf")
+    repaired, reading = repair_encoding(doc, vocab)
+    assert not reading.applied
+    assert reading.terms_after < reading.terms_before
+    assert repaired is doc, "a rejected repair must not alter the document"
+
+
+def test_repair_widens_what_the_catalogue_advertises(vocab):
+    """The point of the repair: coverage the provider always had, now claimable."""
+    doc = read_document(DATA_DIR / "imd_rajasthan_agromet.pdf")
+    before, _ = extract(doc, vocab=vocab)
+    repaired, _ = repair_encoding(doc, vocab)
+    after, _ = extract(repaired, vocab=vocab)
+
+    crops_before = {s.name for p in before for s in p.subjects}
+    crops_after = {s.name for p in after for s in p.subjects}
+    assert crops_before < crops_after, "the repair must not lose a subject"
+    assert {"Okra", "Brinjal"} <= crops_after
 
 
 # --- 9b. formats other than PDF ----------------------------------------------

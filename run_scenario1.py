@@ -97,6 +97,11 @@ def main(argv: list[str] | None = None) -> int:
         args.fresh = False  # only the first document recreates the collection
         onboardings.extend(done)
         print(done[0].summary())
+        if done[0].repair.applied:
+            # Say so on every run. A document silently rewritten between
+            # extraction and indexing is exactly the kind of step that should
+            # never be invisible.
+            print(f"  encoding fix {done[0].repair.summary()}")
         for w in done[0].extraction.warnings:
             print(f"  ! {w}")
         print()
