@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 29 tests, ~9s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 30 tests, ~9s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -281,8 +281,12 @@ imports into another package.
    simultaneously a canonical topic name and a word any prose detector would
    flag.
 
-8. **A document with no usable text layer is refused, not guessed at.** The
-   alternative is a resource claiming coverage it cannot serve.
+8. **A document we cannot stand behind is refused, not guessed at.** Two
+   cases reach the same answer: a PDF with no usable text layer (a scan), and
+   a bulletin from a state the vocabulary does not cover. Both raise
+   `UnusableDocument`, both print a `REFUSED` line naming the reason, and
+   neither stops the other documents in the run. The alternative is a resource
+   claiming coverage it cannot serve.
 
 ---
 
@@ -303,6 +307,25 @@ imports into another package.
   contended straight after a test run. The table above gives ranges for that
   reason. Quote no single figure; measure on the target hardware, and expect a
   dedicated GPU to be both faster and far more consistent.
+
+* **Three states, and a fourth one is refused rather than guessed.**
+  `_STATE_MARKERS` in `ingest/passages.py` knows Karnataka, Uttar Pradesh and
+  Rajasthan, and `taxonomy/data/districts.json` carries 138 districts across
+  those same three — authored from the three source bulletins. A bulletin from
+  anywhere else cannot be given an area code without inventing a coverage
+  claim, so it is refused by name:
+
+  ```
+  REFUSED  kerala_prices.pdf
+           Cannot determine which state kerala_prices.pdf covers. Add a marker
+           to _STATE_MARKERS in ingest/passages.py rather than guessing — an
+           area code is a claim about coverage.
+  ```
+
+  Adding a state is a marker line plus that state's districts with their
+  aliases and local-script spellings. The marker is a minute; the district
+  vocabulary is the actual work, and it has to be right, because those codes
+  are published as coverage.
 
 * **`context.domain` is not in Beckn v2.** The spec's `Context` has no `domain`
   property — v2 replaced it with `schemaContext`. We emit it because
