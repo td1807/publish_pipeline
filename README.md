@@ -158,7 +158,11 @@ step 3   ACCEPTED — 3 catalogues, 85 resources, 163,060-byte payload
          and zero advisory text — checked against real sentences from the source
          round-trip verified: every field held exactly as published
 
-totals   510 passages · 85 resources · 510 vectors · 0 refused
+REFUSED  imd_karnataka_district_kannada.pdf
+         has 0 of 1 pages with a text layer (0%, need 50%). This looks like
+         a scan. Run OCR and re-ingest.
+
+totals   3 onboarded · 1 refused · 510 passages · 85 resources · 510 vectors
 ```
 
 **Why the three states differ so much is the interesting part**, and it is real
@@ -283,7 +287,10 @@ imports into another package.
    simultaneously a canonical topic name and a word any prose detector would
    flag.
 
-8. **A document we cannot stand behind is refused, not guessed at.** Three
+8. **A document we cannot stand behind is refused, not guessed at.** The
+   default run includes the scanned Kannada district bulletin for this reason —
+   `1 refused` in the totals is the check working, not a failure, and a demo
+   that only ever showed the happy path would never demonstrate it. Three
    cases reach the same answer: a file no extractor can open, a document with
    no usable text layer (a scan), and a bulletin from a state the vocabulary
    does not cover. All three raise `UnusableDocument`, all three print a

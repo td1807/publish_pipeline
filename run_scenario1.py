@@ -22,10 +22,16 @@ from .taxonomy.vocab import load_vocabulary
 from .vectors.embeddings import get_embedder
 from .vectors.store import VectorIndex
 
+# The three publishable bulletins, plus the scanned one. The scan is here on
+# purpose: refusing a document we cannot read is the load-bearing behaviour of
+# step 1, and a demo that only ever shows the happy path never demonstrates it.
+# It costs nothing -- a refusal publishes nothing and the run continues -- and
+# "1 refused" in the totals is the feature working, not a failure.
 DEFAULT_BULLETINS = [
     "imd_karnataka_agromet.pdf",
     "imd_up_agromet.pdf",
     "imd_rajasthan_agromet.pdf",
+    "imd_karnataka_district_kannada.pdf",
 ]
 
 # One question, asked only to prove branch 2b's index is usable later. Scenario 1

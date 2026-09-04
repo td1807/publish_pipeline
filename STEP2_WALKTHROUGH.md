@@ -782,7 +782,8 @@ Honest gaps, so they come from me rather than from the room:
 .venv/bin/python main.py \
        --file imd_karnataka_district_kannada.pdf
 #   → REFUSED: a scanned PDF publishes nothing rather than a resource
-#     claiming coverage we never read
+#     claiming coverage we never read. This file is also in the default
+#     --all set, so every run shows the refusal path: 3 onboarded, 1 refused.
 
 .venv/bin/python main.py --file <a bulletin from a fourth state>
 #   → REFUSED: the vocabulary covers three states, so an area code for a fourth
