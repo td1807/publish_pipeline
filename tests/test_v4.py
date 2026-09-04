@@ -20,8 +20,8 @@ from ..beckn.catalog import build_catalog
 from ..beckn.envelope import build_envelope
 from ..config import DATA_DIR, EVIDENCE_DIR
 from ..ingest.language import check_devanagari_encoding, detect
-from ..ingest.passages import detect_state, extract
-from ..ingest.pdf_text import UnusableDocument, read_pdf
+from ..ingest.passages import UnknownState, detect_state, extract
+from ..ingest.pdf_text import Document, Page, UnusableDocument, read_pdf
 from ..network_node import NetworkNode
 from ..publish import publish
 from ..taxonomy.ids import point_id_for, resource_id_for
@@ -443,6 +443,25 @@ def test_refused_document_publishes_nothing(vocab):
     with pytest.raises(UnusableDocument):
         doc = read_pdf(SCANNED)
         extract(doc, vocab=vocab)
+
+
+def test_document_from_an_uncovered_state_is_refused_not_crashed(vocab):
+    """An out-of-scope state must refuse the same way a scan does.
+
+    The vocabulary covers three states. A bulletin from anywhere else cannot be
+    given an area code without inventing a coverage claim, so it is refused --
+    but as a refusal the caller can catch and narrate, not as an exception that
+    ends a multi-document run partway through.
+    """
+    doc = Document(
+        path=Path("kerala_prices.pdf"),
+        pages=(Page(number=1, text="Government of Kerala PRICE BULLETIN"),),
+        extractor="test",
+    )
+    with pytest.raises(UnknownState) as exc:
+        detect_state(doc, vocab)
+    assert "coverage" in str(exc.value)
+    assert isinstance(exc.value, UnusableDocument)
 
 
 # --- 10. round trip ----------------------------------------------------------

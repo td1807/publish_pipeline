@@ -25,7 +25,7 @@ from ..config import MAX_PASSAGE_CHARS, MIN_PASSAGE_CHARS, PROVIDER_ID, DOMAIN
 from ..taxonomy.ids import point_id_for, resource_id_for
 from ..taxonomy.vocab import Area, Subject, Vocabulary, category_for, load_vocabulary
 from . import language
-from .pdf_text import Document
+from .pdf_text import Document, UnusableDocument
 
 
 @dataclass(frozen=True)
@@ -117,6 +117,15 @@ class ExtractionReport:
         )
 
 
+class UnknownState(UnusableDocument):
+    """The document names no state this vocabulary covers.
+
+    A subclass of UnusableDocument because it is the same kind of answer: the
+    document cannot be published, and the caller that already narrates a
+    refusal for a scan should narrate this one too rather than stop the run.
+    """
+
+
 # --- which state is this bulletin about? -------------------------------------
 # Checked against the document text, not only the filename, so a renamed file
 # cannot silently publish under the wrong state code.
@@ -133,7 +142,7 @@ def detect_state(doc: Document, vocab: Vocabulary) -> str:
     for code, markers in _STATE_MARKERS:
         if any(m in name for m in markers) or any(m in head for m in markers):
             return code
-    raise ValueError(
+    raise UnknownState(
         f"Cannot determine which state {doc.path.name} covers. Add a marker to "
         "_STATE_MARKERS in ingest/passages.py rather than guessing — an area "
         "code is a claim about coverage."

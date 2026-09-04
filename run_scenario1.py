@@ -75,8 +75,10 @@ def main(argv: list[str] | None = None) -> int:
         try:
             done, index = onboard_all([path], index=index, fresh=args.fresh, vocab=vocab)
         except UnusableDocument as exc:
-            # The refusal path. A scanned bulletin publishes nothing at all,
-            # rather than a resource claiming coverage we never read.
+            # The refusal path, for both kinds of document we will not stand
+            # behind: a scan we cannot read, and a state the vocabulary does
+            # not cover. Either publishes nothing at all, rather than a
+            # resource claiming coverage we never read or never had.
             refused.append((Path(path).name, str(exc)))
             print(f"\nREFUSED  {Path(path).name}\n         {exc}")
             continue
