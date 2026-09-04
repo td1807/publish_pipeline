@@ -8,7 +8,7 @@ IMD's Karnataka agromet bulletin 69/2026 (53 pages). Nothing here is invented
 for illustration. Re-run it yourself with:
 
 ```bash
-python -m publish_pipeline.run_scenario1 --all --fresh
+.venv/bin/python main.py --all --fresh
 ```
 
 ---
@@ -675,23 +675,23 @@ Honest gaps, so they come from me rather than from the room:
 ## Appendix: reproducing every number here
 
 ```bash
-python -m publish_pipeline.run_scenario1 --all --fresh
+.venv/bin/python main.py --all --fresh
 #   → evidence/publish_payload.json      the combined /catalog/publish body
 #   → evidence/resources/{karnataka,up,rajasthan}.json   per-bulletin resources
 #   → evidence/SCENARIO_1_TRANSCRIPT.txt
 
-python -m publish_pipeline.run_scenario1 --all --show-resource livestock-in-ka-koppal
+.venv/bin/python main.py --all --show-resource livestock-in-ka-koppal
 #   → prints one resource's full resourceAttributes to stdout
 
-python -m publish_pipeline.run_scenario1 \
+.venv/bin/python main.py \
        --pdf imd_karnataka_district_kannada.pdf
 #   → REFUSED: a scanned PDF publishes nothing rather than a resource
 #     claiming coverage we never read
 
-EMBEDDING_BACKEND=lexical python -m publish_pipeline.run_scenario1 --all --fresh
+EMBEDDING_BACKEND=lexical .venv/bin/python main.py --all --fresh
 #   → the whole flow in ~0.4s with no model. Branch 2a output is byte-identical;
 #     every retrieval result is stamped semantic=False.
 
-pytest publish_pipeline/tests/test_v4.py -q -m "not semantic"  # 29 passed, 9s
-pytest publish_pipeline/tests/test_v4.py -q -m semantic        # 1 passed, 52s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 29 passed, 9s
+.venv/bin/pytest tests/test_v4.py -q -m semantic        # 1 passed, 52s
 ```

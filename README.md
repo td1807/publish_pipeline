@@ -41,15 +41,55 @@ from the provider, which is exactly what branch 2b exists to serve.
 
 ## Run it
 
-```bash
-# Python >= 3.10 required. The repo's existing venv already has everything
-# except sentence-transformers.
-pip install -r requirements.txt
+From a clean machine, start to finish:
 
-python -m publish_pipeline.run_scenario1 --all --fresh
-pytest publish_pipeline/tests/test_v4.py -q -m "not semantic"   # 29 tests, ~9s
-pytest publish_pipeline/tests/test_v4.py -q -m semantic         # 1 test, needs the model
+```bash
+git clone https://github.com/td1807/publish_pipeline.git
+cd publish_pipeline
+
+python3.11 -m venv .venv                      # any Python >= 3.10
+.venv/bin/pip install -r requirements.txt     # ~3 GB: torch, then the e5 model on first run
+
+.venv/bin/python main.py --all --fresh
 ```
+
+Then the tests:
+
+```bash
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 29 tests, ~9s
+.venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
+```
+
+Three things about that first block are worth knowing, because each one
+produces a confusing error rather than an obvious one:
+
+* **Python 3.10 is the floor, and macOS ships 3.9.** There is no `python` or
+  `pip` on a stock macOS PATH at all, only `python3`, and that one is 3.9 —
+  which is why `python …` and `pip …` fail with `command not found` before
+  reaching any code here, and why `pip3 install` reports "no matching
+  distribution" for packages that plainly exist. Calling the venv's own
+  interpreter by path, as above, sidesteps all of it. `main.py` checks the
+  version itself and says so plainly if it is too old.
+* **Run `main.py`, not `-m publish_pipeline.run_scenario1`.** The module form
+  still works, but only from the *parent* of the checkout, since the modules
+  import each other relatively. `main.py` puts the parent on `sys.path` for
+  you so the command works from inside the checkout. Either way, the directory
+  must stay named `publish_pipeline`.
+* **The first run is slow and needs the network.** Roughly 700 MB of torch at
+  install time and ~2.2 GB of `intfloat/multilingual-e5-large` on first use.
+  Both are cached afterwards (the model in `~/.cache/huggingface`), so later
+  runs start immediately. To see the whole pipeline without either download,
+  use `EMBEDDING_BACKEND=lexical`, which skips the model entirely and stamps
+  `semantic=False` on every result so a degraded run cannot be mistaken for a
+  real one.
+
+Nothing else has to be running: Qdrant is embedded in the process against a
+local `.qdrant/` directory, there is no server, no Docker, and no port. That
+directory is not in git — `--fresh` rebuilds it. It is also locked while a run
+is in progress, so run one at a time; if a run is killed hard, delete
+`.qdrant/` and re-run with `--fresh`. Offline, prefix commands with
+`HF_HUB_OFFLINE=1` so sentence-transformers uses the cache instead of checking
+for a newer revision.
 
 Saved output from a real run is checked in, so the walkthrough can be read
 without running anything:
@@ -76,7 +116,7 @@ To print a single resource's attributes straight to the terminal (matched on any
 substring of its id — note the order is `…-<category>-<area>`):
 
 ```bash
-python -m publish_pipeline.run_scenario1 --all --show-resource livestock-in-ka-koppal
+.venv/bin/python main.py --all --show-resource livestock-in-ka-koppal
 ```
 
 ### It runs without the model, and says so

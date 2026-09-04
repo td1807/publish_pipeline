@@ -1,8 +1,9 @@
 # publish_pipeline
 #
-#     pip install -r requirements.txt
-#     python -m publish_pipeline.run_scenario1 --all --fresh
-#     pytest publish_pipeline/tests/test_v4.py -q -m "not semantic"
+#     python3.11 -m venv .venv
+#     .venv/bin/pip install -r requirements.txt
+#     .venv/bin/python main.py --all --fresh
+#     .venv/bin/pytest tests/test_v4.py -q -m "not semantic"
 #
 # REQUIRES PYTHON >= 3.10 (uses `X | Y` type syntax and `str.removeprefix`).
 # macOS ships 3.9 in the Command Line Tools, and on 3.9 pip reports

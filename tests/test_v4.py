@@ -4,8 +4,8 @@ Runs on the fast `lexical` embedder by default so the suite needs no model
 download and finishes in seconds. The two tests that are genuinely *about* the
 real model are marked `semantic` and skip unless it is installed:
 
-    pytest publish_pipeline/tests/test_v4.py -q
-    pytest publish_pipeline/tests/test_v4.py -q -m semantic
+    .venv/bin/pytest tests/test_v4.py -q
+    .venv/bin/pytest tests/test_v4.py -q -m semantic
 """
 
 from __future__ import annotations
