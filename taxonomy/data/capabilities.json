@@ -1,0 +1,73 @@
+{
+  "_comment": [
+    "Capability types, topics and weather parameters.",
+    "",
+    "The 'capabilities' table is load-bearing: @type is a function of the",
+    "CATEGORY of the passage, not of the document. One agromet bulletin therefore",
+    "publishes several capability types, and each type carries only the attribute",
+    "groups it is for -- a crop resource has agricultureSubjects and no",
+    "weatherParameters; a forecast resource the reverse. validate.py fails a",
+    "payload where the two disagree, which is what stops a resource from",
+    "advertising a capability it has no data for."
+  ],
+  "capabilities": {
+    "Crop": {
+      "type": "CropAdvisoryCapability",
+      "subject_categories": ["Crop"],
+      "subject_kinds": ["crop"],
+      "attribute_groups": ["agricultureSubjects", "topics"],
+      "forbidden_groups": ["weatherParameters"]
+    },
+    "Weather": {
+      "type": "WeatherAdvisoryCapability",
+      "subject_categories": ["Weather"],
+      "subject_kinds": [],
+      "attribute_groups": ["weatherParameters", "topics"],
+      "forbidden_groups": ["agricultureSubjects"]
+    },
+    "Livestock": {
+      "type": "LivestockAdvisoryCapability",
+      "subject_categories": ["Livestock"],
+      "subject_kinds": ["livestock"],
+      "attribute_groups": ["agricultureSubjects", "topics"],
+      "forbidden_groups": ["weatherParameters"]
+    },
+    "Horticulture": {
+      "type": "HorticultureAdvisoryCapability",
+      "subject_categories": ["Crop", "Horticulture"],
+      "subject_kinds": ["crop"],
+      "attribute_groups": ["agricultureSubjects", "topics"],
+      "forbidden_groups": ["weatherParameters"]
+    }
+  },
+  "horticulture_slugs": [
+    "banana", "mango", "grape", "citrus", "pomegranate", "guava", "papaya",
+    "coconut", "arecanut", "coffee", "black-pepper", "cardamom", "cashew",
+    "potato", "onion", "tomato", "chilli", "brinjal", "okra", "cabbage",
+    "cauliflower", "turmeric", "ginger"
+  ],
+  "topics": [
+    {"name": "Irrigation", "aliases": ["irrigate", "irrigation", "watering", "life saving irrigation", "सिंचाई", "पानी", "ನೀರಾವರಿ"]},
+    {"name": "Spraying", "aliases": ["spray", "spraying", "foliar", "छिड़काव", "स्प्रे", "सिडकाव", "ಸಿಂಪರಣೆ"]},
+    {"name": "Sowing", "aliases": ["sow", "sowing", "transplanting", "transplant", "seeding", "बुवाई", "बोनी", "रोपाई", "ಬಿತ್ತನೆ"]},
+    {"name": "Harvesting", "aliases": ["harvest", "harvesting", "threshing", "कटाई", "गहाई", "कटाई-मड़ाई", "ಕೊಯ್ಲು"]},
+    {"name": "PestManagement", "aliases": ["pest", "pests", "insect", "borer", "aphid", "thrips", "whitefly", "caterpillar", "कीट", "कीड़े", "सुंडी", "ಕೀಟ"]},
+    {"name": "DiseaseManagement", "aliases": ["disease", "blight", "rust", "wilt", "mildew", "rot", "बीमारी", "रोग", "झुलसा", "ರೋಗ"]},
+    {"name": "WeedManagement", "aliases": ["weed", "weeds", "weeding", "intercultivation", "खरपतवार", "निराई", "ಕಳೆ"]},
+    {"name": "NutrientManagement", "aliases": ["fertilizer", "fertiliser", "urea", "manure", "fym", "nutrient", "dap", "potash", "उर्वरक", "खाद", "यूरिया", "पोषक", "ಗೊಬ್ಬರ"]},
+    {"name": "CropProtection", "aliases": ["plant protection", "crop protection", "फसल सुरक्षा", "पौध संरक्षण"]},
+    {"name": "LivestockCare", "aliases": ["livestock", "animal", "cattle", "vaccination", "deworming", "पशु", "पशुपालन", "टीकाकरण", "ಪಶು"]},
+    {"name": "Storage", "aliases": ["storage", "store", "godown", "भंडारण", "भण्डारण", "ಸಂಗ್ರಹ"]},
+    {"name": "SoilMoisture", "aliases": ["soil moisture", "moisture stress", "drought", "मिट्टी की नमी", "नमी", "सूखा", "ಮಣ್ಣಿನ ತೇವ"]},
+    {"name": "Drainage", "aliases": ["drainage", "drain out", "water logging", "waterlogging", "जल निकासी", "जलभराव", "ಒಳಚರಂಡಿ"]}
+  ],
+  "weather_parameters": [
+    {"name": "Rainfall", "aliases": ["rain", "rainfall", "rains", "showers", "precipitation", "वर्षा", "बारिश", "वर्षा", "बरसात", "ಮಳೆ"]},
+    {"name": "Temperature", "aliases": ["temperature", "max temp", "min temp", "maximum temperature", "minimum temperature", "तापमान", "ಉಷ್ಣಾಂಶ"]},
+    {"name": "Humidity", "aliases": ["humidity", "relative humidity", "आर्द्रता", "नमी", "ಆರ್ದ್ರತೆ"]},
+    {"name": "WindSpeed", "aliases": ["wind", "wind speed", "kmph", "gusty winds", "sustained wind", "हवा", "हवाएं", "हवाएँ", "ಗಾಳಿ"]},
+    {"name": "Thunderstorm", "aliases": ["thunderstorm", "lightning", "squall", "hail", "आंधी", "तूफान", "बिजली", "ओलावृष्टि", "ಗುಡುಗು"]},
+    {"name": "CloudCover", "aliases": ["cloudy", "cloud", "overcast", "बादल", "ಮೋಡ"]},
+    {"name": "Alert", "aliases": ["warning", "alert", "advisory warning", "चेतावनी", "अलर्ट", "ಎಚ್ಚರಿಕೆ"]}
+  ]
+}

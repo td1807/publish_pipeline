@@ -1,0 +1,470 @@
+{
+  "document": "imd_rajasthan_agromet.pdf",
+  "state": {
+    "code": "IN-RJ",
+    "name": "Rajasthan"
+  },
+  "catalogId": "cat-imd-agromet-agriculture-in-rj",
+  "provider": {
+    "id": "prov-imd-agromet",
+    "descriptor": {
+      "code": "IMD-AGROMET",
+      "name": "India Meteorological Department — Agromet Advisory Services"
+    }
+  },
+  "extraction": {
+    "pages": 30,
+    "passages": 25,
+    "subjectResolution": 0.12,
+    "districtsResolved": 32,
+    "languages": {
+      "hi": 23,
+      "en": 2
+    },
+    "categories": {
+      "Weather": 21,
+      "Horticulture": 3,
+      "Livestock": 1
+    },
+    "warnings": [
+      "Only 3/25 passages resolved to a taxonomy subject. Crop coverage claims for this state are thin."
+    ]
+  },
+  "resourceCount": 4,
+  "capabilityTypes": {
+    "HorticultureAdvisoryCapability": 1,
+    "LivestockAdvisoryCapability": 1,
+    "WeatherAdvisoryCapability": 2
+  },
+  "resources": [
+    {
+      "id": "res-imd-agromet-agriculture-horticulture-in-rj",
+      "descriptor": {
+        "code": "HORTICULTURE-IN-RJ",
+        "name": "Horticulture advisory, Rajasthan",
+        "shortDesc": "Horticulture advisory at state granularity for Rajasthan",
+        "longDesc": "Horticulture advisory capability covering Rajasthan, standing on 3 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:HorticultureAdvisoryCapability",
+        "subjectCategories": [
+          "Crop",
+          "Horticulture"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-RJ",
+            "areaLevel": "State",
+            "areaName": "Rajasthan"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-AJMER",
+            "areaLevel": "District",
+            "areaName": "Ajmer"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DAUSA",
+            "areaLevel": "District",
+            "areaName": "Dausa"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JAIPUR",
+            "areaLevel": "District",
+            "areaName": "Jaipur"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GUAVA",
+              "name": "Guava"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MANGO",
+              "name": "Mango"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "POMEGRANATE",
+              "name": "Pomegranate"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/tomato",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "TOMATO",
+              "name": "Tomato"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "Irrigation",
+          "LivestockCare",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 3,
+          "pageRange": [
+            12,
+            12
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-livestock-in-rj",
+      "descriptor": {
+        "code": "LIVESTOCK-IN-RJ",
+        "name": "Livestock advisory, Rajasthan",
+        "shortDesc": "Livestock advisory at state granularity for Rajasthan",
+        "longDesc": "Livestock advisory capability covering Rajasthan, standing on 1 indexed passage (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:LivestockAdvisoryCapability",
+        "subjectCategories": [
+          "Livestock"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-RJ",
+            "areaLevel": "State",
+            "areaName": "Rajasthan"
+          }
+        ],
+        "geographicGranularity": "State",
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "LivestockCare",
+          "SoilMoisture"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 1,
+          "pageRange": [
+            12,
+            12
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-rj",
+      "descriptor": {
+        "code": "WEATHER-IN-RJ",
+        "name": "Weather advisory, Rajasthan",
+        "shortDesc": "Weather forecast and warnings at state granularity for Rajasthan",
+        "longDesc": "Weather advisory capability covering Rajasthan, standing on 20 indexed passages (source pages 1-30). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-RJ",
+            "areaLevel": "State",
+            "areaName": "Rajasthan"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-AJMER",
+            "areaLevel": "District",
+            "areaName": "Ajmer"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-ALWAR",
+            "areaLevel": "District",
+            "areaName": "Alwar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BANSWARA",
+            "areaLevel": "District",
+            "areaName": "Banswara"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BARAN",
+            "areaLevel": "District",
+            "areaName": "Baran"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BARMER",
+            "areaLevel": "District",
+            "areaName": "Barmer"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BHARATPUR",
+            "areaLevel": "District",
+            "areaName": "Bharatpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BHILWARA",
+            "areaLevel": "District",
+            "areaName": "Bhilwara"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BIKANER",
+            "areaLevel": "District",
+            "areaName": "Bikaner"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BUNDI",
+            "areaLevel": "District",
+            "areaName": "Bundi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-CHITTORGARH",
+            "areaLevel": "District",
+            "areaName": "Chittorgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-CHURU",
+            "areaLevel": "District",
+            "areaName": "Churu"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DAUSA",
+            "areaLevel": "District",
+            "areaName": "Dausa"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DHOLPUR",
+            "areaLevel": "District",
+            "areaName": "Dholpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DUNGARPUR",
+            "areaLevel": "District",
+            "areaName": "Dungarpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-HANUMANGARH",
+            "areaLevel": "District",
+            "areaName": "Hanumangarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JAIPUR",
+            "areaLevel": "District",
+            "areaName": "Jaipur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JAISALMER",
+            "areaLevel": "District",
+            "areaName": "Jaisalmer"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JALORE",
+            "areaLevel": "District",
+            "areaName": "Jalore"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JHALAWAR",
+            "areaLevel": "District",
+            "areaName": "Jhalawar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JHUNJHUNU",
+            "areaLevel": "District",
+            "areaName": "Jhunjhunu"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JODHPUR",
+            "areaLevel": "District",
+            "areaName": "Jodhpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-KARAULI",
+            "areaLevel": "District",
+            "areaName": "Karauli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-KOTA",
+            "areaLevel": "District",
+            "areaName": "Kota"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-NAGAUR",
+            "areaLevel": "District",
+            "areaName": "Nagaur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-PALI",
+            "areaLevel": "District",
+            "areaName": "Pali"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-PRATAPGARH",
+            "areaLevel": "District",
+            "areaName": "Pratapgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-SAWAI-MADHOPUR",
+            "areaLevel": "District",
+            "areaName": "Sawai Madhopur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-SIKAR",
+            "areaLevel": "District",
+            "areaName": "Sikar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-SIROHI",
+            "areaLevel": "District",
+            "areaName": "Sirohi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-SRIGANGANAGAR",
+            "areaLevel": "District",
+            "areaName": "Sriganganagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-TONK",
+            "areaLevel": "District",
+            "areaName": "Tonk"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-UDAIPUR",
+            "areaLevel": "District",
+            "areaName": "Udaipur"
+          }
+        ],
+        "geographicGranularity": "State",
+        "weatherParameters": [
+          "Alert",
+          "Temperature",
+          "Thunderstorm",
+          "WindSpeed"
+        ],
+        "topics": [
+          "Drainage",
+          "Storage"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 20,
+          "pageRange": [
+            1,
+            30
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-rj-jodhpur",
+      "descriptor": {
+        "code": "WEATHER-IN-RJ-JODHPUR",
+        "name": "Weather advisory, Jodhpur",
+        "shortDesc": "Weather forecast and warnings at district granularity for Jodhpur",
+        "longDesc": "Weather advisory capability covering Jodhpur, standing on 1 indexed passage (source page 3). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-JODHPUR",
+            "areaLevel": "District",
+            "areaName": "Jodhpur"
+          }
+        ],
+        "geographicGranularity": "District",
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 1,
+          "pageRange": [
+            3,
+            3
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    }
+  ]
+}

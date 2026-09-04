@@ -1,0 +1,1791 @@
+{
+  "document": "imd_up_agromet.pdf",
+  "state": {
+    "code": "IN-UP",
+    "name": "Uttar Pradesh"
+  },
+  "catalogId": "cat-imd-agromet-agriculture-in-up",
+  "provider": {
+    "id": "prov-imd-agromet",
+    "descriptor": {
+      "code": "IMD-AGROMET",
+      "name": "India Meteorological Department — Agromet Advisory Services"
+    }
+  },
+  "extraction": {
+    "pages": 45,
+    "passages": 177,
+    "subjectResolution": 0.452,
+    "districtsResolved": 75,
+    "languages": {
+      "hi": 115,
+      "en": 62
+    },
+    "categories": {
+      "Crop": 53,
+      "Weather": 93,
+      "Horticulture": 11,
+      "Livestock": 20
+    },
+    "warnings": []
+  },
+  "resourceCount": 8,
+  "capabilityTypes": {
+    "CropAdvisoryCapability": 2,
+    "HorticultureAdvisoryCapability": 1,
+    "LivestockAdvisoryCapability": 2,
+    "WeatherAdvisoryCapability": 3
+  },
+  "resources": [
+    {
+      "id": "res-imd-agromet-agriculture-crop-in-up",
+      "descriptor": {
+        "code": "CROP-IN-UP",
+        "name": "Crop advisory, Uttar Pradesh",
+        "shortDesc": "Crop advisory at state granularity for Uttar Pradesh",
+        "longDesc": "Crop advisory capability covering Uttar Pradesh, standing on 51 indexed passages (source pages 1-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:CropAdvisoryCapability",
+        "subjectCategories": [
+          "Crop"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-UP",
+            "areaLevel": "State",
+            "areaName": "Uttar Pradesh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AGRA",
+            "areaLevel": "District",
+            "areaName": "Agra"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ALIGARH",
+            "areaLevel": "District",
+            "areaName": "Aligarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AMBEDKAR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Ambedkar Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AMETHI",
+            "areaLevel": "District",
+            "areaName": "Amethi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AURAIYA",
+            "areaLevel": "District",
+            "areaName": "Auraiya"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AYODHYA",
+            "areaLevel": "District",
+            "areaName": "Ayodhya"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AZAMGARH",
+            "areaLevel": "District",
+            "areaName": "Azamgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAGHPAT",
+            "areaLevel": "District",
+            "areaName": "Baghpat"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAHRAICH",
+            "areaLevel": "District",
+            "areaName": "Bahraich"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BALLIA",
+            "areaLevel": "District",
+            "areaName": "Ballia"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BALRAMPUR",
+            "areaLevel": "District",
+            "areaName": "Balrampur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BANDA",
+            "areaLevel": "District",
+            "areaName": "Banda"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BARABANKI",
+            "areaLevel": "District",
+            "areaName": "Barabanki"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAREILLY",
+            "areaLevel": "District",
+            "areaName": "Bareilly"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BASTI",
+            "areaLevel": "District",
+            "areaName": "Basti"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BIJNOR",
+            "areaLevel": "District",
+            "areaName": "Bijnor"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BUDAUN",
+            "areaLevel": "District",
+            "areaName": "Budaun"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-CHANDAULI",
+            "areaLevel": "District",
+            "areaName": "Chandauli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-CHITRAKOOT",
+            "areaLevel": "District",
+            "areaName": "Chitrakoot"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-DEORIA",
+            "areaLevel": "District",
+            "areaName": "Deoria"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ETAH",
+            "areaLevel": "District",
+            "areaName": "Etah"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ETAWAH",
+            "areaLevel": "District",
+            "areaName": "Etawah"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FARRUKHABAD",
+            "areaLevel": "District",
+            "areaName": "Farrukhabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FATEHPUR",
+            "areaLevel": "District",
+            "areaName": "Fatehpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FIROZABAD",
+            "areaLevel": "District",
+            "areaName": "Firozabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GHAZIABAD",
+            "areaLevel": "District",
+            "areaName": "Ghaziabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GHAZIPUR",
+            "areaLevel": "District",
+            "areaName": "Ghazipur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GONDA",
+            "areaLevel": "District",
+            "areaName": "Gonda"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GORAKHPUR",
+            "areaLevel": "District",
+            "areaName": "Gorakhpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HAMIRPUR",
+            "areaLevel": "District",
+            "areaName": "Hamirpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HAPUR",
+            "areaLevel": "District",
+            "areaName": "Hapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HARDOI",
+            "areaLevel": "District",
+            "areaName": "Hardoi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HATHRAS",
+            "areaLevel": "District",
+            "areaName": "Hathras"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JALAUN",
+            "areaLevel": "District",
+            "areaName": "Jalaun"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JAUNPUR",
+            "areaLevel": "District",
+            "areaName": "Jaunpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JHANSI",
+            "areaLevel": "District",
+            "areaName": "Jhansi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANNAUJ",
+            "areaLevel": "District",
+            "areaName": "Kannauj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANPUR-DEHAT",
+            "areaLevel": "District",
+            "areaName": "Kanpur Dehat"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANPUR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Kanpur Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KASGANJ",
+            "areaLevel": "District",
+            "areaName": "Kasganj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KAUSHAMBI",
+            "areaLevel": "District",
+            "areaName": "Kaushambi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KUSHINAGAR",
+            "areaLevel": "District",
+            "areaName": "Kushinagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LAKHIMPUR-KHERI",
+            "areaLevel": "District",
+            "areaName": "Lakhimpur Kheri"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LALITPUR",
+            "areaLevel": "District",
+            "areaName": "Lalitpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LUCKNOW",
+            "areaLevel": "District",
+            "areaName": "Lucknow"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAHOBA",
+            "areaLevel": "District",
+            "areaName": "Mahoba"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAHRAJGANJ",
+            "areaLevel": "District",
+            "areaName": "Mahrajganj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAINPURI",
+            "areaLevel": "District",
+            "areaName": "Mainpuri"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MATHURA",
+            "areaLevel": "District",
+            "areaName": "Mathura"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAU",
+            "areaLevel": "District",
+            "areaName": "Mau"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MEERUT",
+            "areaLevel": "District",
+            "areaName": "Meerut"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MIRZAPUR",
+            "areaLevel": "District",
+            "areaName": "Mirzapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MORADABAD",
+            "areaLevel": "District",
+            "areaName": "Moradabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MUZAFFARNAGAR",
+            "areaLevel": "District",
+            "areaName": "Muzaffarnagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PILIBHIT",
+            "areaLevel": "District",
+            "areaName": "Pilibhit"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PRATAPGARH",
+            "areaLevel": "District",
+            "areaName": "Pratapgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PRAYAGRAJ",
+            "areaLevel": "District",
+            "areaName": "Prayagraj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-RAEBARELI",
+            "areaLevel": "District",
+            "areaName": "Raebareli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-RAMPUR",
+            "areaLevel": "District",
+            "areaName": "Rampur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SAHARANPUR",
+            "areaLevel": "District",
+            "areaName": "Saharanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SAMBHAL",
+            "areaLevel": "District",
+            "areaName": "Sambhal"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SANT-KABIR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Sant Kabir Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SANT-RAVIDAS-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Sant Ravidas Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHAHJAHANPUR",
+            "areaLevel": "District",
+            "areaName": "Shahjahanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHAMLI",
+            "areaLevel": "District",
+            "areaName": "Shamli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHRAWASTI",
+            "areaLevel": "District",
+            "areaName": "Shrawasti"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SIDDHARTHNAGAR",
+            "areaLevel": "District",
+            "areaName": "Siddharthnagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SITAPUR",
+            "areaLevel": "District",
+            "areaName": "Sitapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SONBHADRA",
+            "areaLevel": "District",
+            "areaName": "Sonbhadra"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SULTANPUR",
+            "areaLevel": "District",
+            "areaName": "Sultanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-UNNAO",
+            "areaLevel": "District",
+            "areaName": "Unnao"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-VARANASI",
+            "areaLevel": "District",
+            "areaName": "Varanasi"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BANANA",
+              "name": "Banana"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/barley",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BARLEY",
+              "name": "Barley"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BENGAL_GRAM",
+              "name": "Bengal gram"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BLACK_GRAM",
+              "name": "Black gram"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BRINJAL",
+              "name": "Brinjal"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cabbage",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CABBAGE",
+              "name": "Cabbage"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CAULIFLOWER",
+              "name": "Cauliflower"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CHILLI",
+              "name": "Chilli"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CITRUS",
+              "name": "Citrus"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cluster-bean",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CLUSTER_BEAN",
+              "name": "Cluster bean"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "COWPEA",
+              "name": "Cowpea"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/field-pea",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "FIELD_PEA",
+              "name": "Field pea"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/finger-millet",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "FINGER_MILLET",
+              "name": "Finger millet"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/green-gram",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GREEN_GRAM",
+              "name": "Green gram"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GROUNDNUT",
+              "name": "Groundnut"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GUAVA",
+              "name": "Guava"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MAIZE",
+              "name": "Maize"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MANGO",
+              "name": "Mango"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/moth-bean",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MOTH_BEAN",
+              "name": "Moth bean"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mustard",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MUSTARD",
+              "name": "Mustard"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "OKRA",
+              "name": "Okra"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "PADDY",
+              "name": "Paddy"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/papaya",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "PAPAYA",
+              "name": "Papaya"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/red-gram",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "RED_GRAM",
+              "name": "Red gram"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/sesame",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "SESAME",
+              "name": "Sesame"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/sorghum",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "SORGHUM",
+              "name": "Sorghum"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/soybean",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "SOYBEAN",
+              "name": "Soybean"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "SUGARCANE",
+              "name": "Sugarcane"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/tomato",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "TOMATO",
+              "name": "Tomato"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "Harvesting",
+          "Irrigation",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture",
+          "Sowing",
+          "Spraying",
+          "WeedManagement"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 51,
+          "pageRange": [
+            1,
+            44
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-horticulture-in-up",
+      "descriptor": {
+        "code": "HORTICULTURE-IN-UP",
+        "name": "Horticulture advisory, Uttar Pradesh",
+        "shortDesc": "Horticulture advisory at state granularity for Uttar Pradesh",
+        "longDesc": "Horticulture advisory capability covering Uttar Pradesh, standing on 11 indexed passages (source pages 4-41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:HorticultureAdvisoryCapability",
+        "subjectCategories": [
+          "Crop",
+          "Horticulture"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-UP",
+            "areaLevel": "State",
+            "areaName": "Uttar Pradesh"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BRINJAL",
+              "name": "Brinjal"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CHILLI",
+              "name": "Chilli"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CITRUS",
+              "name": "Citrus"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GINGER",
+              "name": "Ginger"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GUAVA",
+              "name": "Guava"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MANGO",
+              "name": "Mango"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "OKRA",
+              "name": "Okra"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "ONION",
+              "name": "Onion"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/turmeric",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "TURMERIC",
+              "name": "Turmeric"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "Irrigation",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture",
+          "Sowing",
+          "Spraying"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 11,
+          "pageRange": [
+            4,
+            41
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-livestock-in-up",
+      "descriptor": {
+        "code": "LIVESTOCK-IN-UP",
+        "name": "Livestock advisory, Uttar Pradesh",
+        "shortDesc": "Livestock advisory at state granularity for Uttar Pradesh",
+        "longDesc": "Livestock advisory capability covering Uttar Pradesh, standing on 18 indexed passages (source pages 18-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:LivestockAdvisoryCapability",
+        "subjectCategories": [
+          "Crop",
+          "Livestock"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-UP",
+            "areaLevel": "State",
+            "areaName": "Uttar Pradesh"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BRINJAL",
+              "name": "Brinjal"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CAULIFLOWER",
+              "name": "Cauliflower"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CHILLI",
+              "name": "Chilli"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CITRUS",
+              "name": "Citrus"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "COWPEA",
+              "name": "Cowpea"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "GUAVA",
+              "name": "Guava"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MANGO",
+              "name": "Mango"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mustard",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MUSTARD",
+              "name": "Mustard"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "ONION",
+              "name": "Onion"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "PADDY",
+              "name": "Paddy"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/papaya",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "PAPAYA",
+              "name": "Papaya"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/potato",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "POTATO",
+              "name": "Potato"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/tomato",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "TOMATO",
+              "name": "Tomato"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/wheat",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "WHEAT",
+              "name": "Wheat"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/buffalo",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "BUFFALO",
+              "name": "Buffalo"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/cattle",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "CATTLE",
+              "name": "Cattle"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/goat",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "GOAT",
+              "name": "Goat"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/poultry",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "POULTRY",
+              "name": "Poultry"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/sheep",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "SHEEP",
+              "name": "Sheep"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Irrigation",
+          "LivestockCare",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture",
+          "Sowing",
+          "Spraying"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 18,
+          "pageRange": [
+            18,
+            43
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-up",
+      "descriptor": {
+        "code": "WEATHER-IN-UP",
+        "name": "Weather advisory, Uttar Pradesh",
+        "shortDesc": "Weather forecast and warnings at state granularity for Uttar Pradesh",
+        "longDesc": "Weather advisory capability covering Uttar Pradesh, standing on 63 indexed passages (source pages 1-37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-UP",
+            "areaLevel": "State",
+            "areaName": "Uttar Pradesh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AGRA",
+            "areaLevel": "District",
+            "areaName": "Agra"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ALIGARH",
+            "areaLevel": "District",
+            "areaName": "Aligarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AMBEDKAR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Ambedkar Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AMETHI",
+            "areaLevel": "District",
+            "areaName": "Amethi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AMROHA",
+            "areaLevel": "District",
+            "areaName": "Amroha"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AURAIYA",
+            "areaLevel": "District",
+            "areaName": "Auraiya"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AYODHYA",
+            "areaLevel": "District",
+            "areaName": "Ayodhya"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-AZAMGARH",
+            "areaLevel": "District",
+            "areaName": "Azamgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAGHPAT",
+            "areaLevel": "District",
+            "areaName": "Baghpat"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAHRAICH",
+            "areaLevel": "District",
+            "areaName": "Bahraich"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BALLIA",
+            "areaLevel": "District",
+            "areaName": "Ballia"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BALRAMPUR",
+            "areaLevel": "District",
+            "areaName": "Balrampur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BANDA",
+            "areaLevel": "District",
+            "areaName": "Banda"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BARABANKI",
+            "areaLevel": "District",
+            "areaName": "Barabanki"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BAREILLY",
+            "areaLevel": "District",
+            "areaName": "Bareilly"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BASTI",
+            "areaLevel": "District",
+            "areaName": "Basti"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BIJNOR",
+            "areaLevel": "District",
+            "areaName": "Bijnor"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BUDAUN",
+            "areaLevel": "District",
+            "areaName": "Budaun"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-BULANDSHAHR",
+            "areaLevel": "District",
+            "areaName": "Bulandshahr"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-CHANDAULI",
+            "areaLevel": "District",
+            "areaName": "Chandauli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-CHITRAKOOT",
+            "areaLevel": "District",
+            "areaName": "Chitrakoot"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-DEORIA",
+            "areaLevel": "District",
+            "areaName": "Deoria"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ETAH",
+            "areaLevel": "District",
+            "areaName": "Etah"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-ETAWAH",
+            "areaLevel": "District",
+            "areaName": "Etawah"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FARRUKHABAD",
+            "areaLevel": "District",
+            "areaName": "Farrukhabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FATEHPUR",
+            "areaLevel": "District",
+            "areaName": "Fatehpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-FIROZABAD",
+            "areaLevel": "District",
+            "areaName": "Firozabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GAUTAM-BUDDHA-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Gautam Buddha Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GHAZIABAD",
+            "areaLevel": "District",
+            "areaName": "Ghaziabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GHAZIPUR",
+            "areaLevel": "District",
+            "areaName": "Ghazipur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GONDA",
+            "areaLevel": "District",
+            "areaName": "Gonda"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-GORAKHPUR",
+            "areaLevel": "District",
+            "areaName": "Gorakhpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HAMIRPUR",
+            "areaLevel": "District",
+            "areaName": "Hamirpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HAPUR",
+            "areaLevel": "District",
+            "areaName": "Hapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HARDOI",
+            "areaLevel": "District",
+            "areaName": "Hardoi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-HATHRAS",
+            "areaLevel": "District",
+            "areaName": "Hathras"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JALAUN",
+            "areaLevel": "District",
+            "areaName": "Jalaun"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JAUNPUR",
+            "areaLevel": "District",
+            "areaName": "Jaunpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-JHANSI",
+            "areaLevel": "District",
+            "areaName": "Jhansi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANNAUJ",
+            "areaLevel": "District",
+            "areaName": "Kannauj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANPUR-DEHAT",
+            "areaLevel": "District",
+            "areaName": "Kanpur Dehat"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KANPUR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Kanpur Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KASGANJ",
+            "areaLevel": "District",
+            "areaName": "Kasganj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KAUSHAMBI",
+            "areaLevel": "District",
+            "areaName": "Kaushambi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-KUSHINAGAR",
+            "areaLevel": "District",
+            "areaName": "Kushinagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LAKHIMPUR-KHERI",
+            "areaLevel": "District",
+            "areaName": "Lakhimpur Kheri"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LALITPUR",
+            "areaLevel": "District",
+            "areaName": "Lalitpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LUCKNOW",
+            "areaLevel": "District",
+            "areaName": "Lucknow"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAHOBA",
+            "areaLevel": "District",
+            "areaName": "Mahoba"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAHRAJGANJ",
+            "areaLevel": "District",
+            "areaName": "Mahrajganj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAINPURI",
+            "areaLevel": "District",
+            "areaName": "Mainpuri"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MATHURA",
+            "areaLevel": "District",
+            "areaName": "Mathura"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MAU",
+            "areaLevel": "District",
+            "areaName": "Mau"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MEERUT",
+            "areaLevel": "District",
+            "areaName": "Meerut"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MIRZAPUR",
+            "areaLevel": "District",
+            "areaName": "Mirzapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MORADABAD",
+            "areaLevel": "District",
+            "areaName": "Moradabad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-MUZAFFARNAGAR",
+            "areaLevel": "District",
+            "areaName": "Muzaffarnagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PILIBHIT",
+            "areaLevel": "District",
+            "areaName": "Pilibhit"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PRATAPGARH",
+            "areaLevel": "District",
+            "areaName": "Pratapgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-PRAYAGRAJ",
+            "areaLevel": "District",
+            "areaName": "Prayagraj"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-RAEBARELI",
+            "areaLevel": "District",
+            "areaName": "Raebareli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-RAMPUR",
+            "areaLevel": "District",
+            "areaName": "Rampur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SAHARANPUR",
+            "areaLevel": "District",
+            "areaName": "Saharanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SAMBHAL",
+            "areaLevel": "District",
+            "areaName": "Sambhal"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SANT-KABIR-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Sant Kabir Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SANT-RAVIDAS-NAGAR",
+            "areaLevel": "District",
+            "areaName": "Sant Ravidas Nagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHAHJAHANPUR",
+            "areaLevel": "District",
+            "areaName": "Shahjahanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHAMLI",
+            "areaLevel": "District",
+            "areaName": "Shamli"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SHRAWASTI",
+            "areaLevel": "District",
+            "areaName": "Shrawasti"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SIDDHARTHNAGAR",
+            "areaLevel": "District",
+            "areaName": "Siddharthnagar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SITAPUR",
+            "areaLevel": "District",
+            "areaName": "Sitapur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SONBHADRA",
+            "areaLevel": "District",
+            "areaName": "Sonbhadra"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SULTANPUR",
+            "areaLevel": "District",
+            "areaName": "Sultanpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-UNNAO",
+            "areaLevel": "District",
+            "areaName": "Unnao"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-VARANASI",
+            "areaLevel": "District",
+            "areaName": "Varanasi"
+          }
+        ],
+        "geographicGranularity": "State",
+        "weatherParameters": [
+          "Alert",
+          "CloudCover",
+          "Humidity",
+          "Rainfall",
+          "Temperature",
+          "Thunderstorm",
+          "WindSpeed"
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "Irrigation",
+          "NutrientManagement",
+          "SoilMoisture",
+          "Sowing"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 63,
+          "pageRange": [
+            1,
+            37
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-crop-in-up-lucknow",
+      "descriptor": {
+        "code": "CROP-IN-UP-LUCKNOW",
+        "name": "Crop advisory, Lucknow",
+        "shortDesc": "Crop advisory at district granularity for Lucknow",
+        "longDesc": "Crop advisory capability covering Lucknow, standing on 2 indexed passages (source pages 3-4). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:CropAdvisoryCapability",
+        "subjectCategories": [
+          "Crop"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LUCKNOW",
+            "areaLevel": "District",
+            "areaName": "Lucknow"
+          }
+        ],
+        "geographicGranularity": "District",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mustard",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MUSTARD",
+              "name": "Mustard"
+            }
+          }
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 2,
+          "pageRange": [
+            3,
+            4
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-livestock-in-up-lucknow",
+      "descriptor": {
+        "code": "LIVESTOCK-IN-UP-LUCKNOW",
+        "name": "Livestock advisory, Lucknow",
+        "shortDesc": "Livestock advisory at district granularity for Lucknow",
+        "longDesc": "Livestock advisory capability covering Lucknow, standing on 2 indexed passages (source pages 23-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:LivestockAdvisoryCapability",
+        "subjectCategories": [
+          "Livestock"
+        ],
+        "languages": [
+          "hi",
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LUCKNOW",
+            "areaLevel": "District",
+            "areaName": "Lucknow"
+          }
+        ],
+        "geographicGranularity": "District",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/livestock/cattle",
+            "subjectType": "Livestock",
+            "descriptor": {
+              "code": "CATTLE",
+              "name": "Cattle"
+            }
+          }
+        ],
+        "topics": [
+          "SoilMoisture"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 2,
+          "pageRange": [
+            23,
+            44
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-up-lucknow",
+      "descriptor": {
+        "code": "WEATHER-IN-UP-LUCKNOW",
+        "name": "Weather advisory, Lucknow",
+        "shortDesc": "Weather forecast and warnings at district granularity for Lucknow",
+        "longDesc": "Weather advisory capability covering Lucknow, standing on 29 indexed passages (source pages 2-45). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-LUCKNOW",
+            "areaLevel": "District",
+            "areaName": "Lucknow"
+          }
+        ],
+        "geographicGranularity": "District",
+        "weatherParameters": [
+          "Alert",
+          "CloudCover",
+          "Humidity",
+          "Rainfall",
+          "Temperature",
+          "Thunderstorm",
+          "WindSpeed"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 29,
+          "pageRange": [
+            2,
+            45
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-up-sambhal",
+      "descriptor": {
+        "code": "WEATHER-IN-UP-SAMBHAL",
+        "name": "Weather advisory, Sambhal",
+        "shortDesc": "Weather forecast and warnings at district granularity for Sambhal",
+        "longDesc": "Weather advisory capability covering Sambhal, standing on 1 indexed passage (source page 15). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-UP-SAMBHAL",
+            "areaLevel": "District",
+            "areaName": "Sambhal"
+          }
+        ],
+        "geographicGranularity": "District",
+        "weatherParameters": [
+          "Alert"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 1,
+          "pageRange": [
+            15,
+            15
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+# publish_pipeline
+#
+#     pip install -r requirements.txt
+#     python -m publish_pipeline.run_scenario1 --all --fresh
+#     pytest publish_pipeline/tests/test_v4.py -q -m "not semantic"
+#
+# REQUIRES PYTHON >= 3.10 (uses `X | Y` type syntax and `str.removeprefix`).
+# macOS ships 3.9 in the Command Line Tools, and on 3.9 pip reports
+# "No matching distribution found (from versions: none)" — which reads like a
+# missing package but means "no release is compatible with this interpreter".
+# Check `python -V` before anything else.
+
+# --- PDF reading --------------------------------------------------------
+# pymupdf is tried first: it keeps table columns in a readable order more often
+# than the alternatives, which matters because the entire crop advisory payload
+# of an IMD bulletin lives inside
+# `Major crops | Stage | Pest/disease | Agricultural Advisories` tables.
+# pdfplumber is the fallback.
+pymupdf>=1.24.0
+pdfplumber>=0.11.0
+
+# --- Beckn payload modelling -------------------------------------------
+# The models mirror beckn.yaml, including its `additionalProperties: false`,
+# so a stray key fails here rather than at somebody else's validator.
+pydantic>=2.0.0
+
+# --- the vector store ---------------------------------------------------
+# QDRANT_URL=local (the default) runs Qdrant *inside this process* against a
+# local directory: no server, no Docker, no port.
+qdrant-client>=1.12.0
+
+# --- HTTP ---------------------------------------------------------------
+# Only imported when publishing to a real network node or using remote
+# embeddings. The default run needs neither, and the import is inside the
+# function rather than at module top, so a missing httpx never breaks a demo.
+httpx>=0.24.0
+
+# --- tests --------------------------------------------------------------
+pytest>=7.0.0
+
+# ------------------------------------------------------------------------
+# EMBEDDINGS — this is the only heavy choice in the file.
+#
+# (a) local (the default, EMBEDDING_BACKEND=local). Real 1024-d multilingual
+#     vectors from intfloat/multilingual-e5-large. Uncomment the line below.
+#     First run downloads ~2.2 GB of model on top of ~700 MB of torch.
+#     Uses Apple Silicon MPS / CUDA automatically when present; set
+#     EMBEDDING_DEVICE=cpu to force CPU.
+#
+sentence-transformers>=5.0.0
+#
+# (b) remote — the same model behind an OpenAI-compatible endpoint, nothing
+#     large to install:
+#
+#       export EMBEDDING_BACKEND=remote
+#       export EMBEDDING_BASE_URL=https://<your-embeddings-host>/v1
+#       export EMBEDDING_API_KEY=...
+#
+# (c) lexical — no model at all:
+#
+#       export EMBEDDING_BACKEND=lexical
+#
+#     Runs instantly with nothing downloaded, and matches SPELLINGS, NOT
+#     MEANINGS. Every result it returns is stamped `semantic=False`, because a
+#     plausible-looking similarity score from a bag of character n-grams is the
+#     easiest way to mislead a room. The test suite uses this deliberately: it
+#     is testing plumbing, not the model.
+# ------------------------------------------------------------------------

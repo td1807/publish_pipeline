@@ -1,0 +1,7 @@
+# Qdrant embedded storage — rebuilt by `run_scenario1 --fresh`
+.qdrant/
+__pycache__/
+*.pyc
+.v4_state.json
+.DS_Store
+.venv/
