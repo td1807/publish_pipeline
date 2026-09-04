@@ -1,8 +1,8 @@
 """Runnable, narrated scenario 1.
 
-    python -m publish_pipeline.run_scenario1 --all --fresh
-    python -m publish_pipeline.run_scenario1 --pdf imd_karnataka_agromet.pdf
-    python -m publish_pipeline.run_scenario1 --pdf imd_karnataka_district_kannada.pdf
+    .venv/bin/python main.py --all --fresh
+    .venv/bin/python main.py --pdf imd_karnataka_agromet.pdf
+    .venv/bin/python main.py --pdf imd_karnataka_district_kannada.pdf   # refused: a scan
 
 Prints what each step did, with real numbers, and writes the actual publish
 payload to evidence/ so the walkthrough can be read without running anything.
