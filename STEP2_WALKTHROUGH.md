@@ -132,8 +132,9 @@ table rows rarely repeat their crop; and a run too short to survive
 `MIN_PASSAGE_CHARS` is folded back into its neighbour rather than dropped.
 
 Measured across the three bulletins: passages 357 → 510, passages carrying a
-resolved subject 208 → 341, passages carrying more than one crop 133 → 84, text
-coverage unchanged at 97–100%. Retrieval barely moved (14 farmer questions: 12
+resolved subject 208 → 344, passages carrying more than one crop 133 → 68, and
+passages placed in a district 243 → 330. Text coverage is unchanged at 99.5%
+(per bulletin: 99.5% / 99.7% / 97.2%). Retrieval barely moved (14 farmer questions: 12
 unchanged, 1 better, 1 worse) — **the gain is in labelling, not ranking**, and
 §4.9 records that honestly.
 
@@ -232,7 +233,7 @@ Passages are grouped by **(primary area × category)**:
 241 passages  ──group──▶  71 resources
 ```
 
-One resource is *"crop advisory for Koppal"* — 8 passages from pages 14–17.
+One resource is *"crop advisory for Koppal"* — 8 passages from pages 15–17.
 Not one resource per PDF, and not one per advisory line.
 
 This is a product decision with a technical consequence. A farmer does not look
@@ -310,14 +311,14 @@ published object** for the Koppal crop resource (subjects trimmed for length):
       "subjectType": "Crop", "descriptor": { "code": "COTTON", "name": "Cotton" } },
     { "subjectId": "https://taxonomy.openagrinet.global/crop/field-pea",
       "subjectType": "Crop", "descriptor": { "code": "FIELD_PEA", "name": "Field pea" } }
-    /* …+4 more, including .../crop/red-gram */
+    /* …+7 more: cowpea, groundnut, maize, onion, paddy, pomegranate, red-gram */
   ],
   "topics": ["Irrigation", "NutrientManagement", "PestManagement",
              "SoilMoisture", "Sowing", "Spraying", "WeedManagement"],
   "evidence": {
     "sourceDocuments": ["imd_karnataka_agromet.pdf"],
     "passageCount": 8,
-    "pageRange": [14, 17]
+    "pageRange": [15, 17]
   },
   "updateFrequency": "P1D"
 }
@@ -337,7 +338,7 @@ could plausibly discover on it.** "Which crops?" yes. "Which districts?" yes.
 
 The `evidence` block is provenance of the *claim*, not the content of it: a
 consumer deciding whether to trust this provider can see the resource rests on 8
-passages across 4 pages, without receiving any of the text.
+passages across 3 pages, without receiving any of the text.
 
 ### 3.4 Three checks that are ours, not the spec's
 
@@ -605,16 +606,28 @@ This is a single spot measurement on one resource, not a benchmark. No
 recall@k number should be quoted from it.
 
 A wider measurement, run when the crop-boundary chunking of §2.1 landed: 14
-farmer questions in Hindi and English, across all three bulletins, each scored
-against the passage its answer must come from.
+farmer questions in Hindi and English, across all three bulletins.
+
+Two ground truths were used, and they disagree on the absolute number, which is
+itself the finding. **Strict** demands one specific passage — the Hindi one from
+the bulletin the question is about. **Correct-advice** accepts any passage that
+answers the question, including the English equivalent from another state.
 
 ```
-                            before chunking   after
-MRR@5                             0.821       0.857 (with the alias fix below)
-unchanged                            12
-better                                1        fall armyworm on maize, #3 → #2
-worse                                 1        "wilt in bengal gram" left the top 5
+                                    before chunking      after
+MRR@5, strict ground truth                    0.655      0.643
+MRR@5, correct-advice ground truth               --      0.821  (shipped)
+                                                         0.836  + gram alias fix
+                                                         0.857  + subject filter (not shipped)
+
+per-question movement (strict):  12 unchanged · 1 better · 1 worse
+   better   fall armyworm on maize                #3 → #2
+   worse    "wilt in bengal gram"                 left the top 5
 ```
+
+Quote neither MRR as a benchmark: 14 questions on three bulletins, written by
+the same person who read the bulletins. The per-question movement is the part
+that holds under either scoring.
 
 Two things that measurement exposed, both worth more attention than the MRR:
 

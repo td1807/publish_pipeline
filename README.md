@@ -298,15 +298,16 @@ imports into another package.
 * **Parallelism buys nothing measurable, and the run says so.** The two
   branches genuinely execute concurrently in a thread pool, but 2a costs ~10 ms
   against 2b's tens of seconds, so wall clock is simply 2b's time — the measured
-  saving is ~0 (ratio 568×–15,654× across runs). The reason to run them
+  saving is ~0 (ratio 2,325×–27,678× in the latest run). The reason to run them
   concurrently is architectural (neither branch blocks the other, and either can
   fail without corrupting the other), **not throughput.** A real speed-up would
   come from parallelising *within* 2b. `BranchTiming.summary()` prints the ratio
   rather than claiming a win.
 
-* **2b's timing varies by more than 12× on identical input.** Karnataka's 155
-  passages measured 14.9 s, 33.5 s, 83.6 s and 186.2 s across four runs on the
-  same laptop — fastest on an idle machine, slowest with the GPU hot and
+* **2b's timing varies by more than 12× on identical input.** Karnataka
+  measured 14.9 s, 33.5 s, 83.6 s and 186.2 s across four runs on the same
+  laptop (at 155 passages, before the crop-boundary chunking; at 241 passages
+  four runs today gave 16.0, 17.5, 17.9 and 18.4 s) — fastest on an idle machine, slowest with the GPU hot and
   contended straight after a test run. The table above gives ranges for that
   reason. Quote no single figure; measure on the target hardware, and expect a
   dedicated GPU to be both faster and far more consistent.
@@ -341,18 +342,20 @@ imports into another package.
   Keeping two crops in one passage is a far smaller cost than losing a line.
 
   Measured across the three bulletins: passages 357 → 510, passages carrying a
-  resolved subject **208 → 341**, and passages carrying more than one crop
-  **133 → 84** (counted before the `gram` alias fix below; the direction is
-  unchanged). Text coverage is unchanged (97–100%). Nothing was lost from the
-  catalogue: same crops, same topics, same area codes per bulletin, and 74 → 83
-  resources. The *percentage* placed in a district falls for UP and Rajasthan
-  only because the denominator grew; the absolute counts are 76 → 77 and
-  16 → 16.
+  resolved subject **208 → 344**, passages carrying more than one crop
+  **133 → 68**, and passages placed in a district 243 → 330. Text coverage is
+  unchanged at 99.5% (per bulletin: 99.5% / 99.7% / 97.2%). Nothing was lost
+  from the catalogue: same crops, same topics, same area codes per bulletin,
+  and 74 → 84 resources. The *percentage* placed in a district falls for UP and
+  Rajasthan only because the denominator grew; those absolute counts are
+  76 → 77 and 16 → 16.
 
   What it did **not** clearly improve is retrieval. Measured over all three
-  bulletins with 14 farmer questions in Hindi and English, checked against the
-  passage each answer must come from: **12 unchanged, 1 better, 1 worse**
-  (MRR@5 0.655 → 0.643). Fall armyworm in maize improved from rank 3 to 2;
+  bulletins with 14 farmer questions in Hindi and English: **12 unchanged, 1
+  better, 1 worse** (MRR@5 0.655 → 0.643 when the ground truth demands one
+  specific Hindi passage; see the walkthrough §4.9 for the second, looser
+  scoring and why the absolute figure should not be quoted). Fall armyworm in
+  maize improved from rank 3 to 2;
   "wilt in bengal gram" fell out of the top 5, into a cluster of black-gram and
   green-gram passages scoring 0.797–0.807 — a near-tie shuffle, not a
   structural loss. **The demonstrated gain is in labelling, not ranking.**
