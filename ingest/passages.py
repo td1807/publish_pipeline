@@ -184,27 +184,85 @@ def _heading_districts(line: str, state_code: str, vocab: Vocabulary) -> list[Ar
 _BLOCK = re.compile(r"\n\s*\n")
 
 
-def _blocks(text: str) -> list[str]:
+def _crop_slugs(text: str, vocab: Vocabulary) -> set[str]:
+    return {s.slug for s in vocab.subjects_in(text)}
+
+
+def _split_on_crop_change(piece: str, vocab: Vocabulary) -> list[str]:
+    """Cut one blank-line block wherever its lines switch to a different crop.
+
+    An IMD advisory table has no blank line between one crop's advice and the
+    next -- `Okra ... spray Malathion` is followed directly by `Tomato, chilli,
+    brinjal ... pick fruit regularly`. Blank-line blocks therefore arrive
+    already mixed, and no amount of merging logic above this can unmix them.
+
+    A line that names crops the current run does not share starts a new run,
+    provided the run is long enough to stand alone; lines naming no crop always
+    continue the run, because table rows rarely repeat their crop.
+    """
+    runs: list[str] = []
+    buf: list[str] = []
+    crops: set[str] = set()
+    for line in piece.split("\n"):
+        if not line.strip():
+            continue
+        line_crops = _crop_slugs(line, vocab)
+        breaks = bool(crops and line_crops and not (crops & line_crops))
+        if breaks and len("\n".join(buf)) >= MIN_PASSAGE_CHARS:
+            runs.append("\n".join(buf))
+            buf, crops = [line], line_crops
+            continue
+        buf.append(line)
+        crops |= line_crops
+    if buf:
+        runs.append("\n".join(buf))
+    return [r for r in runs if r.strip()]
+
+
+def _blocks(text: str, vocab: Vocabulary) -> list[str]:
     """Split a page into candidate passages, then merge to a workable size.
 
     Merging matters for these files: an IMD advisory table emits many short
     lines, and a two-line fragment embeds into a vector that matches almost
     anything. Merging up to MAX_PASSAGE_CHARS keeps a passage long enough to
     carry meaning and short enough to cite a single page honestly.
+
+    Size is not the only boundary that matters, though. An advisory table puts
+    one crop's advice next to another's, and merging purely on length glues
+    them into a passage that is about both and therefore precisely about
+    neither -- measured: an okra query ranked such a passage second, behind a
+    generic one. So a piece naming crops that the buffer does not share starts
+    a new passage instead of joining, as long as what is already buffered can
+    stand on its own. Pieces naming no crop still merge, because continuation
+    lines of a table rarely repeat the crop they belong to.
     """
     out: list[str] = []
     buf = ""
-    for raw in _BLOCK.split(text):
-        piece = raw.strip()
-        if not piece:
-            continue
+    buf_crops: set[str] = set()
+    pieces = [
+        sub
+        for raw in _BLOCK.split(text)
+        if raw.strip()
+        for sub in _split_on_crop_change(raw.strip(), vocab)
+    ]
+    for piece in pieces:
+        piece_crops = _crop_slugs(piece, vocab)
+        different_crop = bool(buf_crops and piece_crops and not (buf_crops & piece_crops))
         if not buf:
             buf = piece
+            buf_crops = piece_crops
+        elif different_crop and len(buf) >= MIN_PASSAGE_CHARS:
+            # A crop boundary, and the buffer is already publishable on its own.
+            out.append(buf)
+            buf = piece
+            buf_crops = piece_crops
         elif len(buf) + len(piece) + 2 <= MAX_PASSAGE_CHARS:
             buf = f"{buf}\n\n{piece}"
+            buf_crops |= piece_crops
         else:
             out.append(buf)
             buf = piece
+            buf_crops = piece_crops
         while len(buf) > MAX_PASSAGE_CHARS:
             cut = buf.rfind("\n", 0, MAX_PASSAGE_CHARS)
             if cut <= 0:
@@ -239,7 +297,7 @@ def extract(
             if found:
                 current_section = found
 
-        for block in _blocks(page.text):
+        for block in _blocks(page.text, vocab):
             in_block = _heading_districts(block, state_code, vocab)
             if in_block:
                 current_section = in_block

@@ -3,9 +3,9 @@
     "domain": "agriculture",
     "action": "publish",
     "version": "2.0.0",
-    "transactionId": "d02357f6-f9f1-44ff-ae7c-03701f7dc7b2",
-    "messageId": "6d6f1018-3b64-409e-b61d-9fa7f687deb5",
-    "timestamp": "2026-09-04T08:54:05Z",
+    "transactionId": "a2e96897-dcc4-4858-9e01-5e7267f8e89f",
+    "messageId": "ed99d3ce-d380-4b85-afbc-0b1785ddd0db",
+    "timestamp": "2026-09-04T09:32:55Z",
     "schemaContext": [
       "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld#openagrinet:CropAdvisoryCapability",
       "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld#openagrinet:HorticultureAdvisoryCapability",
@@ -32,8 +32,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T08:53:17Z",
-          "endDate": "2027-09-04T08:53:17Z"
+          "startDate": "2026-09-04T09:32:08Z",
+          "endDate": "2027-09-04T09:32:08Z"
         },
         "resources": [
           {
@@ -42,7 +42,7 @@
               "code": "CROP-IN-KA",
               "name": "Crop advisory, Karnataka",
               "shortDesc": "Crop advisory at state granularity for Karnataka",
-              "longDesc": "Crop advisory capability covering Karnataka, standing on 2 indexed passages (source pages 4-5). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Karnataka, standing on 3 indexed passages (source pages 4-5). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -160,14 +160,6 @@
               "geographicGranularity": "State",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BANANA",
-                    "name": "Banana"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -210,7 +202,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   4,
                   5
@@ -225,7 +217,7 @@
               "code": "WEATHER-IN-KA",
               "name": "Weather advisory, Karnataka",
               "shortDesc": "Weather forecast and warnings at state granularity for Karnataka",
-              "longDesc": "Weather advisory capability covering Karnataka, standing on 12 indexed passages (source pages 1-5). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Karnataka, standing on 11 indexed passages (source pages 1-4). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -445,10 +437,10 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 12,
+                "passageCount": 11,
                 "pageRange": [
                   1,
-                  5
+                  4
                 ]
               },
               "updateFrequency": "P1D",
@@ -461,7 +453,7 @@
               "code": "CROP-IN-KA-BAGALKOTE",
               "name": "Crop advisory, Bagalkote",
               "shortDesc": "Crop advisory at district granularity for Bagalkote",
-              "longDesc": "Crop advisory capability covering Bagalkote, standing on 5 indexed passages (source pages 21-23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Bagalkote, standing on 7 indexed passages (source pages 21-23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -515,14 +507,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ONION",
-                    "name": "Onion"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/red-gram",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -570,7 +554,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 5,
+                "passageCount": 7,
                 "pageRange": [
                   21,
                   23
@@ -585,7 +569,7 @@
               "code": "HORTICULTURE-IN-KA-BAGALKOTE",
               "name": "Horticulture advisory, Bagalkote",
               "shortDesc": "Horticulture advisory at district granularity for Bagalkote",
-              "longDesc": "Horticulture advisory capability covering Bagalkote, standing on 1 indexed passage (source page 23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Bagalkote, standing on 3 indexed passages (source page 23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -622,17 +606,27 @@
                     "code": "GRAPE",
                     "name": "Grape"
                   }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "ONION",
+                    "name": "Onion"
+                  }
                 }
               ],
               "topics": [
                 "DiseaseManagement",
+                "PestManagement",
+                "Sowing",
                 "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 3,
                 "pageRange": [
                   23,
                   23
@@ -653,7 +647,6 @@
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
               "@type": "openagrinet:LivestockAdvisoryCapability",
               "subjectCategories": [
-                "Crop",
                 "Livestock"
               ],
               "languages": [
@@ -669,14 +662,6 @@
               ],
               "geographicGranularity": "District",
               "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "SUGARCANE",
-                    "name": "Sugarcane"
-                  }
-                },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/goat",
                   "subjectType": "Livestock",
@@ -728,7 +713,7 @@
               "code": "WEATHER-IN-KA-BAGALKOTE",
               "name": "Weather advisory, Bagalkote",
               "shortDesc": "Weather forecast and warnings at district granularity for Bagalkote",
-              "longDesc": "Weather advisory capability covering Bagalkote, standing on 1 indexed passage (source page 22). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Bagalkote, standing on 1 indexed passage (source page 21). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -748,20 +733,14 @@
                 }
               ],
               "geographicGranularity": "District",
-              "topics": [
-                "DiseaseManagement",
-                "Sowing",
-                "Spraying",
-                "WeedManagement"
-              ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
                 "passageCount": 1,
                 "pageRange": [
-                  22,
-                  22
+                  21,
+                  21
                 ]
               },
               "updateFrequency": "P1D",
@@ -774,7 +753,7 @@
               "code": "CROP-IN-KA-BENGALURU-RURAL",
               "name": "Crop advisory, Bengaluru Rural",
               "shortDesc": "Crop advisory at district granularity for Bengaluru Rural",
-              "longDesc": "Crop advisory capability covering Bengaluru Rural, standing on 2 indexed passages (source page 37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Bengaluru Rural, standing on 4 indexed passages (source page 37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -853,16 +832,18 @@
                 }
               ],
               "topics": [
+                "Harvesting",
                 "Irrigation",
                 "PestManagement",
                 "SoilMoisture",
-                "Sowing"
+                "Sowing",
+                "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 4,
                 "pageRange": [
                   37,
                   37
@@ -872,57 +853,12 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-weather-in-ka-bengaluru-rural",
-            "descriptor": {
-              "code": "WEATHER-IN-KA-BENGALURU-RURAL",
-              "name": "Weather advisory, Bengaluru Rural",
-              "shortDesc": "Weather forecast and warnings at district granularity for Bengaluru Rural",
-              "longDesc": "Weather advisory capability covering Bengaluru Rural, standing on 1 indexed passage (source page 37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:WeatherAdvisoryCapability",
-              "subjectCategories": [
-                "Weather"
-              ],
-              "languages": [
-                "en"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-BENGALURU-RURAL",
-                  "areaLevel": "District",
-                  "areaName": "Bengaluru Rural"
-                }
-              ],
-              "geographicGranularity": "District",
-              "topics": [
-                "Harvesting",
-                "PestManagement",
-                "Spraying"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_karnataka_agromet.pdf"
-                ],
-                "passageCount": 1,
-                "pageRange": [
-                  37,
-                  37
-                ]
-              },
-              "updateFrequency": "P1D",
-              "forecastHorizon": "P7D"
-            }
-          },
-          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-bengaluru-urban",
             "descriptor": {
               "code": "CROP-IN-KA-BENGALURU-URBAN",
               "name": "Crop advisory, Bengaluru Urban",
               "shortDesc": "Crop advisory at district granularity for Bengaluru Urban",
-              "longDesc": "Crop advisory capability covering Bengaluru Urban, standing on 1 indexed passage (source page 36). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Bengaluru Urban, standing on 3 indexed passages (source page 36). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -994,14 +930,17 @@
               ],
               "topics": [
                 "Irrigation",
+                "NutrientManagement",
+                "PestManagement",
                 "Sowing",
-                "Spraying"
+                "Spraying",
+                "WeedManagement"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 3,
                 "pageRange": [
                   36,
                   36
@@ -1016,7 +955,7 @@
               "code": "HORTICULTURE-IN-KA-BENGALURU-URBAN",
               "name": "Horticulture advisory, Bengaluru Urban",
               "shortDesc": "Horticulture advisory at district granularity for Bengaluru Urban",
-              "longDesc": "Horticulture advisory capability covering Bengaluru Urban, standing on 2 indexed passages (source page 36). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Bengaluru Urban, standing on 4 indexed passages (source pages 35-36). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -1061,23 +1000,33 @@
                     "code": "PAPAYA",
                     "name": "Papaya"
                   }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "POMEGRANATE",
+                    "name": "Pomegranate"
+                  }
                 }
               ],
               "topics": [
+                "DiseaseManagement",
+                "Drainage",
                 "Irrigation",
+                "LivestockCare",
                 "NutrientManagement",
                 "PestManagement",
                 "SoilMoisture",
-                "Spraying",
-                "WeedManagement"
+                "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 4,
                 "pageRange": [
-                  36,
+                  35,
                   36
                 ]
               },
@@ -1090,13 +1039,12 @@
               "code": "LIVESTOCK-IN-KA-BENGALURU-URBAN",
               "name": "Livestock advisory, Bengaluru Urban",
               "shortDesc": "Livestock advisory at district granularity for Bengaluru Urban",
-              "longDesc": "Livestock advisory capability covering Bengaluru Urban, standing on 3 indexed passages (source page 35). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Livestock advisory capability covering Bengaluru Urban, standing on 2 indexed passages (source page 35). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
               "@type": "openagrinet:LivestockAdvisoryCapability",
               "subjectCategories": [
-                "Crop",
                 "Livestock"
               ],
               "languages": [
@@ -1113,14 +1061,6 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "POMEGRANATE",
-                    "name": "Pomegranate"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/poultry",
                   "subjectType": "Livestock",
                   "descriptor": {
@@ -1130,8 +1070,6 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
-                "Drainage",
                 "LivestockCare",
                 "PestManagement",
                 "Sowing"
@@ -1140,7 +1078,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 2,
                 "pageRange": [
                   35,
                   35
@@ -1150,12 +1088,55 @@
             }
           },
           {
+            "id": "res-imd-agromet-agriculture-weather-in-ka-bengaluru-urban",
+            "descriptor": {
+              "code": "WEATHER-IN-KA-BENGALURU-URBAN",
+              "name": "Weather advisory, Bengaluru Urban",
+              "shortDesc": "Weather forecast and warnings at district granularity for Bengaluru Urban",
+              "longDesc": "Weather advisory capability covering Bengaluru Urban, standing on 1 indexed passage (source page 35). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:WeatherAdvisoryCapability",
+              "subjectCategories": [
+                "Weather"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-BENGALURU-URBAN",
+                  "areaLevel": "District",
+                  "areaName": "Bengaluru Urban"
+                }
+              ],
+              "geographicGranularity": "District",
+              "topics": [
+                "Sowing"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
+                "pageRange": [
+                  35,
+                  35
+                ]
+              },
+              "updateFrequency": "P1D",
+              "forecastHorizon": "P7D"
+            }
+          },
+          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-bidar",
             "descriptor": {
               "code": "CROP-IN-KA-BIDAR",
               "name": "Crop advisory, Bidar",
               "shortDesc": "Crop advisory at district granularity for Bidar",
-              "longDesc": "Crop advisory capability covering Bidar, standing on 2 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Bidar, standing on 5 indexed passages (source pages 11-12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1217,11 +1198,11 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/red-gram",
                   "subjectType": "Crop",
                   "descriptor": {
-                    "code": "MANGO",
-                    "name": "Mango"
+                    "code": "RED_GRAM",
+                    "name": "Red gram"
                   }
                 },
                 {
@@ -1244,9 +1225,9 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 5,
                 "pageRange": [
-                  12,
+                  11,
                   12
                 ]
               },
@@ -1254,19 +1235,19 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-livestock-in-ka-bidar",
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-bidar",
             "descriptor": {
-              "code": "LIVESTOCK-IN-KA-BIDAR",
-              "name": "Livestock advisory, Bidar",
-              "shortDesc": "Livestock advisory at district granularity for Bidar",
-              "longDesc": "Livestock advisory capability covering Bidar, standing on 4 indexed passages (source pages 11-12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "code": "HORTICULTURE-IN-KA-BIDAR",
+              "name": "Horticulture advisory, Bidar",
+              "shortDesc": "Horticulture advisory at district granularity for Bidar",
+              "longDesc": "Horticulture advisory capability covering Bidar, standing on 2 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
               "subjectCategories": [
                 "Crop",
-                "Livestock"
+                "Horticulture"
               ],
               "languages": [
                 "en"
@@ -1282,37 +1263,58 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BENGAL_GRAM",
-                    "name": "Bengal gram"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/green-gram",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GREEN_GRAM",
-                    "name": "Green gram"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "MANGO",
                     "name": "Mango"
                   }
-                },
+                }
+              ],
+              "topics": [
+                "LivestockCare",
+                "WeedManagement"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 2,
+                "pageRange": [
+                  12,
+                  12
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-livestock-in-ka-bidar",
+            "descriptor": {
+              "code": "LIVESTOCK-IN-KA-BIDAR",
+              "name": "Livestock advisory, Bidar",
+              "shortDesc": "Livestock advisory at district granularity for Bidar",
+              "longDesc": "Livestock advisory capability covering Bidar, standing on 5 indexed passages (source pages 11-12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "subjectCategories": [
+                "Livestock"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/red-gram",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "RED_GRAM",
-                    "name": "Red gram"
-                  }
-                },
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-BIDAR",
+                  "areaLevel": "District",
+                  "areaName": "Bidar"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/cattle",
                   "subjectType": "Livestock",
@@ -1359,14 +1361,13 @@
                 "Harvesting",
                 "LivestockCare",
                 "NutrientManagement",
-                "PestManagement",
-                "Spraying"
+                "PestManagement"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 4,
+                "passageCount": 5,
                 "pageRange": [
                   11,
                   12
@@ -1376,58 +1377,12 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-weather-in-ka-bidar",
-            "descriptor": {
-              "code": "WEATHER-IN-KA-BIDAR",
-              "name": "Weather advisory, Bidar",
-              "shortDesc": "Weather forecast and warnings at district granularity for Bidar",
-              "longDesc": "Weather advisory capability covering Bidar, standing on 1 indexed passage (source page 11). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:WeatherAdvisoryCapability",
-              "subjectCategories": [
-                "Weather"
-              ],
-              "languages": [
-                "en"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-BIDAR",
-                  "areaLevel": "District",
-                  "areaName": "Bidar"
-                }
-              ],
-              "geographicGranularity": "District",
-              "weatherParameters": [
-                "Rainfall"
-              ],
-              "topics": [
-                "Drainage"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_karnataka_agromet.pdf"
-                ],
-                "passageCount": 1,
-                "pageRange": [
-                  11,
-                  11
-                ]
-              },
-              "updateFrequency": "P1D",
-              "forecastHorizon": "P7D"
-            }
-          },
-          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-chamarajanagara",
             "descriptor": {
               "code": "CROP-IN-KA-CHAMARAJANAGARA",
               "name": "Crop advisory, Chamarajanagara",
               "shortDesc": "Crop advisory at district granularity for Chamarajanagara",
-              "longDesc": "Crop advisory capability covering Chamarajanagara, standing on 2 indexed passages (source page 44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Chamarajanagara, standing on 3 indexed passages (source page 44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1508,7 +1463,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   44,
                   44
@@ -1620,7 +1575,7 @@
               "code": "CROP-IN-KA-CHIKKABALLAPURA",
               "name": "Crop advisory, Chikkaballapura",
               "shortDesc": "Crop advisory at district granularity for Chikkaballapura",
-              "longDesc": "Crop advisory capability covering Chikkaballapura, standing on 3 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Chikkaballapura, standing on 4 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1655,22 +1610,6 @@
                   "descriptor": {
                     "code": "BLACK_GRAM",
                     "name": "Black gram"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BRINJAL",
-                    "name": "Brinjal"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
                   }
                 },
                 {
@@ -1715,10 +1654,7 @@
                 }
               ],
               "topics": [
-                "Irrigation",
-                "NutrientManagement",
                 "PestManagement",
-                "SoilMoisture",
                 "Sowing",
                 "Spraying"
               ],
@@ -1726,7 +1662,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 4,
                 "pageRange": [
                   39,
                   40
@@ -1741,7 +1677,7 @@
               "code": "HORTICULTURE-IN-KA-CHIKKABALLAPURA",
               "name": "Horticulture advisory, Chikkaballapura",
               "shortDesc": "Horticulture advisory at district granularity for Chikkaballapura",
-              "longDesc": "Horticulture advisory capability covering Chikkaballapura, standing on 3 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Chikkaballapura, standing on 7 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -1763,6 +1699,22 @@
               ],
               "geographicGranularity": "District",
               "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "BRINJAL",
+                    "name": "Brinjal"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CHILLI",
+                    "name": "Chilli"
+                  }
+                },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
                   "subjectType": "Crop",
@@ -1792,7 +1744,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 7,
                 "pageRange": [
                   39,
                   40
@@ -1807,7 +1759,7 @@
               "code": "CROP-IN-KA-CHIKKAMAGALURU",
               "name": "Crop advisory, Chikkamagaluru",
               "shortDesc": "Crop advisory at district granularity for Chikkamagaluru",
-              "longDesc": "Crop advisory capability covering Chikkamagaluru, standing on 1 indexed passage (source page 49). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Chikkamagaluru, standing on 2 indexed passages (source page 49). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1829,11 +1781,11 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
                   "subjectType": "Crop",
                   "descriptor": {
-                    "code": "GINGER",
-                    "name": "Ginger"
+                    "code": "MAIZE",
+                    "name": "Maize"
                   }
                 },
                 {
@@ -1846,16 +1798,15 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
+                "Irrigation",
                 "NutrientManagement",
-                "Sowing",
-                "Spraying"
+                "Sowing"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 2,
                 "pageRange": [
                   49,
                   49
@@ -1865,19 +1816,19 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-livestock-in-ka-chikkamagaluru",
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-chikkamagaluru",
             "descriptor": {
-              "code": "LIVESTOCK-IN-KA-CHIKKAMAGALURU",
-              "name": "Livestock advisory, Chikkamagaluru",
-              "shortDesc": "Livestock advisory at district granularity for Chikkamagaluru",
-              "longDesc": "Livestock advisory capability covering Chikkamagaluru, standing on 2 indexed passages (source page 49). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "code": "HORTICULTURE-IN-KA-CHIKKAMAGALURU",
+              "name": "Horticulture advisory, Chikkamagaluru",
+              "shortDesc": "Horticulture advisory at district granularity for Chikkamagaluru",
+              "longDesc": "Horticulture advisory capability covering Chikkamagaluru, standing on 4 indexed passages (source page 49). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
               "subjectCategories": [
                 "Crop",
-                "Livestock"
+                "Horticulture"
               ],
               "languages": [
                 "en"
@@ -1909,13 +1860,59 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
                   "subjectType": "Crop",
                   "descriptor": {
-                    "code": "MAIZE",
-                    "name": "Maize"
+                    "code": "GINGER",
+                    "name": "Ginger"
                   }
-                },
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Drainage",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 4,
+                "pageRange": [
+                  49,
+                  49
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-livestock-in-ka-chikkamagaluru",
+            "descriptor": {
+              "code": "LIVESTOCK-IN-KA-CHIKKAMAGALURU",
+              "name": "Livestock advisory, Chikkamagaluru",
+              "shortDesc": "Livestock advisory at district granularity for Chikkamagaluru",
+              "longDesc": "Livestock advisory capability covering Chikkamagaluru, standing on 2 indexed passages (source page 49). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "subjectCategories": [
+                "Livestock"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-CHIKKAMAGALURU",
+                  "areaLevel": "District",
+                  "areaName": "Chikkamagaluru"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/cattle",
                   "subjectType": "Livestock",
@@ -1926,11 +1923,8 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
                 "Drainage",
-                "Irrigation",
-                "LivestockCare",
-                "Spraying"
+                "LivestockCare"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -1994,7 +1988,7 @@
               "code": "CROP-IN-KA-CHITRADURGA",
               "name": "Crop advisory, Chitradurga",
               "shortDesc": "Crop advisory at district granularity for Chitradurga",
-              "longDesc": "Crop advisory capability covering Chitradurga, standing on 14 indexed passages (source pages 27-33). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Chitradurga, standing on 12 indexed passages (source pages 27-33). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -2021,14 +2015,6 @@
               ],
               "geographicGranularity": "District",
               "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/arecanut",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ARECANUT",
-                    "name": "Arecanut"
-                  }
-                },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
                   "subjectType": "Crop",
@@ -2094,7 +2080,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 14,
+                "passageCount": 12,
                 "pageRange": [
                   27,
                   33
@@ -2109,7 +2095,7 @@
               "code": "HORTICULTURE-IN-KA-CHITRADURGA",
               "name": "Horticulture advisory, Chitradurga",
               "shortDesc": "Horticulture advisory at district granularity for Chitradurga",
-              "longDesc": "Horticulture advisory capability covering Chitradurga, standing on 7 indexed passages (source pages 29-34). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Chitradurga, standing on 8 indexed passages (source pages 29-34). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -2176,7 +2162,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 7,
+                "passageCount": 8,
                 "pageRange": [
                   29,
                   34
@@ -2191,7 +2177,7 @@
               "code": "LIVESTOCK-IN-KA-CHITRADURGA",
               "name": "Livestock advisory, Chitradurga",
               "shortDesc": "Livestock advisory at district granularity for Chitradurga",
-              "longDesc": "Livestock advisory capability covering Chitradurga, standing on 2 indexed passages (source page 30). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Livestock advisory capability covering Chitradurga, standing on 3 indexed passages (source page 30). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
@@ -2235,7 +2221,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   30,
                   30
@@ -2250,7 +2236,7 @@
               "code": "WEATHER-IN-KA-CHITRADURGA",
               "name": "Weather advisory, Chitradurga",
               "shortDesc": "Weather forecast and warnings at district granularity for Chitradurga",
-              "longDesc": "Weather advisory capability covering Chitradurga, standing on 4 indexed passages (source pages 28-34). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Chitradurga, standing on 9 indexed passages (source pages 27-34). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -2277,23 +2263,25 @@
               ],
               "geographicGranularity": "District",
               "weatherParameters": [
-                "Rainfall"
+                "CloudCover",
+                "Humidity",
+                "Rainfall",
+                "WindSpeed"
               ],
               "topics": [
                 "DiseaseManagement",
                 "Drainage",
                 "Irrigation",
                 "PestManagement",
-                "SoilMoisture",
                 "WeedManagement"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 4,
+                "passageCount": 9,
                 "pageRange": [
-                  28,
+                  27,
                   34
                 ]
               },
@@ -2343,14 +2331,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cashew",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CASHEW",
-                    "name": "Cashew"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -2364,7 +2344,6 @@
                 "Irrigation",
                 "LivestockCare",
                 "NutrientManagement",
-                "PestManagement",
                 "SoilMoisture",
                 "Spraying"
               ],
@@ -2387,7 +2366,7 @@
               "code": "HORTICULTURE-IN-KA-DAKSHINA-KANNADA",
               "name": "Horticulture advisory, Dakshina Kannada",
               "shortDesc": "Horticulture advisory at district granularity for Dakshina Kannada",
-              "longDesc": "Horticulture advisory capability covering Dakshina Kannada, standing on 3 indexed passages (source pages 8-9). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Dakshina Kannada, standing on 4 indexed passages (source pages 8-10). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -2432,6 +2411,14 @@
                   }
                 },
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/cashew",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CASHEW",
+                    "name": "Cashew"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/coconut",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -2442,7 +2429,7 @@
               ],
               "topics": [
                 "Drainage",
-                "NutrientManagement",
+                "PestManagement",
                 "Spraying",
                 "WeedManagement"
               ],
@@ -2450,10 +2437,10 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 4,
                 "pageRange": [
                   8,
-                  9
+                  10
                 ]
               },
               "updateFrequency": "P1D"
@@ -2503,7 +2490,6 @@
               ],
               "topics": [
                 "LivestockCare",
-                "PestManagement",
                 "Spraying",
                 "WeedManagement"
               ],
@@ -2526,7 +2512,7 @@
               "code": "WEATHER-IN-KA-DAKSHINA-KANNADA",
               "name": "Weather advisory, Dakshina Kannada",
               "shortDesc": "Weather forecast and warnings at district granularity for Dakshina Kannada",
-              "longDesc": "Weather advisory capability covering Dakshina Kannada, standing on 1 indexed passage (source page 9). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Dakshina Kannada, standing on 3 indexed passages (source pages 8-9). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -2565,9 +2551,9 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 3,
                 "pageRange": [
-                  9,
+                  8,
                   9
                 ]
               },
@@ -2581,7 +2567,7 @@
               "code": "CROP-IN-KA-DHARWAD",
               "name": "Crop advisory, Dharwad",
               "shortDesc": "Crop advisory at district granularity for Dharwad",
-              "longDesc": "Crop advisory capability covering Dharwad, standing on 4 indexed passages (source pages 25-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Dharwad, standing on 7 indexed passages (source pages 24-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -2623,14 +2609,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/cotton",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -2669,14 +2647,6 @@
                     "code": "SUGARCANE",
                     "name": "Sugarcane"
                   }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/tomato",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "TOMATO",
-                    "name": "Tomato"
-                  }
                 }
               ],
               "topics": [
@@ -2694,9 +2664,9 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 4,
+                "passageCount": 7,
                 "pageRange": [
-                  25,
+                  24,
                   26
                 ]
               },
@@ -2773,6 +2743,7 @@
                 "Harvesting",
                 "Irrigation",
                 "LivestockCare",
+                "PestManagement",
                 "SoilMoisture",
                 "Spraying",
                 "WeedManagement"
@@ -2796,13 +2767,12 @@
               "code": "LIVESTOCK-IN-KA-DHARWAD",
               "name": "Livestock advisory, Dharwad",
               "shortDesc": "Livestock advisory at district granularity for Dharwad",
-              "longDesc": "Livestock advisory capability covering Dharwad, standing on 2 indexed passages (source pages 24-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Livestock advisory capability covering Dharwad, standing on 3 indexed passages (source pages 24-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
               "@type": "openagrinet:LivestockAdvisoryCapability",
               "subjectCategories": [
-                "Crop",
                 "Livestock"
               ],
               "languages": [
@@ -2831,14 +2801,6 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BENGAL_GRAM",
-                    "name": "Bengal gram"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/goat",
                   "subjectType": "Livestock",
                   "descriptor": {
@@ -2857,7 +2819,6 @@
               ],
               "topics": [
                 "DiseaseManagement",
-                "Harvesting",
                 "LivestockCare",
                 "PestManagement",
                 "Spraying"
@@ -2866,7 +2827,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   24,
                   26
@@ -2876,70 +2837,12 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-weather-in-ka-dharwad",
-            "descriptor": {
-              "code": "WEATHER-IN-KA-DHARWAD",
-              "name": "Weather advisory, Dharwad",
-              "shortDesc": "Weather forecast and warnings at district granularity for Dharwad",
-              "longDesc": "Weather advisory capability covering Dharwad, standing on 1 indexed passage (source page 24). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:WeatherAdvisoryCapability",
-              "subjectCategories": [
-                "Weather"
-              ],
-              "languages": [
-                "en"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-DHARWAD",
-                  "areaLevel": "District",
-                  "areaName": "Dharwad"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-BELAGAVI",
-                  "areaLevel": "District",
-                  "areaName": "Belagavi"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-HAVERI",
-                  "areaLevel": "District",
-                  "areaName": "Haveri"
-                }
-              ],
-              "geographicGranularity": "District",
-              "weatherParameters": [
-                "Rainfall"
-              ],
-              "topics": [
-                "Harvesting"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_karnataka_agromet.pdf"
-                ],
-                "passageCount": 1,
-                "pageRange": [
-                  24,
-                  24
-                ]
-              },
-              "updateFrequency": "P1D",
-              "forecastHorizon": "P7D"
-            }
-          },
-          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-gadag",
             "descriptor": {
               "code": "CROP-IN-KA-GADAG",
               "name": "Crop advisory, Gadag",
               "shortDesc": "Crop advisory at district granularity for Gadag",
-              "longDesc": "Crop advisory capability covering Gadag, standing on 3 indexed passages (source page 18). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Gadag, standing on 5 indexed passages (source page 18). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -2974,14 +2877,6 @@
                   "descriptor": {
                     "code": "MAIZE",
                     "name": "Maize"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ONION",
-                    "name": "Onion"
                   }
                 },
                 {
@@ -3020,7 +2915,61 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 5,
+                "pageRange": [
+                  18,
+                  18
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-gadag",
+            "descriptor": {
+              "code": "HORTICULTURE-IN-KA-GADAG",
+              "name": "Horticulture advisory, Gadag",
+              "shortDesc": "Horticulture advisory at district granularity for Gadag",
+              "longDesc": "Horticulture advisory capability covering Gadag, standing on 1 indexed passage (source page 18). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Horticulture"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-GADAG",
+                  "areaLevel": "District",
+                  "areaName": "Gadag"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "ONION",
+                    "name": "Onion"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
                 "pageRange": [
                   18,
                   18
@@ -3035,7 +2984,7 @@
               "code": "CROP-IN-KA-HASSAN",
               "name": "Crop advisory, Hassan",
               "shortDesc": "Crop advisory at district granularity for Hassan",
-              "longDesc": "Crop advisory capability covering Hassan, standing on 1 indexed passage (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Hassan, standing on 2 indexed passages (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -3074,17 +3023,15 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
                 "Irrigation",
                 "NutrientManagement",
-                "Sowing",
-                "Spraying"
+                "Sowing"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 2,
                 "pageRange": [
                   48,
                   48
@@ -3099,7 +3046,7 @@
               "code": "HORTICULTURE-IN-KA-HASSAN",
               "name": "Horticulture advisory, Hassan",
               "shortDesc": "Horticulture advisory at district granularity for Hassan",
-              "longDesc": "Horticulture advisory capability covering Hassan, standing on 1 indexed passage (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Hassan, standing on 4 indexed passages (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -3107,70 +3054,6 @@
               "subjectCategories": [
                 "Crop",
                 "Horticulture"
-              ],
-              "languages": [
-                "en"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-KA-HASSAN",
-                  "areaLevel": "District",
-                  "areaName": "Hassan"
-                }
-              ],
-              "geographicGranularity": "District",
-              "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/coconut",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "COCONUT",
-                    "name": "Coconut"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GINGER",
-                    "name": "Ginger"
-                  }
-                }
-              ],
-              "topics": [
-                "DiseaseManagement",
-                "Drainage",
-                "Harvesting",
-                "Sowing"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_karnataka_agromet.pdf"
-                ],
-                "passageCount": 1,
-                "pageRange": [
-                  48,
-                  48
-                ]
-              },
-              "updateFrequency": "P1D"
-            }
-          },
-          {
-            "id": "res-imd-agromet-agriculture-livestock-in-ka-hassan",
-            "descriptor": {
-              "code": "LIVESTOCK-IN-KA-HASSAN",
-              "name": "Livestock advisory, Hassan",
-              "shortDesc": "Livestock advisory at district granularity for Hassan",
-              "longDesc": "Livestock advisory capability covering Hassan, standing on 1 indexed passage (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:LivestockAdvisoryCapability",
-              "subjectCategories": [
-                "Crop",
-                "Livestock"
               ],
               "languages": [
                 "en"
@@ -3202,6 +3085,69 @@
                   }
                 },
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/coconut",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "COCONUT",
+                    "name": "Coconut"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "GINGER",
+                    "name": "Ginger"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Drainage",
+                "Harvesting",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 4,
+                "pageRange": [
+                  48,
+                  48
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-livestock-in-ka-hassan",
+            "descriptor": {
+              "code": "LIVESTOCK-IN-KA-HASSAN",
+              "name": "Livestock advisory, Hassan",
+              "shortDesc": "Livestock advisory at district granularity for Hassan",
+              "longDesc": "Livestock advisory capability covering Hassan, standing on 1 indexed passage (source page 48). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "subjectCategories": [
+                "Livestock"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-HASSAN",
+                  "areaLevel": "District",
+                  "areaName": "Hassan"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/cattle",
                   "subjectType": "Livestock",
                   "descriptor": {
@@ -3211,10 +3157,8 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
                 "Drainage",
-                "LivestockCare",
-                "Spraying"
+                "LivestockCare"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -3235,7 +3179,7 @@
               "code": "CROP-IN-KA-KALABURAGI",
               "name": "Crop advisory, Kalaburagi",
               "shortDesc": "Crop advisory at district granularity for Kalaburagi",
-              "longDesc": "Crop advisory capability covering Kalaburagi, standing on 2 indexed passages (source page 13). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Kalaburagi, standing on 7 indexed passages (source page 13). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -3288,14 +3232,6 @@
                   "descriptor": {
                     "code": "BLACK_GRAM",
                     "name": "Black gram"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
                   }
                 },
                 {
@@ -3366,7 +3302,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 7,
                 "pageRange": [
                   13,
                   13
@@ -3376,19 +3312,19 @@
             }
           },
           {
-            "id": "res-imd-agromet-agriculture-livestock-in-ka-kalaburagi",
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-kalaburagi",
             "descriptor": {
-              "code": "LIVESTOCK-IN-KA-KALABURAGI",
-              "name": "Livestock advisory, Kalaburagi",
-              "shortDesc": "Livestock advisory at district granularity for Kalaburagi",
-              "longDesc": "Livestock advisory capability covering Kalaburagi, standing on 1 indexed passage (source page 13). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "code": "HORTICULTURE-IN-KA-KALABURAGI",
+              "name": "Horticulture advisory, Kalaburagi",
+              "shortDesc": "Horticulture advisory at district granularity for Kalaburagi",
+              "longDesc": "Horticulture advisory capability covering Kalaburagi, standing on 1 indexed passage (source page 13). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
               "subjectCategories": [
                 "Crop",
-                "Livestock"
+                "Horticulture"
               ],
               "languages": [
                 "en"
@@ -3428,7 +3364,69 @@
                     "code": "CHILLI",
                     "name": "Chilli"
                   }
+                }
+              ],
+              "topics": [
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
+                "pageRange": [
+                  13,
+                  13
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-livestock-in-ka-kalaburagi",
+            "descriptor": {
+              "code": "LIVESTOCK-IN-KA-KALABURAGI",
+              "name": "Livestock advisory, Kalaburagi",
+              "shortDesc": "Livestock advisory at district granularity for Kalaburagi",
+              "longDesc": "Livestock advisory capability covering Kalaburagi, standing on 1 indexed passage (source page 13). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "subjectCategories": [
+                "Livestock"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-KALABURAGI",
+                  "areaLevel": "District",
+                  "areaName": "Kalaburagi"
                 },
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-BALLARI",
+                  "areaLevel": "District",
+                  "areaName": "Ballari"
+                },
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-RAICHUR",
+                  "areaLevel": "District",
+                  "areaName": "Raichur"
+                },
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-VIJAYANAGARA",
+                  "areaLevel": "District",
+                  "areaName": "Vijayanagara"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/goat",
                   "subjectType": "Livestock",
@@ -3447,8 +3445,7 @@
                 }
               ],
               "topics": [
-                "LivestockCare",
-                "Spraying"
+                "LivestockCare"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -3491,14 +3488,6 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GINGER",
-                    "name": "Ginger"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -3517,7 +3506,6 @@
               ],
               "topics": [
                 "DiseaseManagement",
-                "Drainage",
                 "Irrigation",
                 "PestManagement",
                 "SoilMoisture",
@@ -3542,7 +3530,7 @@
               "code": "HORTICULTURE-IN-KA-KODAGU",
               "name": "Horticulture advisory, Kodagu",
               "shortDesc": "Horticulture advisory at district granularity for Kodagu",
-              "longDesc": "Horticulture advisory capability covering Kodagu, standing on 2 indexed passages (source page 42). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Kodagu, standing on 4 indexed passages (source page 42). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -3587,6 +3575,14 @@
                     "code": "COFFEE",
                     "name": "Coffee"
                   }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "GINGER",
+                    "name": "Ginger"
+                  }
                 }
               ],
               "topics": [
@@ -3602,7 +3598,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 4,
                 "pageRange": [
                   42,
                   42
@@ -3617,7 +3613,7 @@
               "code": "LIVESTOCK-IN-KA-KODAGU",
               "name": "Livestock advisory, Kodagu",
               "shortDesc": "Livestock advisory at district granularity for Kodagu",
-              "longDesc": "Livestock advisory capability covering Kodagu, standing on 2 indexed passages (source page 43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Livestock advisory capability covering Kodagu, standing on 3 indexed passages (source page 43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
@@ -3680,8 +3676,6 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
-                "Harvesting",
                 "Irrigation",
                 "LivestockCare",
                 "SoilMoisture",
@@ -3691,7 +3685,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   43,
                   43
@@ -3701,12 +3695,57 @@
             }
           },
           {
+            "id": "res-imd-agromet-agriculture-weather-in-ka-kodagu",
+            "descriptor": {
+              "code": "WEATHER-IN-KA-KODAGU",
+              "name": "Weather advisory, Kodagu",
+              "shortDesc": "Weather forecast and warnings at district granularity for Kodagu",
+              "longDesc": "Weather advisory capability covering Kodagu, standing on 1 indexed passage (source page 43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:WeatherAdvisoryCapability",
+              "subjectCategories": [
+                "Weather"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-KODAGU",
+                  "areaLevel": "District",
+                  "areaName": "Kodagu"
+                }
+              ],
+              "geographicGranularity": "District",
+              "topics": [
+                "DiseaseManagement",
+                "Harvesting",
+                "SoilMoisture"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
+                "pageRange": [
+                  43,
+                  43
+                ]
+              },
+              "updateFrequency": "P1D",
+              "forecastHorizon": "P7D"
+            }
+          },
+          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-kolar",
             "descriptor": {
               "code": "CROP-IN-KA-KOLAR",
               "name": "Crop advisory, Kolar",
               "shortDesc": "Crop advisory at district granularity for Kolar",
-              "longDesc": "Crop advisory capability covering Kolar, standing on 1 indexed passage (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Kolar, standing on 2 indexed passages (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -3758,22 +3797,6 @@
                     "code": "GREEN_GRAM",
                     "name": "Green gram"
                   }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GROUNDNUT",
-                    "name": "Groundnut"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "MAIZE",
-                    "name": "Maize"
-                  }
                 }
               ],
               "topics": [
@@ -3783,7 +3806,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 2,
                 "pageRange": [
                   38,
                   38
@@ -3798,7 +3821,7 @@
               "code": "HORTICULTURE-IN-KA-KOLAR",
               "name": "Horticulture advisory, Kolar",
               "shortDesc": "Horticulture advisory at district granularity for Kolar",
-              "longDesc": "Horticulture advisory capability covering Kolar, standing on 1 indexed passage (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Kolar, standing on 2 indexed passages (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -3843,13 +3866,14 @@
                 "NutrientManagement",
                 "PestManagement",
                 "SoilMoisture",
+                "Sowing",
                 "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 2,
                 "pageRange": [
                   38,
                   38
@@ -3885,9 +3909,6 @@
               ],
               "geographicGranularity": "District",
               "topics": [
-                "Irrigation",
-                "PestManagement",
-                "SoilMoisture",
                 "Sowing"
               ],
               "evidence": {
@@ -3910,7 +3931,7 @@
               "code": "CROP-IN-KA-KOPPAL",
               "name": "Crop advisory, Koppal",
               "shortDesc": "Crop advisory at district granularity for Koppal",
-              "longDesc": "Crop advisory capability covering Koppal, standing on 8 indexed passages (source pages 14-17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Koppal, standing on 8 indexed passages (source pages 15-17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -3940,6 +3961,14 @@
                   }
                 },
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "COWPEA",
+                    "name": "Cowpea"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/field-pea",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -3964,11 +3993,27 @@
                   }
                 },
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "ONION",
+                    "name": "Onion"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "PADDY",
                     "name": "Paddy"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "POMEGRANATE",
+                    "name": "Pomegranate"
                   }
                 },
                 {
@@ -3995,7 +4040,7 @@
                 ],
                 "passageCount": 8,
                 "pageRange": [
-                  14,
+                  15,
                   17
                 ]
               },
@@ -4008,7 +4053,7 @@
               "code": "HORTICULTURE-IN-KA-KOPPAL",
               "name": "Horticulture advisory, Koppal",
               "shortDesc": "Horticulture advisory at district granularity for Koppal",
-              "longDesc": "Horticulture advisory capability covering Koppal, standing on 1 indexed passage (source page 17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Koppal, standing on 2 indexed passages (source page 17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -4058,7 +4103,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 2,
                 "pageRange": [
                   17,
                   17
@@ -4073,7 +4118,7 @@
               "code": "LIVESTOCK-IN-KA-KOPPAL",
               "name": "Livestock advisory, Koppal",
               "shortDesc": "Livestock advisory at district granularity for Koppal",
-              "longDesc": "Livestock advisory capability covering Koppal, standing on 3 indexed passages (source pages 14-17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Livestock advisory capability covering Koppal, standing on 4 indexed passages (source pages 14-17). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
@@ -4096,35 +4141,11 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "COWPEA",
-                    "name": "Cowpea"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ONION",
-                    "name": "Onion"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "PADDY",
                     "name": "Paddy"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "POMEGRANATE",
-                    "name": "Pomegranate"
                   }
                 },
                 {
@@ -4153,7 +4174,6 @@
                 }
               ],
               "topics": [
-                "CropProtection",
                 "DiseaseManagement",
                 "Irrigation",
                 "LivestockCare",
@@ -4168,7 +4188,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 3,
+                "passageCount": 4,
                 "pageRange": [
                   14,
                   17
@@ -4178,12 +4198,57 @@
             }
           },
           {
+            "id": "res-imd-agromet-agriculture-weather-in-ka-koppal",
+            "descriptor": {
+              "code": "WEATHER-IN-KA-KOPPAL",
+              "name": "Weather advisory, Koppal",
+              "shortDesc": "Weather forecast and warnings at district granularity for Koppal",
+              "longDesc": "Weather advisory capability covering Koppal, standing on 2 indexed passages (source pages 14-15). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:WeatherAdvisoryCapability",
+              "subjectCategories": [
+                "Weather"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-KOPPAL",
+                  "areaLevel": "District",
+                  "areaName": "Koppal"
+                }
+              ],
+              "geographicGranularity": "District",
+              "topics": [
+                "CropProtection",
+                "Irrigation",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 2,
+                "pageRange": [
+                  14,
+                  15
+                ]
+              },
+              "updateFrequency": "P1D",
+              "forecastHorizon": "P7D"
+            }
+          },
+          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-mysuru",
             "descriptor": {
               "code": "CROP-IN-KA-MYSURU",
               "name": "Crop advisory, Mysuru",
               "shortDesc": "Crop advisory at district granularity for Mysuru",
-              "longDesc": "Crop advisory capability covering Mysuru, standing on 5 indexed passages (source pages 45-46). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Mysuru, standing on 7 indexed passages (source pages 45-46). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -4227,27 +4292,11 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "COWPEA",
                     "name": "Cowpea"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GINGER",
-                    "name": "Ginger"
                   }
                 },
                 {
@@ -4289,6 +4338,79 @@
                     "code": "TOBACCO",
                     "name": "Tobacco"
                   }
+                }
+              ],
+              "topics": [
+                "Irrigation",
+                "LivestockCare",
+                "NutrientManagement",
+                "PestManagement",
+                "SoilMoisture",
+                "Sowing",
+                "WeedManagement"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 7,
+                "pageRange": [
+                  45,
+                  46
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-mysuru",
+            "descriptor": {
+              "code": "HORTICULTURE-IN-KA-MYSURU",
+              "name": "Horticulture advisory, Mysuru",
+              "shortDesc": "Horticulture advisory at district granularity for Mysuru",
+              "longDesc": "Horticulture advisory capability covering Mysuru, standing on 5 indexed passages (source pages 45-46). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Horticulture"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-MYSURU",
+                  "areaLevel": "District",
+                  "areaName": "Mysuru"
+                },
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-MANDYA",
+                  "areaLevel": "District",
+                  "areaName": "Mandya"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CHILLI",
+                    "name": "Chilli"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "GINGER",
+                    "name": "Ginger"
+                  }
                 },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/tomato",
@@ -4302,12 +4424,7 @@
               "topics": [
                 "Harvesting",
                 "Irrigation",
-                "LivestockCare",
-                "NutrientManagement",
-                "PestManagement",
-                "SoilMoisture",
-                "Sowing",
-                "WeedManagement"
+                "SoilMoisture"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -4334,7 +4451,6 @@
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
               "@type": "openagrinet:LivestockAdvisoryCapability",
               "subjectCategories": [
-                "Crop",
                 "Livestock"
               ],
               "languages": [
@@ -4357,14 +4473,6 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "PADDY",
-                    "name": "Paddy"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/poultry",
                   "subjectType": "Livestock",
                   "descriptor": {
@@ -4375,9 +4483,8 @@
               ],
               "topics": [
                 "Irrigation",
-                "LivestockCare",
                 "SoilMoisture",
-                "Sowing"
+                "WeedManagement"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -4398,7 +4505,7 @@
               "code": "WEATHER-IN-KA-MYSURU",
               "name": "Weather advisory, Mysuru",
               "shortDesc": "Weather forecast and warnings at district granularity for Mysuru",
-              "longDesc": "Weather advisory capability covering Mysuru, standing on 2 indexed passages (source page 45). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Mysuru, standing on 1 indexed passage (source page 45). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -4437,7 +4544,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 1,
                 "pageRange": [
                   45,
                   45
@@ -4453,7 +4560,7 @@
               "code": "CROP-IN-KA-RAMANAGARA",
               "name": "Crop advisory, Ramanagara",
               "shortDesc": "Crop advisory at district granularity for Ramanagara",
-              "longDesc": "Crop advisory capability covering Ramanagara, standing on 2 indexed passages (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Ramanagara, standing on 3 indexed passages (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -4488,14 +4595,6 @@
                   "descriptor": {
                     "code": "BLACK_GRAM",
                     "name": "Black gram"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
                   }
                 },
                 {
@@ -4548,7 +4647,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 2,
+                "passageCount": 3,
                 "pageRange": [
                   41,
                   41
@@ -4563,7 +4662,7 @@
               "code": "HORTICULTURE-IN-KA-RAMANAGARA",
               "name": "Horticulture advisory, Ramanagara",
               "shortDesc": "Horticulture advisory at district granularity for Ramanagara",
-              "longDesc": "Horticulture advisory capability covering Ramanagara, standing on 1 indexed passage (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Ramanagara, standing on 4 indexed passages (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -4591,6 +4690,14 @@
                   "descriptor": {
                     "code": "ARECANUT",
                     "name": "Arecanut"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CHILLI",
+                    "name": "Chilli"
                   }
                 },
                 {
@@ -4628,7 +4735,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 4,
                 "pageRange": [
                   41,
                   41
@@ -4665,22 +4772,6 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/arecanut",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ARECANUT",
-                    "name": "Arecanut"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GINGER",
-                    "name": "Ginger"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -4698,11 +4789,71 @@
                 }
               ],
               "topics": [
-                "DiseaseManagement",
-                "Drainage",
                 "Irrigation",
                 "NutrientManagement",
-                "Sowing",
+                "Sowing"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 2,
+                "pageRange": [
+                  47,
+                  47
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-shivamogga",
+            "descriptor": {
+              "code": "HORTICULTURE-IN-KA-SHIVAMOGGA",
+              "name": "Horticulture advisory, Shivamogga",
+              "shortDesc": "Horticulture advisory at district granularity for Shivamogga",
+              "longDesc": "Horticulture advisory capability covering Shivamogga, standing on 2 indexed passages (source page 47). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Horticulture"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-SHIVAMOGGA",
+                  "areaLevel": "District",
+                  "areaName": "Shivamogga"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/arecanut",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "ARECANUT",
+                    "name": "Arecanut"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "GINGER",
+                    "name": "Ginger"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Drainage",
                 "Spraying"
               ],
               "evidence": {
@@ -4773,6 +4924,46 @@
             }
           },
           {
+            "id": "res-imd-agromet-agriculture-weather-in-ka-shivamogga",
+            "descriptor": {
+              "code": "WEATHER-IN-KA-SHIVAMOGGA",
+              "name": "Weather advisory, Shivamogga",
+              "shortDesc": "Weather forecast and warnings at district granularity for Shivamogga",
+              "longDesc": "Weather advisory capability covering Shivamogga, standing on 1 indexed passage (source page 47). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:WeatherAdvisoryCapability",
+              "subjectCategories": [
+                "Weather"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-SHIVAMOGGA",
+                  "areaLevel": "District",
+                  "areaName": "Shivamogga"
+                }
+              ],
+              "geographicGranularity": "District",
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
+                "pageRange": [
+                  47,
+                  47
+                ]
+              },
+              "updateFrequency": "P1D",
+              "forecastHorizon": "P7D"
+            }
+          },
+          {
             "id": "res-imd-agromet-agriculture-crop-in-ka-uttara-kannada",
             "descriptor": {
               "code": "CROP-IN-KA-UTTARA-KANNADA",
@@ -4785,6 +4976,91 @@
               "@type": "openagrinet:CropAdvisoryCapability",
               "subjectCategories": [
                 "Crop"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-UTTARA-KANNADA",
+                  "areaLevel": "District",
+                  "areaName": "Uttara Kannada"
+                }
+              ],
+              "geographicGranularity": "District",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/cotton",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "COTTON",
+                    "name": "Cotton"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "MAIZE",
+                    "name": "Maize"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "PADDY",
+                    "name": "Paddy"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "SUGARCANE",
+                    "name": "Sugarcane"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Drainage",
+                "Harvesting",
+                "NutrientManagement",
+                "PestManagement",
+                "Sowing",
+                "Spraying",
+                "Storage",
+                "WeedManagement"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 5,
+                "pageRange": [
+                  6,
+                  7
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-horticulture-in-ka-uttara-kannada",
+            "descriptor": {
+              "code": "HORTICULTURE-IN-KA-UTTARA-KANNADA",
+              "name": "Horticulture advisory, Uttara Kannada",
+              "shortDesc": "Horticulture advisory at district granularity for Uttara Kannada",
+              "longDesc": "Horticulture advisory capability covering Uttara Kannada, standing on 3 indexed passages (source page 7). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Horticulture"
               ],
               "languages": [
                 "en"
@@ -4816,43 +5092,11 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cotton",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "COTTON",
-                    "name": "Cotton"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/ginger",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "GINGER",
                     "name": "Ginger"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/maize",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "MAIZE",
-                    "name": "Maize"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "PADDY",
-                    "name": "Paddy"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "SUGARCANE",
-                    "name": "Sugarcane"
                   }
                 },
                 {
@@ -4867,21 +5111,16 @@
               "topics": [
                 "DiseaseManagement",
                 "Drainage",
-                "Harvesting",
-                "NutrientManagement",
-                "PestManagement",
                 "Sowing",
-                "Spraying",
-                "Storage",
-                "WeedManagement"
+                "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 5,
+                "passageCount": 3,
                 "pageRange": [
-                  6,
+                  7,
                   7
                 ]
               },
@@ -4938,7 +5177,7 @@
               "code": "CROP-IN-KA-VIJAYAPURA",
               "name": "Crop advisory, Vijayapura",
               "shortDesc": "Crop advisory at district granularity for Vijayapura",
-              "longDesc": "Crop advisory capability covering Vijayapura, standing on 5 indexed passages (source pages 19-20). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Vijayapura, standing on 7 indexed passages (source pages 19-20). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -4968,22 +5207,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CITRUS",
-                    "name": "Citrus"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -5000,19 +5223,19 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ONION",
-                    "name": "Onion"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/red-gram",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "RED_GRAM",
                     "name": "Red gram"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "SUGARCANE",
+                    "name": "Sugarcane"
                   }
                 },
                 {
@@ -5026,7 +5249,6 @@
               ],
               "topics": [
                 "DiseaseManagement",
-                "Harvesting",
                 "NutrientManagement",
                 "PestManagement",
                 "Sowing",
@@ -5036,7 +5258,7 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 5,
+                "passageCount": 7,
                 "pageRange": [
                   19,
                   20
@@ -5051,7 +5273,7 @@
               "code": "HORTICULTURE-IN-KA-VIJAYAPURA",
               "name": "Horticulture advisory, Vijayapura",
               "shortDesc": "Horticulture advisory at district granularity for Vijayapura",
-              "longDesc": "Horticulture advisory capability covering Vijayapura, standing on 1 indexed passage (source page 19). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Vijayapura, standing on 5 indexed passages (source pages 19-20). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -5074,11 +5296,27 @@
               "geographicGranularity": "District",
               "agricultureSubjects": [
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CHILLI",
+                    "name": "Chilli"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "CITRUS",
                     "name": "Citrus"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "ONION",
+                    "name": "Onion"
                   }
                 }
               ],
@@ -5086,6 +5324,7 @@
                 "DiseaseManagement",
                 "Harvesting",
                 "LivestockCare",
+                "NutrientManagement",
                 "PestManagement",
                 "Spraying"
               ],
@@ -5093,10 +5332,10 @@
                 "sourceDocuments": [
                   "imd_karnataka_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 5,
                 "pageRange": [
                   19,
-                  19
+                  20
                 ]
               },
               "updateFrequency": "P1D"
@@ -5114,7 +5353,6 @@
               "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
               "@type": "openagrinet:LivestockAdvisoryCapability",
               "subjectCategories": [
-                "Crop",
                 "Livestock"
               ],
               "languages": [
@@ -5130,14 +5368,6 @@
               ],
               "geographicGranularity": "District",
               "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/sugarcane",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "SUGARCANE",
-                    "name": "Sugarcane"
-                  }
-                },
                 {
                   "subjectId": "https://taxonomy.openagrinet.global/livestock/goat",
                   "subjectType": "Livestock",
@@ -5157,9 +5387,7 @@
               ],
               "topics": [
                 "DiseaseManagement",
-                "NutrientManagement",
-                "PestManagement",
-                "Spraying"
+                "PestManagement"
               ],
               "evidence": {
                 "sourceDocuments": [
@@ -5172,6 +5400,46 @@
                 ]
               },
               "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-weather-in-ka-vijayapura",
+            "descriptor": {
+              "code": "WEATHER-IN-KA-VIJAYAPURA",
+              "name": "Weather advisory, Vijayapura",
+              "shortDesc": "Weather forecast and warnings at district granularity for Vijayapura",
+              "longDesc": "Weather advisory capability covering Vijayapura, standing on 1 indexed passage (source page 19). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:WeatherAdvisoryCapability",
+              "subjectCategories": [
+                "Weather"
+              ],
+              "languages": [
+                "en"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "OPENAGRI-DISTRICT",
+                  "areaCode": "IN-KA-VIJAYAPURA",
+                  "areaLevel": "District",
+                  "areaName": "Vijayapura"
+                }
+              ],
+              "geographicGranularity": "District",
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_karnataka_agromet.pdf"
+                ],
+                "passageCount": 1,
+                "pageRange": [
+                  19,
+                  19
+                ]
+              },
+              "updateFrequency": "P1D",
+              "forecastHorizon": "P7D"
             }
           }
         ]
@@ -5193,8 +5461,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T08:53:36Z",
-          "endDate": "2027-09-04T08:53:36Z"
+          "startDate": "2026-09-04T09:32:28Z",
+          "endDate": "2027-09-04T09:32:28Z"
         },
         "resources": [
           {
@@ -5203,7 +5471,7 @@
               "code": "CROP-IN-UP",
               "name": "Crop advisory, Uttar Pradesh",
               "shortDesc": "Crop advisory at state granularity for Uttar Pradesh",
-              "longDesc": "Crop advisory capability covering Uttar Pradesh, standing on 51 indexed passages (source pages 1-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Crop advisory capability covering Uttar Pradesh, standing on 89 indexed passages (source pages 1-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -5281,12 +5549,6 @@
                   "areaCode": "IN-UP-BALLIA",
                   "areaLevel": "District",
                   "areaName": "Ballia"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-UP-BALRAMPUR",
-                  "areaLevel": "District",
-                  "areaName": "Balrampur"
                 },
                 {
                   "codeScheme": "OPENAGRI-DISTRICT",
@@ -5383,12 +5645,6 @@
                   "areaCode": "IN-UP-GHAZIPUR",
                   "areaLevel": "District",
                   "areaName": "Ghazipur"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-UP-GONDA",
-                  "areaLevel": "District",
-                  "areaName": "Gonda"
                 },
                 {
                   "codeScheme": "OPENAGRI-DISTRICT",
@@ -5500,12 +5756,6 @@
                 },
                 {
                   "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-UP-MAHRAJGANJ",
-                  "areaLevel": "District",
-                  "areaName": "Mahrajganj"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
                   "areaCode": "IN-UP-MAINPURI",
                   "areaLevel": "District",
                   "areaName": "Mainpuri"
@@ -5614,18 +5864,6 @@
                 },
                 {
                   "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-UP-SHRAWASTI",
-                  "areaLevel": "District",
-                  "areaName": "Shrawasti"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
-                  "areaCode": "IN-UP-SIDDHARTHNAGAR",
-                  "areaLevel": "District",
-                  "areaName": "Siddharthnagar"
-                },
-                {
-                  "codeScheme": "OPENAGRI-DISTRICT",
                   "areaCode": "IN-UP-SITAPUR",
                   "areaLevel": "District",
                   "areaName": "Sitapur"
@@ -5698,35 +5936,11 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cabbage",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CABBAGE",
-                    "name": "Cabbage"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CAULIFLOWER",
-                    "name": "Cauliflower"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "CHILLI",
                     "name": "Chilli"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CITRUS",
-                    "name": "Citrus"
                   }
                 },
                 {
@@ -5818,14 +6032,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "OKRA",
-                    "name": "Okra"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -5839,6 +6045,14 @@
                   "descriptor": {
                     "code": "PAPAYA",
                     "name": "Papaya"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/potato",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "POTATO",
+                    "name": "Potato"
                   }
                 },
                 {
@@ -5888,6 +6102,14 @@
                     "code": "TOMATO",
                     "name": "Tomato"
                   }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/wheat",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "WHEAT",
+                    "name": "Wheat"
+                  }
                 }
               ],
               "topics": [
@@ -5895,6 +6117,7 @@
                 "Drainage",
                 "Harvesting",
                 "Irrigation",
+                "LivestockCare",
                 "NutrientManagement",
                 "PestManagement",
                 "SoilMoisture",
@@ -5906,7 +6129,7 @@
                 "sourceDocuments": [
                   "imd_up_agromet.pdf"
                 ],
-                "passageCount": 51,
+                "passageCount": 89,
                 "pageRange": [
                   1,
                   44
@@ -5921,7 +6144,7 @@
               "code": "HORTICULTURE-IN-UP",
               "name": "Horticulture advisory, Uttar Pradesh",
               "shortDesc": "Horticulture advisory at state granularity for Uttar Pradesh",
-              "longDesc": "Horticulture advisory capability covering Uttar Pradesh, standing on 11 indexed passages (source pages 4-41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Horticulture advisory capability covering Uttar Pradesh, standing on 29 indexed passages (source pages 4-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -5931,8 +6154,8 @@
                 "Horticulture"
               ],
               "languages": [
-                "hi",
-                "en"
+                "en",
+                "hi"
               ],
               "coverageAreas": [
                 {
@@ -5945,11 +6168,35 @@
               "geographicGranularity": "State",
               "agricultureSubjects": [
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "BANANA",
+                    "name": "Banana"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "BRINJAL",
                     "name": "Brinjal"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/cabbage",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CABBAGE",
+                    "name": "Cabbage"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "CAULIFLOWER",
+                    "name": "Cauliflower"
                   }
                 },
                 {
@@ -6009,147 +6256,6 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/turmeric",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "TURMERIC",
-                    "name": "Turmeric"
-                  }
-                }
-              ],
-              "topics": [
-                "DiseaseManagement",
-                "Drainage",
-                "Irrigation",
-                "NutrientManagement",
-                "PestManagement",
-                "SoilMoisture",
-                "Sowing",
-                "Spraying"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_up_agromet.pdf"
-                ],
-                "passageCount": 11,
-                "pageRange": [
-                  4,
-                  41
-                ]
-              },
-              "updateFrequency": "P1D"
-            }
-          },
-          {
-            "id": "res-imd-agromet-agriculture-livestock-in-up",
-            "descriptor": {
-              "code": "LIVESTOCK-IN-UP",
-              "name": "Livestock advisory, Uttar Pradesh",
-              "shortDesc": "Livestock advisory at state granularity for Uttar Pradesh",
-              "longDesc": "Livestock advisory capability covering Uttar Pradesh, standing on 18 indexed passages (source pages 18-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:LivestockAdvisoryCapability",
-              "subjectCategories": [
-                "Crop",
-                "Livestock"
-              ],
-              "languages": [
-                "hi",
-                "en"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "ISO-3166-2",
-                  "areaCode": "IN-UP",
-                  "areaLevel": "State",
-                  "areaName": "Uttar Pradesh"
-                }
-              ],
-              "geographicGranularity": "State",
-              "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BRINJAL",
-                    "name": "Brinjal"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CAULIFLOWER",
-                    "name": "Cauliflower"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CHILLI",
-                    "name": "Chilli"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "CITRUS",
-                    "name": "Citrus"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "COWPEA",
-                    "name": "Cowpea"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "GUAVA",
-                    "name": "Guava"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "MANGO",
-                    "name": "Mango"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/mustard",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "MUSTARD",
-                    "name": "Mustard"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "ONION",
-                    "name": "Onion"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "PADDY",
-                    "name": "Paddy"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/papaya",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -6174,11 +6280,73 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/wheat",
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/turmeric",
                   "subjectType": "Crop",
                   "descriptor": {
-                    "code": "WHEAT",
-                    "name": "Wheat"
+                    "code": "TURMERIC",
+                    "name": "Turmeric"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Drainage",
+                "Irrigation",
+                "LivestockCare",
+                "NutrientManagement",
+                "PestManagement",
+                "SoilMoisture",
+                "Sowing",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_up_agromet.pdf"
+                ],
+                "passageCount": 29,
+                "pageRange": [
+                  4,
+                  44
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-livestock-in-up",
+            "descriptor": {
+              "code": "LIVESTOCK-IN-UP",
+              "name": "Livestock advisory, Uttar Pradesh",
+              "shortDesc": "Livestock advisory at state granularity for Uttar Pradesh",
+              "longDesc": "Livestock advisory capability covering Uttar Pradesh, standing on 14 indexed passages (source pages 18-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:LivestockAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Livestock"
+              ],
+              "languages": [
+                "en",
+                "hi"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "ISO-3166-2",
+                  "areaCode": "IN-UP",
+                  "areaLevel": "State",
+                  "areaName": "Uttar Pradesh"
+                }
+              ],
+              "geographicGranularity": "State",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "MANGO",
+                    "name": "Mango"
                   }
                 },
                 {
@@ -6226,17 +6394,14 @@
                 "DiseaseManagement",
                 "Irrigation",
                 "LivestockCare",
-                "NutrientManagement",
-                "PestManagement",
                 "SoilMoisture",
-                "Sowing",
                 "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_up_agromet.pdf"
                 ],
-                "passageCount": 18,
+                "passageCount": 14,
                 "pageRange": [
                   18,
                   43
@@ -6251,7 +6416,7 @@
               "code": "WEATHER-IN-UP",
               "name": "Weather advisory, Uttar Pradesh",
               "shortDesc": "Weather forecast and warnings at state granularity for Uttar Pradesh",
-              "longDesc": "Weather advisory capability covering Uttar Pradesh, standing on 63 indexed passages (source pages 1-37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+              "longDesc": "Weather advisory capability covering Uttar Pradesh, standing on 74 indexed passages (source pages 1-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
             },
             "resourceAttributes": {
               "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -6736,17 +6901,19 @@
                 "Drainage",
                 "Irrigation",
                 "NutrientManagement",
+                "PestManagement",
                 "SoilMoisture",
-                "Sowing"
+                "Sowing",
+                "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_up_agromet.pdf"
                 ],
-                "passageCount": 63,
+                "passageCount": 74,
                 "pageRange": [
                   1,
-                  37
+                  43
                 ]
               },
               "updateFrequency": "P1D",
@@ -6966,8 +7133,8 @@
         },
         "isActive": true,
         "validity": {
-          "startDate": "2026-09-04T08:54:01Z",
-          "endDate": "2027-09-04T08:54:01Z"
+          "startDate": "2026-09-04T09:32:52Z",
+          "endDate": "2027-09-04T09:32:52Z"
         },
         "resources": [
           {
@@ -6983,6 +7150,71 @@
               "@type": "openagrinet:CropAdvisoryCapability",
               "subjectCategories": [
                 "Crop"
+              ],
+              "languages": [
+                "hi"
+              ],
+              "coverageAreas": [
+                {
+                  "codeScheme": "ISO-3166-2",
+                  "areaCode": "IN-RJ",
+                  "areaLevel": "State",
+                  "areaName": "Rajasthan"
+                }
+              ],
+              "geographicGranularity": "State",
+              "agricultureSubjects": [
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/pearl-millet",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "PEARL_MILLET",
+                    "name": "Pearl millet"
+                  }
+                },
+                {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/sesame",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "SESAME",
+                    "name": "Sesame"
+                  }
+                }
+              ],
+              "topics": [
+                "DiseaseManagement",
+                "Irrigation",
+                "PestManagement",
+                "SoilMoisture",
+                "Spraying"
+              ],
+              "evidence": {
+                "sourceDocuments": [
+                  "imd_rajasthan_agromet.pdf"
+                ],
+                "passageCount": 2,
+                "pageRange": [
+                  12,
+                  12
+                ]
+              },
+              "updateFrequency": "P1D"
+            }
+          },
+          {
+            "id": "res-imd-agromet-agriculture-horticulture-in-rj",
+            "descriptor": {
+              "code": "HORTICULTURE-IN-RJ",
+              "name": "Horticulture advisory, Rajasthan",
+              "shortDesc": "Horticulture advisory at state granularity for Rajasthan",
+              "longDesc": "Horticulture advisory capability covering Rajasthan, standing on 5 indexed passages (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+            },
+            "resourceAttributes": {
+              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
+              "@type": "openagrinet:HorticultureAdvisoryCapability",
+              "subjectCategories": [
+                "Crop",
+                "Horticulture"
               ],
               "languages": [
                 "hi"
@@ -7022,6 +7254,14 @@
               "geographicGranularity": "State",
               "agricultureSubjects": [
                 {
+                  "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
+                  "subjectType": "Crop",
+                  "descriptor": {
+                    "code": "BRINJAL",
+                    "name": "Brinjal"
+                  }
+                },
+                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
                   "subjectType": "Crop",
                   "descriptor": {
@@ -7046,93 +7286,11 @@
                   }
                 },
                 {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/pearl-millet",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "PEARL_MILLET",
-                    "name": "Pearl millet"
-                  }
-                },
-                {
                   "subjectId": "https://taxonomy.openagrinet.global/crop/pomegranate",
                   "subjectType": "Crop",
                   "descriptor": {
                     "code": "POMEGRANATE",
                     "name": "Pomegranate"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/sesame",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "SESAME",
-                    "name": "Sesame"
-                  }
-                }
-              ],
-              "topics": [
-                "DiseaseManagement",
-                "Irrigation",
-                "NutrientManagement",
-                "PestManagement",
-                "SoilMoisture",
-                "Spraying"
-              ],
-              "evidence": {
-                "sourceDocuments": [
-                  "imd_rajasthan_agromet.pdf"
-                ],
-                "passageCount": 2,
-                "pageRange": [
-                  12,
-                  12
-                ]
-              },
-              "updateFrequency": "P1D"
-            }
-          },
-          {
-            "id": "res-imd-agromet-agriculture-horticulture-in-rj",
-            "descriptor": {
-              "code": "HORTICULTURE-IN-RJ",
-              "name": "Horticulture advisory, Rajasthan",
-              "shortDesc": "Horticulture advisory at state granularity for Rajasthan",
-              "longDesc": "Horticulture advisory capability covering Rajasthan, standing on 1 indexed passage (source page 12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-            },
-            "resourceAttributes": {
-              "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
-              "@type": "openagrinet:HorticultureAdvisoryCapability",
-              "subjectCategories": [
-                "Crop",
-                "Horticulture"
-              ],
-              "languages": [
-                "hi"
-              ],
-              "coverageAreas": [
-                {
-                  "codeScheme": "ISO-3166-2",
-                  "areaCode": "IN-RJ",
-                  "areaLevel": "State",
-                  "areaName": "Rajasthan"
-                }
-              ],
-              "geographicGranularity": "State",
-              "agricultureSubjects": [
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "BRINJAL",
-                    "name": "Brinjal"
-                  }
-                },
-                {
-                  "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
-                  "subjectType": "Crop",
-                  "descriptor": {
-                    "code": "OKRA",
-                    "name": "Okra"
                   }
                 },
                 {
@@ -7149,14 +7307,16 @@
                 "Drainage",
                 "Irrigation",
                 "LivestockCare",
+                "NutrientManagement",
                 "PestManagement",
+                "SoilMoisture",
                 "Spraying"
               ],
               "evidence": {
                 "sourceDocuments": [
                   "imd_rajasthan_agromet.pdf"
                 ],
-                "passageCount": 1,
+                "passageCount": 5,
                 "pageRange": [
                   12,
                   12
@@ -7192,10 +7352,7 @@
               ],
               "geographicGranularity": "State",
               "topics": [
-                "DiseaseManagement",
-                "Drainage",
-                "LivestockCare",
-                "SoilMoisture"
+                "LivestockCare"
               ],
               "evidence": {
                 "sourceDocuments": [

@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 37 tests, ~10s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 40 tests, ~15s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -138,42 +138,42 @@ up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 | | Karnataka | Uttar Pradesh | Rajasthan |
 |---|---|---|---|
 | pages | 53 | 45 | 30 |
-| passages | 155 | 177 | 25 |
-| language mix | `en` 154 / `hi` 1 | `en` 62 / **`hi` 115** | `en` 2 / **`hi` 23** |
-| subjects resolved | **80.6%** | 45.2% | **12.0%** |
+| passages | 237 | 240 | 29 |
+| language mix | `en` 236 / `hi` 1 | `en` 84 / **`hi` 156** | `en` 2 / **`hi` 27** |
+| subjects resolved | **83.5%** | 56.7% | **24.1%** |
 | districts resolved | 31 / 31 | 75 / 75 | 32 / 32 |
-| passages placed in a district | 97.4% | 42.9% | 64.0% |
-| **2a** resources | **61** | 8 | 4 |
-| capability types | 4 | 4 | 3 |
-| **2b** vectors | 155 | 177 | 25 |
-| max tokens / passage | 254 | 314 | 305 |
+| passages placed in a district | 98.3% | 32.1% | 55.2% |
+| **2a** resources | **70** | 8 | 5 |
+| capability types | 4 | 4 | 4 |
+| **2b** vectors | 237 | 240 | 29 |
+| max tokens / passage | 254 | 299 | 314 |
 | 2a time | ~0.01 s | ~0.01 s | ~0.02 s |
 | 2b time | 15–186 s | 22–154 s | 4–49 s |
 
 ```
-step 3   ACCEPTED — 3 catalogues, 73 resources, 154,599-byte payload
-         network layer now holds 121,198 bytes of resourceAttributes:
-           73 resources · 51 subject URIs · 141 area codes · 13 topics
+step 3   ACCEPTED — 3 catalogues, 83 resources, 161,767-byte payload
+         network layer holds resourceAttributes only:
+           83 resources · 52 subject URIs · 141 area codes · 13 topics
            · 4 subject categories · 7 weather parameters · 2 languages
          and zero advisory text — checked against real sentences from the source
          round-trip verified: every field held exactly as published
 
-totals   357 passages · 73 resources · 357 vectors · 0 refused
+totals   506 passages · 83 resources · 506 vectors · 0 refused
 ```
 
 **Why the three states differ so much is the interesting part**, and it is real
 signal rather than a bug:
 
-* **Karnataka publishes 61 resources from 53 pages** because it is organised as
+* **Karnataka publishes 70 resources from 53 pages** because it is organised as
   per-district advisory sections (`Agromet Advisory for Koppal district`), so
   almost every passage lands in a district and becomes part of a district-level
   capability.
-* **UP publishes only 8 resources from *more* passages (177)** because it is
+* **UP publishes only 8 resources from *more* passages (240)** because it is
   organised by agro-climatic zone, and its tables list 7–8 districts per row.
   Those passages are honestly statewide, so they group into a handful of
   state-level resources — while still naming all 75 districts in
   `coverageAreas`, so a consumer can narrow down.
-* **Rajasthan resolves only 12% of passages to a crop** because it genuinely is
+* **Rajasthan resolves only 24% of passages to a crop** because it genuinely is
   mostly weather warnings, not crop advisories. The run prints that as a
   warning rather than letting a thin catalogue look complete.
 
@@ -308,6 +308,28 @@ imports into another package.
   contended straight after a test run. The table above gives ranges for that
   reason. Quote no single figure; measure on the target hardware, and expect a
   dedicated GPU to be both faster and far more consistent.
+
+* **Passages are cut on crop boundaries as well as on length.** An IMD advisory
+  table runs one crop's advice into the next with no blank line between them, so
+  splitting purely on size produced passages that were about two crops and
+  therefore precisely about neither. `_split_on_crop_change()` starts a new
+  passage at a line naming crops the current one does not share, provided what
+  is already buffered can stand alone; a line naming no crop always continues
+  the run, because table rows rarely repeat their crop.
+
+  Measured across the three bulletins: passages 357 → 506, passages carrying a
+  resolved subject **208 → 341**, and passages carrying more than one crop
+  **133 → 84**. Text coverage is unchanged (97–100%), and no district was lost —
+  the *percentage* placed in a district falls for UP and Rajasthan only because
+  the denominator grew; the absolute counts are 76 → 77 and 16 → 16.
+
+  What it did **not** clearly improve is retrieval. On an eight-query set over
+  the Rajasthan bulletin, MRR@5 went 0.875 → 0.833: pomegranate wilt improved
+  from rank 2 to rank 1, while two queries slipped to rank 3 behind short,
+  generic "spray during rain" fragments that finer chunking leaves competing on
+  their own. The scores are within ~1% of each other, so on a set this small
+  that is noise rather than a regression — but it is not evidence of a win
+  either. The demonstrated gain is in labelling, not ranking.
 
 * **PDF is what these bulletins arrive as, but not what the code is limited
   to.** Ingestion goes through MuPDF, which reads **PDF, DOCX, TXT, HTML, EPUB

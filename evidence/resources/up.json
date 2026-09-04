@@ -14,18 +14,18 @@
   },
   "extraction": {
     "pages": 45,
-    "passages": 177,
-    "subjectResolution": 0.452,
+    "passages": 240,
+    "subjectResolution": 0.5667,
     "districtsResolved": 75,
     "languages": {
-      "hi": 115,
-      "en": 62
+      "hi": 140,
+      "en": 100
     },
     "categories": {
-      "Crop": 53,
-      "Weather": 93,
-      "Horticulture": 11,
-      "Livestock": 20
+      "Crop": 91,
+      "Weather": 104,
+      "Horticulture": 29,
+      "Livestock": 16
     },
     "warnings": []
   },
@@ -43,7 +43,7 @@
         "code": "CROP-IN-UP",
         "name": "Crop advisory, Uttar Pradesh",
         "shortDesc": "Crop advisory at state granularity for Uttar Pradesh",
-        "longDesc": "Crop advisory capability covering Uttar Pradesh, standing on 51 indexed passages (source pages 1-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Uttar Pradesh, standing on 89 indexed passages (source pages 1-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -121,12 +121,6 @@
             "areaCode": "IN-UP-BALLIA",
             "areaLevel": "District",
             "areaName": "Ballia"
-          },
-          {
-            "codeScheme": "OPENAGRI-DISTRICT",
-            "areaCode": "IN-UP-BALRAMPUR",
-            "areaLevel": "District",
-            "areaName": "Balrampur"
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
@@ -223,12 +217,6 @@
             "areaCode": "IN-UP-GHAZIPUR",
             "areaLevel": "District",
             "areaName": "Ghazipur"
-          },
-          {
-            "codeScheme": "OPENAGRI-DISTRICT",
-            "areaCode": "IN-UP-GONDA",
-            "areaLevel": "District",
-            "areaName": "Gonda"
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
@@ -340,12 +328,6 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
-            "areaCode": "IN-UP-MAHRAJGANJ",
-            "areaLevel": "District",
-            "areaName": "Mahrajganj"
-          },
-          {
-            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-UP-MAINPURI",
             "areaLevel": "District",
             "areaName": "Mainpuri"
@@ -454,18 +436,6 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
-            "areaCode": "IN-UP-SHRAWASTI",
-            "areaLevel": "District",
-            "areaName": "Shrawasti"
-          },
-          {
-            "codeScheme": "OPENAGRI-DISTRICT",
-            "areaCode": "IN-UP-SIDDHARTHNAGAR",
-            "areaLevel": "District",
-            "areaName": "Siddharthnagar"
-          },
-          {
-            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-UP-SITAPUR",
             "areaLevel": "District",
             "areaName": "Sitapur"
@@ -538,35 +508,11 @@
             }
           },
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/cabbage",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CABBAGE",
-              "name": "Cabbage"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CAULIFLOWER",
-              "name": "Cauliflower"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
             "subjectType": "Crop",
             "descriptor": {
               "code": "CHILLI",
               "name": "Chilli"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CITRUS",
-              "name": "Citrus"
             }
           },
           {
@@ -658,14 +604,6 @@
             }
           },
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/okra",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "OKRA",
-              "name": "Okra"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
             "subjectType": "Crop",
             "descriptor": {
@@ -679,6 +617,14 @@
             "descriptor": {
               "code": "PAPAYA",
               "name": "Papaya"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/potato",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "POTATO",
+              "name": "Potato"
             }
           },
           {
@@ -728,6 +674,14 @@
               "code": "TOMATO",
               "name": "Tomato"
             }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/wheat",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "WHEAT",
+              "name": "Wheat"
+            }
           }
         ],
         "topics": [
@@ -735,6 +689,7 @@
           "Drainage",
           "Harvesting",
           "Irrigation",
+          "LivestockCare",
           "NutrientManagement",
           "PestManagement",
           "SoilMoisture",
@@ -746,7 +701,7 @@
           "sourceDocuments": [
             "imd_up_agromet.pdf"
           ],
-          "passageCount": 51,
+          "passageCount": 89,
           "pageRange": [
             1,
             44
@@ -761,7 +716,7 @@
         "code": "HORTICULTURE-IN-UP",
         "name": "Horticulture advisory, Uttar Pradesh",
         "shortDesc": "Horticulture advisory at state granularity for Uttar Pradesh",
-        "longDesc": "Horticulture advisory capability covering Uttar Pradesh, standing on 11 indexed passages (source pages 4-41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Horticulture advisory capability covering Uttar Pradesh, standing on 29 indexed passages (source pages 4-44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -771,8 +726,8 @@
           "Horticulture"
         ],
         "languages": [
-          "hi",
-          "en"
+          "en",
+          "hi"
         ],
         "coverageAreas": [
           {
@@ -785,11 +740,35 @@
         "geographicGranularity": "State",
         "agricultureSubjects": [
           {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/banana",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "BANANA",
+              "name": "Banana"
+            }
+          },
+          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
             "subjectType": "Crop",
             "descriptor": {
               "code": "BRINJAL",
               "name": "Brinjal"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cabbage",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CABBAGE",
+              "name": "Cabbage"
+            }
+          },
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CAULIFLOWER",
+              "name": "Cauliflower"
             }
           },
           {
@@ -849,147 +828,6 @@
             }
           },
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/turmeric",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "TURMERIC",
-              "name": "Turmeric"
-            }
-          }
-        ],
-        "topics": [
-          "DiseaseManagement",
-          "Drainage",
-          "Irrigation",
-          "NutrientManagement",
-          "PestManagement",
-          "SoilMoisture",
-          "Sowing",
-          "Spraying"
-        ],
-        "evidence": {
-          "sourceDocuments": [
-            "imd_up_agromet.pdf"
-          ],
-          "passageCount": 11,
-          "pageRange": [
-            4,
-            41
-          ]
-        },
-        "updateFrequency": "P1D"
-      }
-    },
-    {
-      "id": "res-imd-agromet-agriculture-livestock-in-up",
-      "descriptor": {
-        "code": "LIVESTOCK-IN-UP",
-        "name": "Livestock advisory, Uttar Pradesh",
-        "shortDesc": "Livestock advisory at state granularity for Uttar Pradesh",
-        "longDesc": "Livestock advisory capability covering Uttar Pradesh, standing on 18 indexed passages (source pages 18-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
-      },
-      "resourceAttributes": {
-        "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
-        "@type": "openagrinet:LivestockAdvisoryCapability",
-        "subjectCategories": [
-          "Crop",
-          "Livestock"
-        ],
-        "languages": [
-          "hi",
-          "en"
-        ],
-        "coverageAreas": [
-          {
-            "codeScheme": "ISO-3166-2",
-            "areaCode": "IN-UP",
-            "areaLevel": "State",
-            "areaName": "Uttar Pradesh"
-          }
-        ],
-        "geographicGranularity": "State",
-        "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/brinjal",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BRINJAL",
-              "name": "Brinjal"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/cauliflower",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CAULIFLOWER",
-              "name": "Cauliflower"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/chilli",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CHILLI",
-              "name": "Chilli"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CITRUS",
-              "name": "Citrus"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "COWPEA",
-              "name": "Cowpea"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/guava",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "GUAVA",
-              "name": "Guava"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "MANGO",
-              "name": "Mango"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/mustard",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "MUSTARD",
-              "name": "Mustard"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/onion",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "ONION",
-              "name": "Onion"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "PADDY",
-              "name": "Paddy"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/papaya",
             "subjectType": "Crop",
             "descriptor": {
@@ -1014,11 +852,73 @@
             }
           },
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/wheat",
+            "subjectId": "https://taxonomy.openagrinet.global/crop/turmeric",
             "subjectType": "Crop",
             "descriptor": {
-              "code": "WHEAT",
-              "name": "Wheat"
+              "code": "TURMERIC",
+              "name": "Turmeric"
+            }
+          }
+        ],
+        "topics": [
+          "DiseaseManagement",
+          "Drainage",
+          "Irrigation",
+          "LivestockCare",
+          "NutrientManagement",
+          "PestManagement",
+          "SoilMoisture",
+          "Sowing",
+          "Spraying"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_up_agromet.pdf"
+          ],
+          "passageCount": 29,
+          "pageRange": [
+            4,
+            44
+          ]
+        },
+        "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-livestock-in-up",
+      "descriptor": {
+        "code": "LIVESTOCK-IN-UP",
+        "name": "Livestock advisory, Uttar Pradesh",
+        "shortDesc": "Livestock advisory at state granularity for Uttar Pradesh",
+        "longDesc": "Livestock advisory capability covering Uttar Pradesh, standing on 14 indexed passages (source pages 18-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/LivestockAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:LivestockAdvisoryCapability",
+        "subjectCategories": [
+          "Crop",
+          "Livestock"
+        ],
+        "languages": [
+          "en",
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "ISO-3166-2",
+            "areaCode": "IN-UP",
+            "areaLevel": "State",
+            "areaName": "Uttar Pradesh"
+          }
+        ],
+        "geographicGranularity": "State",
+        "agricultureSubjects": [
+          {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/mango",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "MANGO",
+              "name": "Mango"
             }
           },
           {
@@ -1066,17 +966,14 @@
           "DiseaseManagement",
           "Irrigation",
           "LivestockCare",
-          "NutrientManagement",
-          "PestManagement",
           "SoilMoisture",
-          "Sowing",
           "Spraying"
         ],
         "evidence": {
           "sourceDocuments": [
             "imd_up_agromet.pdf"
           ],
-          "passageCount": 18,
+          "passageCount": 14,
           "pageRange": [
             18,
             43
@@ -1091,7 +988,7 @@
         "code": "WEATHER-IN-UP",
         "name": "Weather advisory, Uttar Pradesh",
         "shortDesc": "Weather forecast and warnings at state granularity for Uttar Pradesh",
-        "longDesc": "Weather advisory capability covering Uttar Pradesh, standing on 63 indexed passages (source pages 1-37). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Weather advisory capability covering Uttar Pradesh, standing on 74 indexed passages (source pages 1-43). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -1576,17 +1473,19 @@
           "Drainage",
           "Irrigation",
           "NutrientManagement",
+          "PestManagement",
           "SoilMoisture",
-          "Sowing"
+          "Sowing",
+          "Spraying"
         ],
         "evidence": {
           "sourceDocuments": [
             "imd_up_agromet.pdf"
           ],
-          "passageCount": 63,
+          "passageCount": 74,
           "pageRange": [
             1,
-            37
+            43
           ]
         },
         "updateFrequency": "P1D",

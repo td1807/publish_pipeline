@@ -22,7 +22,7 @@ from ..beckn.envelope import build_envelope
 from ..config import DATA_DIR, EVIDENCE_DIR
 from ..scenario1 import repair_encoding
 from ..ingest.language import check_devanagari_encoding, detect, repair_devanagari, score_terms
-from ..ingest.passages import UnknownState, detect_state, extract
+from ..ingest.passages import UnknownState, _split_on_crop_change, detect_state, extract
 from ..ingest.document_text import Document, Page, UnusableDocument, read_document
 from ..network_node import NetworkNode
 from ..publish import publish
@@ -464,6 +464,41 @@ def test_document_from_an_uncovered_state_is_refused_not_crashed(vocab):
         detect_state(doc, vocab)
     assert "coverage" in str(exc.value)
     assert isinstance(exc.value, UnusableDocument)
+
+
+# --- 8b. chunking on crop boundaries -----------------------------------------
+
+
+def test_advice_for_two_crops_is_not_one_passage(vocab):
+    """An advisory table runs one crop into the next with no blank line."""
+    block = (
+        "भिंडी की फसल में पीला मोजेक रोग के प्रकोप की संभावना रहती है। "
+        "रोकथाम के लिए मैलाथियान 50 ईसी 1.0 मिलीलीटर प्रति लीटर पानी की दर से छिड़काव करें।\n"
+        "टमाटर, मिर्च एवं बैंगन के फलों की नियमित तुड़ाई करें। "
+        "फल छेदक एवं फल मक्खी के प्रकोप की नियमित निगरानी करें।"
+    )
+    runs = _split_on_crop_change(block, vocab)
+    assert len(runs) == 2, "okra advice and tomato advice must not share a passage"
+    assert "भिंडी" in runs[0] and "टमाटर" not in runs[0]
+    assert "टमाटर" in runs[1]
+
+
+def test_a_line_naming_no_crop_stays_with_its_run(vocab):
+    """Table continuation lines rarely repeat the crop, so they must not split."""
+    block = (
+        "बाजरा की फसल को अरगट रोग से बचाने के लिए जाइनेब 2.5 किलोग्राम प्रति हेक्टेयर का प्रयोग करें।\n"
+        "छिड़काव सुबह या शाम के समय करें तथा वर्षा की संभावना होने पर न करें।"
+    )
+    assert len(_split_on_crop_change(block, vocab)) == 1
+
+
+def test_splitting_never_drops_text(vocab):
+    """Every character of a block survives the split, minus line breaks."""
+    doc = read_document(DATA_DIR / "imd_rajasthan_agromet.pdf")
+    for page in doc.pages[:6]:
+        for block in [b.strip() for b in page.text.split("\n\n") if b.strip()]:
+            joined = "".join(_split_on_crop_change(block, vocab)).replace("\n", "")
+            assert joined == "".join(l.strip() for l in block.split("\n") if l.strip())
 
 
 # --- 9a. repairing a mis-mapped Devanagari font ------------------------------
