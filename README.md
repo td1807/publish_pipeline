@@ -96,7 +96,7 @@ without running anything:
 
 * [`evidence/SCENARIO_1_TRANSCRIPT.txt`](evidence/SCENARIO_1_TRANSCRIPT.txt)
 * [`evidence/publish_payload.json`](evidence/publish_payload.json) — the actual
-  `/catalog/publish` body (157 KB as published, 280 KB pretty-printed here)
+  `/catalog/publish` body (159 KB as published, 284 KB pretty-printed here)
 * **[`evidence/resources/`](evidence/resources/) — one JSON file per bulletin**,
   each carrying that document's resources with their full `resourceAttributes`.
   Usually the more useful view: "what did *this* bulletin claim?" without
@@ -106,7 +106,7 @@ without running anything:
   |---|---|---|---|
   | `karnataka.json` | IN-KA | 71 | 168 KB |
   | `up.json` | IN-UP | 8 | 51 KB |
-  | `rajasthan.json` | IN-RJ | 5 | 17 KB |
+  | `rajasthan.json` | IN-RJ | 6 | 19 KB |
 
 * [`evidence/message_update.reference.json`](evidence/message_update.reference.json) —
   the target shape, kept alongside so a test can diff against it
@@ -141,9 +141,9 @@ up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 | passages | 241 | 240 | 29 |
 | language mix | `en` 240 / `hi` 1 | `en` 100 / **`hi` 140** | `en` 2 / **`hi` 27** |
 | subjects resolved | **83.4%** | 56.7% | **24.1%** |
-| districts resolved | 31 / 31 | 75 / 75 | 32 / 32 |
-| passages placed in a district | 98.3% | 32.1% | 55.2% |
-| **2a** resources | **71** | 8 | 5 |
+| districts resolved | 31 / 31 | 75 / 75 | 41 / 41 |
+| passages placed in a district | 98.3% | 32.1% | 58.6% |
+| **2a** resources | **71** | 8 | 6 |
 | capability types | 4 | 4 | 4 |
 | **2b** vectors | 241 | 240 | 29 |
 | max tokens / passage | 254 | 299 | 314 |
@@ -151,14 +151,14 @@ up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 | 2b time | 15–186 s | 22–154 s | 4–49 s |
 
 ```
-step 3   ACCEPTED — 3 catalogues, 84 resources, 161,020-byte payload
+step 3   ACCEPTED — 3 catalogues, 85 resources, 163,060-byte payload
          network layer holds resourceAttributes only:
-           84 resources · 51 subject URIs · 141 area codes · 13 topics
+           85 resources · 51 subject URIs · 150 area codes · 13 topics
            · 4 subject categories · 7 weather parameters · 2 languages
          and zero advisory text — checked against real sentences from the source
          round-trip verified: every field held exactly as published
 
-totals   510 passages · 84 resources · 510 vectors · 0 refused
+totals   510 passages · 85 resources · 510 vectors · 0 refused
 ```
 
 **Why the three states differ so much is the interesting part**, and it is real
@@ -393,10 +393,26 @@ imports into another package.
   format. A DOCX laid out that way extracts at least as well as the PDF. A
   spreadsheet of the same data would open and produce nonsense.
 
+* **Rajasthan's district list is the official 41, not only what the bulletin
+  names.** The file originally carried 32, authored from the bundled bulletin,
+  and the run reported "32 distinct" — which read like a shortfall against the
+  state's real district count but was the vocabulary's own size. Nine were
+  missing (Rajsamand, plus the eight districts retained in the December 2024
+  reorganisation: Balotra, Beawar, Deeg, Didwana-Kuchaman, Khairthal-Tijara,
+  Kotputli-Behror, Phalodi, Salumbar), and four more failed to match because
+  the bulletin spells them differently from the alias list — `झुंझुनु` for
+  `झुंझुनूं`, `सवाईमाधोपुर` unspaced, and two carrying the font defect
+  described below.
+
+  The bulletin's annexure does list all 41 bilingually (`डीग / Deeg`,
+  `Khairthal - Tijara`), so this was lost coverage, not absent data: Rajasthan
+  now places **41 / 41** districts against 32 before, 150 area codes against
+  141, and one further resource. Karnataka and UP are unchanged.
+
 * **Three states, and a fourth one is refused rather than guessed.**
   `_STATE_MARKERS` in `ingest/passages.py` knows Karnataka, Uttar Pradesh and
-  Rajasthan, and `taxonomy/data/districts.json` carries 138 districts across
-  those same three — authored from the three source bulletins. A bulletin from
+  Rajasthan, and `taxonomy/data/districts.json` carries 147 districts across
+  those same three. A bulletin from
   anywhere else cannot be given an area code without inventing a coverage
   claim, so it is refused by name:
 
@@ -461,13 +477,13 @@ imports into another package.
   `repair_devanagari()` in `ingest/language.py` undoes it, and `repair_encoding()`
   in `scenario1.py` decides whether to trust the result — it scores both versions
   against the crop and district vocabulary and keeps the repair only if more
-  known terms match. Measured: **Rajasthan 28 → 37 terms, applied; UP 121 → 78,
+  known terms match. Measured: **Rajasthan 34 → 46 terms, applied; UP 121 → 78,
   refused.** The same transform run over the UP bulletin would destroy it, which
   is exactly why the gate exists rather than a blanket "fix Devanagari" pass. A
   repair that fires says so on every run:
 
   ```
-  encoding fix applied — 9 more vocabulary term(s) now match (28 → 37)
+  encoding fix applied — 12 more vocabulary term(s) now match (34 → 46)
   ```
 
   Measured defect rate before repair: **0.7% of Devanagari words in UP, 0.1% in

@@ -16,7 +16,7 @@
     "pages": 30,
     "passages": 29,
     "subjectResolution": 0.2414,
-    "districtsResolved": 32,
+    "districtsResolved": 41,
     "languages": {
       "hi": 27,
       "en": 2
@@ -31,12 +31,12 @@
       "Only 7/29 passages resolved to a taxonomy subject. Crop coverage claims for this state are thin."
     ]
   },
-  "resourceCount": 5,
+  "resourceCount": 6,
   "capabilityTypes": {
     "CropAdvisoryCapability": 1,
     "HorticultureAdvisoryCapability": 1,
     "LivestockAdvisoryCapability": 1,
-    "WeatherAdvisoryCapability": 2
+    "WeatherAdvisoryCapability": 3
   },
   "resources": [
     {
@@ -275,7 +275,7 @@
         "code": "WEATHER-IN-RJ",
         "name": "Weather advisory, Rajasthan",
         "shortDesc": "Weather forecast and warnings at state granularity for Rajasthan",
-        "longDesc": "Weather advisory capability covering Rajasthan, standing on 20 indexed passages (source pages 1-30). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Weather advisory capability covering Rajasthan, standing on 19 indexed passages (source pages 1-30). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
@@ -308,6 +308,12 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BALOTRA",
+            "areaLevel": "District",
+            "areaName": "Balotra"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-RJ-BANSWARA",
             "areaLevel": "District",
             "areaName": "Banswara"
@@ -323,6 +329,12 @@
             "areaCode": "IN-RJ-BARMER",
             "areaLevel": "District",
             "areaName": "Barmer"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-BEAWAR",
+            "areaLevel": "District",
+            "areaName": "Beawar"
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
@@ -368,9 +380,21 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DEEG",
+            "areaLevel": "District",
+            "areaName": "Deeg"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-RJ-DHOLPUR",
             "areaLevel": "District",
             "areaName": "Dholpur"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-DIDWANA-KUCHAMAN",
+            "areaLevel": "District",
+            "areaName": "Didwana-Kuchaman"
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
@@ -434,6 +458,12 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-KOTPUTLI-BEHROR",
+            "areaLevel": "District",
+            "areaName": "Kotputli-Behror"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-RJ-NAGAUR",
             "areaLevel": "District",
             "areaName": "Nagaur"
@@ -446,9 +476,27 @@
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-PHALODI",
+            "areaLevel": "District",
+            "areaName": "Phalodi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
             "areaCode": "IN-RJ-PRATAPGARH",
             "areaLevel": "District",
             "areaName": "Pratapgarh"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-RAJSAMAND",
+            "areaLevel": "District",
+            "areaName": "Rajsamand"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-SALUMBAR",
+            "areaLevel": "District",
+            "areaName": "Salumbar"
           },
           {
             "codeScheme": "OPENAGRI-DISTRICT",
@@ -502,7 +550,7 @@
           "sourceDocuments": [
             "imd_rajasthan_agromet.pdf"
           ],
-          "passageCount": 20,
+          "passageCount": 19,
           "pageRange": [
             1,
             30
@@ -546,6 +594,49 @@
           "pageRange": [
             3,
             3
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-rj-khairthal-tijara",
+      "descriptor": {
+        "code": "WEATHER-IN-RJ-KHAIRTHAL-TIJARA",
+        "name": "Weather advisory, Khairthal-Tijara",
+        "shortDesc": "Weather forecast and warnings at district granularity for Khairthal-Tijara",
+        "longDesc": "Weather advisory capability covering Khairthal-Tijara, standing on 1 indexed passage (source page 26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "hi"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-RJ-KHAIRTHAL-TIJARA",
+            "areaLevel": "District",
+            "areaName": "Khairthal-Tijara"
+          }
+        ],
+        "geographicGranularity": "District",
+        "weatherParameters": [
+          "WindSpeed"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_rajasthan_agromet.pdf"
+          ],
+          "passageCount": 1,
+          "pageRange": [
+            26,
+            26
           ]
         },
         "updateFrequency": "P1D",

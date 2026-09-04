@@ -28,7 +28,7 @@ for illustration. Re-run it yourself with:
    │ 241 passages → 71       │  │ 241 passages → 241 vectors     │
    │ resources               │  │ 1024-d, cosine                 │
    │ ~0.01 s                 │  │ 15-186 s (see §5)              │
-   │ ~157 KB, leaves the     │  │ stays with the provider,        │
+   │ ~159 KB, leaves the     │  │ stays with the provider,        │
    │ building                │  │ never leaves                    │
    └───────────┬─────────────┘  └────────────────────────────────┘
                ▼
@@ -51,7 +51,7 @@ with two different lifetimes.
 |---|---|---|
 | answers | "**who** can help me?" | "**what** should I do?" |
 | audience | the network layer, and every consumer app on it | this provider's own node, on direct request |
-| size | 157 KB for three states | 510 vectors × 1024 floats |
+| size | 159 KB for three states | 510 vectors × 1024 floats |
 | leaves the building? | **yes** — published | **no** — never published |
 | goes stale? | slowly (coverage changes rarely) | n/a — read live at answer time |
 | contains advisory text? | **never** | that is its entire job |
@@ -114,13 +114,14 @@ decide what the catalogue can advertise.
 the result by scoring both versions against the crop and district vocabulary:
 
 ```
-Rajasthan   28 → 37 known terms   applied
+Rajasthan   34 → 46 known terms   applied
 UP         121 → 78 known terms   refused (different defect; the same
                                   transform would destroy this file)
 Karnataka    0 →  0               refused (no Devanagari)
 ```
 
-The catalogue for Rajasthan went from advertising 4 crops to 8, from text it
+The catalogue for Rajasthan went from advertising 4 crops to 8, and its
+districts from 28 matched to 41, from text it
 always held. A repair that fires prints `encoding fix applied — …` on the run.
 
 **Passages are cut on crop boundaries, not only on length.** An advisory table
@@ -352,7 +353,7 @@ flag. Membership resolves that cleanly where a regex could not.
 **No prose.** Every remaining string is scanned for advisory markers (dosages,
 `ml/l`, `@ 4`, imperatives like "apply"/"carry out") and for sentence-length
 runs. If prose appears anywhere, the publish is refused rather than downgraded.
-`test_no_advisory_text_in_payload` greps the finished 157 KB payload for real
+`test_no_advisory_text_in_payload` greps the finished 159 KB payload for real
 sentences taken from the source bulletins — `"NAA"`, `"moisture stress"`,
 `"ml/litre"` — and all three are absent.
 
@@ -370,7 +371,7 @@ caught a live bug*, and it is a good example of why the per-document JSON view
 >
 > `subjectCategories` is now the union of the capability's declared categories
 > and the subject types present, so `livestock-in-ka-bidar` declares
-> `["Crop", "Livestock"]`. Re-audit: 0 of 84 incoherent.
+> `["Crop", "Livestock"]`. Re-audit: 0 of 85 incoherent.
 
 The aggregate statistics could never have shown this. Reading one document's
 resources as JSON showed it immediately.
@@ -706,10 +707,10 @@ the two branches together.
 
 ```
 target        in-process NetworkNode stand-in
-validation    spec valid: 3 catalogue(s), 84 resource(s), 84 resourceAttributes checked
+validation    spec valid: 3 catalogue(s), 85 resource(s), 85 resourceAttributes checked
 payload       154,599 bytes
-ack           ACCEPTED — 3 catalogue(s), 84 resource(s) indexed,
-                         123,219 bytes of resourceAttributes held
+ack           ACCEPTED — 3 catalogue(s), 85 resource(s) indexed,
+                         124,817 bytes of resourceAttributes held
 round-trip    verified — every resourceAttributes field held as published
 ```
 
@@ -717,7 +718,7 @@ What the network layer now holds, and it is worth reading as a list of what it
 *can* match a question against:
 
 ```
-resources 84 · subject URIs 51 · area codes 141 · topics 13
+resources 85 · subject URIs 51 · area codes 150 · topics 13
 subject categories 4 · weather parameters 7 · languages 2
 ```
 
@@ -730,7 +731,7 @@ advisory text 'ml/litre'        present in network layer: False
 ```
 
 Stated in the right order: **the network layer holds the complete
-`resourceAttributes` of all 84 resources — 123 KB of it. What it does not hold
+`resourceAttributes` of all 85 resources — 125 KB of it. What it does not hold
 is document text.** That single asymmetry is why a consumer has to make two
 hops, and why this pipeline has two branches.
 

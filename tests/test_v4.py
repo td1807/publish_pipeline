@@ -724,8 +724,14 @@ def test_subject_uris_are_all_taxonomy_minted(envelope, vocab):
 
 
 def test_all_districts_resolve_for_each_state(vocab):
-    """Every district in the table is findable in its bulletin."""
-    expected = {"IN-KA": 31, "IN-UP": 75, "IN-RJ": 32}
+    """Every district in the table is findable in its bulletin.
+
+    Rajasthan's 41 is the official district count after the December 2024
+    reorganisation, and all 41 resolve: the bulletin's annexure lists them
+    bilingually, so a district missing from this table is lost coverage rather
+    than absent data.
+    """
+    expected = {"IN-KA": 31, "IN-UP": 75, "IN-RJ": 41}
     for path in (KARNATAKA, UP, RAJASTHAN):
         doc = read_document(path)
         code = detect_state(doc, vocab)

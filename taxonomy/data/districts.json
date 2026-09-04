@@ -2,6 +2,8 @@
   "_comment": [
     "District vocabulary, per state, authored FROM the three source bulletins.",
     "Karnataka and Rajasthan spell their districts in Latin; Uttar Pradesh spells",
+    "",
+    "Rajasthan carries all 41 districts as of the December 2024 reorganisation (the original 33 plus the 8 retained new ones), not only those named in the bundled bulletin -- a district the vocabulary does not know cannot be published as coverage even when the bulletin advises on it.",
     "them in Devanagari. The 'aliases' lists carry spelling variants AND the",
     "glyph-corrupted forms these specific PDFs actually emit (e.g. the UP file",
     "renders 'shaahjahaanpur' with a mis-mapped consonant). Absorbing the",
@@ -16,156 +18,955 @@
     "state_name": "Karnataka",
     "primary_language": "en",
     "districts": [
-      {"name": "Bagalkote", "aliases": ["bagalkot"]},
-      {"name": "Ballari", "aliases": ["bellary"]},
-      {"name": "Belagavi", "aliases": ["belgaum"]},
-      {"name": "Bengaluru Rural", "aliases": ["bengaluru (rural)", "bangalore rural"]},
-      {"name": "Bengaluru Urban", "aliases": ["bengaluru (urban)", "bangalore urban", "bengaluru city"]},
-      {"name": "Bidar", "aliases": []},
-      {"name": "Chamarajanagara", "aliases": ["chamarajanagar", "chamrajnagar"]},
-      {"name": "Chikkaballapura", "aliases": ["chikballapur", "chikkaballapur"]},
-      {"name": "Chikkamagaluru", "aliases": ["chikmagalur"]},
-      {"name": "Chitradurga", "aliases": []},
-      {"name": "Dakshina Kannada", "aliases": ["dakshin kannada", "mangaluru"]},
-      {"name": "Davanagere", "aliases": ["davangere"]},
-      {"name": "Dharwad", "aliases": []},
-      {"name": "Gadag", "aliases": []},
-      {"name": "Hassan", "aliases": ["hasan"]},
-      {"name": "Haveri", "aliases": []},
-      {"name": "Kalaburagi", "aliases": ["kalburgi", "gulbarga"]},
-      {"name": "Kodagu", "aliases": ["coorg"]},
-      {"name": "Kolar", "aliases": []},
-      {"name": "Koppal", "aliases": []},
-      {"name": "Mandya", "aliases": []},
-      {"name": "Mysuru", "aliases": ["mysore"]},
-      {"name": "Raichur", "aliases": []},
-      {"name": "Ramanagara", "aliases": ["ramanagaram"]},
-      {"name": "Shivamogga", "aliases": ["shimoga"]},
-      {"name": "Tumakuru", "aliases": ["tumkur"]},
-      {"name": "Udupi", "aliases": []},
-      {"name": "Uttara Kannada", "aliases": ["uttar kannada", "karwar"]},
-      {"name": "Vijayanagara", "aliases": []},
-      {"name": "Vijayapura", "aliases": ["bijapur"]},
-      {"name": "Yadgir", "aliases": ["yadagiri"]}
+      {
+        "name": "Bagalkote",
+        "aliases": [
+          "bagalkot"
+        ]
+      },
+      {
+        "name": "Ballari",
+        "aliases": [
+          "bellary"
+        ]
+      },
+      {
+        "name": "Belagavi",
+        "aliases": [
+          "belgaum"
+        ]
+      },
+      {
+        "name": "Bengaluru Rural",
+        "aliases": [
+          "bengaluru (rural)",
+          "bangalore rural"
+        ]
+      },
+      {
+        "name": "Bengaluru Urban",
+        "aliases": [
+          "bengaluru (urban)",
+          "bangalore urban",
+          "bengaluru city"
+        ]
+      },
+      {
+        "name": "Bidar",
+        "aliases": []
+      },
+      {
+        "name": "Chamarajanagara",
+        "aliases": [
+          "chamarajanagar",
+          "chamrajnagar"
+        ]
+      },
+      {
+        "name": "Chikkaballapura",
+        "aliases": [
+          "chikballapur",
+          "chikkaballapur"
+        ]
+      },
+      {
+        "name": "Chikkamagaluru",
+        "aliases": [
+          "chikmagalur"
+        ]
+      },
+      {
+        "name": "Chitradurga",
+        "aliases": []
+      },
+      {
+        "name": "Dakshina Kannada",
+        "aliases": [
+          "dakshin kannada",
+          "mangaluru"
+        ]
+      },
+      {
+        "name": "Davanagere",
+        "aliases": [
+          "davangere"
+        ]
+      },
+      {
+        "name": "Dharwad",
+        "aliases": []
+      },
+      {
+        "name": "Gadag",
+        "aliases": []
+      },
+      {
+        "name": "Hassan",
+        "aliases": [
+          "hasan"
+        ]
+      },
+      {
+        "name": "Haveri",
+        "aliases": []
+      },
+      {
+        "name": "Kalaburagi",
+        "aliases": [
+          "kalburgi",
+          "gulbarga"
+        ]
+      },
+      {
+        "name": "Kodagu",
+        "aliases": [
+          "coorg"
+        ]
+      },
+      {
+        "name": "Kolar",
+        "aliases": []
+      },
+      {
+        "name": "Koppal",
+        "aliases": []
+      },
+      {
+        "name": "Mandya",
+        "aliases": []
+      },
+      {
+        "name": "Mysuru",
+        "aliases": [
+          "mysore"
+        ]
+      },
+      {
+        "name": "Raichur",
+        "aliases": []
+      },
+      {
+        "name": "Ramanagara",
+        "aliases": [
+          "ramanagaram"
+        ]
+      },
+      {
+        "name": "Shivamogga",
+        "aliases": [
+          "shimoga"
+        ]
+      },
+      {
+        "name": "Tumakuru",
+        "aliases": [
+          "tumkur"
+        ]
+      },
+      {
+        "name": "Udupi",
+        "aliases": []
+      },
+      {
+        "name": "Uttara Kannada",
+        "aliases": [
+          "uttar kannada",
+          "karwar"
+        ]
+      },
+      {
+        "name": "Vijayanagara",
+        "aliases": []
+      },
+      {
+        "name": "Vijayapura",
+        "aliases": [
+          "bijapur"
+        ]
+      },
+      {
+        "name": "Yadgir",
+        "aliases": [
+          "yadagiri"
+        ]
+      }
     ]
   },
   "IN-RJ": {
     "state_name": "Rajasthan",
     "primary_language": "hi",
     "districts": [
-      {"name": "Ajmer", "aliases": ["अजमेर"]},
-      {"name": "Alwar", "aliases": ["अलवर"]},
-      {"name": "Banswara", "aliases": ["बांसवाड़ा"]},
-      {"name": "Baran", "aliases": ["बारां"]},
-      {"name": "Barmer", "aliases": ["बाड़मेर"]},
-      {"name": "Bharatpur", "aliases": ["भरतपुर"]},
-      {"name": "Bhilwara", "aliases": ["भीलवाड़ा"]},
-      {"name": "Bikaner", "aliases": ["बीकानेर"]},
-      {"name": "Bundi", "aliases": ["बूंदी"]},
-      {"name": "Chittorgarh", "aliases": ["चित्तौड़गढ़"]},
-      {"name": "Churu", "aliases": ["चूरू"]},
-      {"name": "Dausa", "aliases": ["दौसा"]},
-      {"name": "Dholpur", "aliases": ["धौलपुर", "dhaulpur"]},
-      {"name": "Dungarpur", "aliases": ["डूंगरपुर"]},
-      {"name": "Hanumangarh", "aliases": ["हनुमानगढ़"]},
-      {"name": "Jaipur", "aliases": ["जयपुर"]},
-      {"name": "Jaisalmer", "aliases": ["जैसलमेर"]},
-      {"name": "Jalore", "aliases": ["जालोर"]},
-      {"name": "Jhalawar", "aliases": ["झालावाड़"]},
-      {"name": "Jhunjhunu", "aliases": ["झुंझुनूं"]},
-      {"name": "Jodhpur", "aliases": ["जोधपुर"]},
-      {"name": "Karauli", "aliases": ["करौली"]},
-      {"name": "Kota", "aliases": ["कोटा"]},
-      {"name": "Nagaur", "aliases": ["नागौर"]},
-      {"name": "Pali", "aliases": ["पाली"]},
-      {"name": "Pratapgarh", "aliases": ["प्रतापगढ़"]},
-      {"name": "Sawai Madhopur", "aliases": ["sawaimadhopur", "सवाई माधोपुर"]},
-      {"name": "Sikar", "aliases": ["सीकर"]},
-      {"name": "Sirohi", "aliases": ["सिरोही"]},
-      {"name": "Sriganganagar", "aliases": ["sri ganganagar", "श्रीगंगानगर"]},
-      {"name": "Tonk", "aliases": ["टोंक"]},
-      {"name": "Udaipur", "aliases": ["उदयपुर"]}
+      {
+        "name": "Ajmer",
+        "aliases": [
+          "अजमेर"
+        ]
+      },
+      {
+        "name": "Alwar",
+        "aliases": [
+          "अलवर"
+        ]
+      },
+      {
+        "name": "Balotra",
+        "aliases": [
+          "बालोतरा"
+        ]
+      },
+      {
+        "name": "Banswara",
+        "aliases": [
+          "बांसवाड़ा",
+          "बााँसवाड़ा"
+        ]
+      },
+      {
+        "name": "Baran",
+        "aliases": [
+          "बारां"
+        ]
+      },
+      {
+        "name": "Barmer",
+        "aliases": [
+          "बाड़मेर"
+        ]
+      },
+      {
+        "name": "Beawar",
+        "aliases": [
+          "ब्यावर"
+        ]
+      },
+      {
+        "name": "Bharatpur",
+        "aliases": [
+          "भरतपुर"
+        ]
+      },
+      {
+        "name": "Bhilwara",
+        "aliases": [
+          "भीलवाड़ा"
+        ]
+      },
+      {
+        "name": "Bikaner",
+        "aliases": [
+          "बीकानेर"
+        ]
+      },
+      {
+        "name": "Bundi",
+        "aliases": [
+          "बूंदी"
+        ]
+      },
+      {
+        "name": "Chittorgarh",
+        "aliases": [
+          "चित्तौड़गढ़"
+        ]
+      },
+      {
+        "name": "Churu",
+        "aliases": [
+          "चूरू"
+        ]
+      },
+      {
+        "name": "Dausa",
+        "aliases": [
+          "दौसा"
+        ]
+      },
+      {
+        "name": "Deeg",
+        "aliases": [
+          "डीग"
+        ]
+      },
+      {
+        "name": "Dholpur",
+        "aliases": [
+          "धौलपुर",
+          "dhaulpur"
+        ]
+      },
+      {
+        "name": "Didwana-Kuchaman",
+        "aliases": [
+          "didwana kuchaman",
+          "डीडवाना-कुचामन",
+          "डीडवाना",
+          "कुचामन"
+        ]
+      },
+      {
+        "name": "Dungarpur",
+        "aliases": [
+          "डूंगरपुर",
+          "ड्ूंगरपुर"
+        ]
+      },
+      {
+        "name": "Hanumangarh",
+        "aliases": [
+          "हनुमानगढ़"
+        ]
+      },
+      {
+        "name": "Jaipur",
+        "aliases": [
+          "जयपुर"
+        ]
+      },
+      {
+        "name": "Jaisalmer",
+        "aliases": [
+          "जैसलमेर"
+        ]
+      },
+      {
+        "name": "Jalore",
+        "aliases": [
+          "जालोर"
+        ]
+      },
+      {
+        "name": "Jhalawar",
+        "aliases": [
+          "झालावाड़"
+        ]
+      },
+      {
+        "name": "Jhunjhunu",
+        "aliases": [
+          "झुंझुनूं",
+          "झुंझुनु"
+        ]
+      },
+      {
+        "name": "Jodhpur",
+        "aliases": [
+          "जोधपुर"
+        ]
+      },
+      {
+        "name": "Karauli",
+        "aliases": [
+          "करौली"
+        ]
+      },
+      {
+        "name": "Khairthal-Tijara",
+        "aliases": [
+          "khairthal tijara",
+          "खैरथल-तिजारा",
+          "खैरथल",
+          "तिजारा"
+        ]
+      },
+      {
+        "name": "Kota",
+        "aliases": [
+          "कोटा"
+        ]
+      },
+      {
+        "name": "Kotputli-Behror",
+        "aliases": [
+          "kotputli behror",
+          "kotputli baharod",
+          "कोटपूतली-बहरोड़",
+          "कोटपूतली",
+          "बहरोड़",
+          "kothputali behror",
+          "kothputali",
+          "behror",
+          "कोटबुतली-हिरोड"
+        ]
+      },
+      {
+        "name": "Nagaur",
+        "aliases": [
+          "नागौर"
+        ]
+      },
+      {
+        "name": "Pali",
+        "aliases": [
+          "पाली"
+        ]
+      },
+      {
+        "name": "Phalodi",
+        "aliases": [
+          "फलोदी"
+        ]
+      },
+      {
+        "name": "Pratapgarh",
+        "aliases": [
+          "प्रतापगढ़"
+        ]
+      },
+      {
+        "name": "Rajsamand",
+        "aliases": [
+          "राजसमंद",
+          "राजसमन्द"
+        ]
+      },
+      {
+        "name": "Salumbar",
+        "aliases": [
+          "salumber",
+          "सलूंबर",
+          "सलूम्बर"
+        ]
+      },
+      {
+        "name": "Sawai Madhopur",
+        "aliases": [
+          "sawaimadhopur",
+          "सवाई माधोपुर",
+          "सवाईमाधोपुर"
+        ]
+      },
+      {
+        "name": "Sikar",
+        "aliases": [
+          "सीकर"
+        ]
+      },
+      {
+        "name": "Sirohi",
+        "aliases": [
+          "सिरोही"
+        ]
+      },
+      {
+        "name": "Sriganganagar",
+        "aliases": [
+          "sri ganganagar",
+          "श्रीगंगानगर"
+        ]
+      },
+      {
+        "name": "Tonk",
+        "aliases": [
+          "टोंक"
+        ]
+      },
+      {
+        "name": "Udaipur",
+        "aliases": [
+          "उदयपुर"
+        ]
+      }
     ]
   },
   "IN-UP": {
     "state_name": "Uttar Pradesh",
     "primary_language": "hi",
     "districts": [
-      {"name": "Agra", "aliases": ["आगरा"]},
-      {"name": "Aligarh", "aliases": ["अलीगढ़"]},
-      {"name": "Ambedkar Nagar", "aliases": ["अम्बेडकर नगर", "अंबेडकर नगर"]},
-      {"name": "Amethi", "aliases": ["अमेठी"]},
-      {"name": "Amroha", "aliases": ["अमरोहा", "ज्योतिबा फुले नगर", "ज्योवतबा फुले नगर"]},
-      {"name": "Auraiya", "aliases": ["औरैया"]},
-      {"name": "Ayodhya", "aliases": ["अयोध्या", "faizabad"]},
-      {"name": "Azamgarh", "aliases": ["आजमगढ़", "आिमगढ़"]},
-      {"name": "Baghpat", "aliases": ["बागपत"]},
-      {"name": "Bahraich", "aliases": ["बहराइच", "बहराईच"]},
-      {"name": "Ballia", "aliases": ["बलिया", "बवलया"]},
-      {"name": "Balrampur", "aliases": ["बलरामपुर"]},
-      {"name": "Banda", "aliases": ["बांदा"]},
-      {"name": "Barabanki", "aliases": ["बाराबंकी"]},
-      {"name": "Bareilly", "aliases": ["बरेली"]},
-      {"name": "Basti", "aliases": ["बस्ती"]},
-      {"name": "Bijnor", "aliases": ["बिजनौर", "वबजनौर", "bijnaur"]},
-      {"name": "Budaun", "aliases": ["बदायूं", "बदायूूँ", "badaun"]},
-      {"name": "Bulandshahr", "aliases": ["बुलंदशहर", "बुलन्दिहर"]},
-      {"name": "Chandauli", "aliases": ["चंदौली"]},
-      {"name": "Chitrakoot", "aliases": ["चित्रकूट", "वचत्रकूि", "chitrakut"]},
-      {"name": "Deoria", "aliases": ["देवरिया", "देिररया"]},
-      {"name": "Etah", "aliases": ["एटा", "एिा"]},
-      {"name": "Etawah", "aliases": ["इटावा", "इिािा"]},
-      {"name": "Farrukhabad", "aliases": ["फर्रुखाबाद"]},
-      {"name": "Fatehpur", "aliases": ["फतेहपुर"]},
-      {"name": "Firozabad", "aliases": ["फिरोजाबाद", "वफरोजाबाद"]},
-      {"name": "Gautam Buddha Nagar", "aliases": ["गौतमबुद्धनगर", "गौतम बुद्ध नगर", "noida"]},
-      {"name": "Ghaziabad", "aliases": ["गाजियाबाद", "गावजयाबाद"]},
-      {"name": "Ghazipur", "aliases": ["गाजीपुर", "गािीपुर"]},
-      {"name": "Gonda", "aliases": ["गोंडा"]},
-      {"name": "Gorakhpur", "aliases": ["गोरखपुर"]},
-      {"name": "Hamirpur", "aliases": ["हमीरपुर"]},
-      {"name": "Hapur", "aliases": ["हापुड", "हापुड़"]},
-      {"name": "Hardoi", "aliases": ["हरदोई"]},
-      {"name": "Hathras", "aliases": ["हाथरस"]},
-      {"name": "Jalaun", "aliases": ["जालौन"]},
-      {"name": "Jaunpur", "aliases": ["जौनपुर"]},
-      {"name": "Jhansi", "aliases": ["झांसी", "झाूँसी"]},
-      {"name": "Kannauj", "aliases": ["कन्नौज"]},
-      {"name": "Kanpur Dehat", "aliases": ["कानपुर देहात"]},
-      {"name": "Kanpur Nagar", "aliases": ["कानपुर नगर", "कानपुर"]},
-      {"name": "Kasganj", "aliases": ["कासगंज", "कांसगंज", "कांशीराम नगर", "कांिीराम नगर"]},
-      {"name": "Kaushambi", "aliases": ["कौशांबी", "कौिांबी"]},
-      {"name": "Kushinagar", "aliases": ["कुशीनगर", "कुिीनगर"]},
-      {"name": "Lakhimpur Kheri", "aliases": ["लखीमपुर खीरी", "लखीमपुर"]},
-      {"name": "Lalitpur", "aliases": ["ललितपुर", "लवलतपुर"]},
-      {"name": "Lucknow", "aliases": ["लखनऊ"]},
-      {"name": "Mahoba", "aliases": ["महोबा"]},
-      {"name": "Mahrajganj", "aliases": ["महराजगंज", "महाराजगंज"]},
-      {"name": "Mainpuri", "aliases": ["मैनपुरी"]},
-      {"name": "Mathura", "aliases": ["मथुरा"]},
-      {"name": "Mau", "aliases": ["मऊ"]},
-      {"name": "Meerut", "aliases": ["मेरठ", "मोदीपुरम"]},
-      {"name": "Mirzapur", "aliases": ["मिर्जापुर", "वमिाुपुर"]},
-      {"name": "Moradabad", "aliases": ["मुरादाबाद"]},
-      {"name": "Muzaffarnagar", "aliases": ["मुजफ्फरनगर", "मुिफ्फरनगर"]},
-      {"name": "Pilibhit", "aliases": ["पीलीभीत"]},
-      {"name": "Pratapgarh", "aliases": ["प्रतापगढ़"]},
-      {"name": "Prayagraj", "aliases": ["प्रयागराज", "allahabad"]},
-      {"name": "Raebareli", "aliases": ["रायबरेली"]},
-      {"name": "Rampur", "aliases": ["रामपुर"]},
-      {"name": "Saharanpur", "aliases": ["सहारनपुर"]},
-      {"name": "Sambhal", "aliases": ["संभल"]},
-      {"name": "Sant Kabir Nagar", "aliases": ["संत कबीर नगर"]},
-      {"name": "Sant Ravidas Nagar", "aliases": ["संत रविदास नगर", "भदोही", "bhadohi"]},
-      {"name": "Shahjahanpur", "aliases": ["शाहजहांपुर", "िाहजहाूँपुर"]},
-      {"name": "Shamli", "aliases": ["शामली", "िामली"]},
-      {"name": "Shrawasti", "aliases": ["श्रावस्ती", "श्रािस्ती"]},
-      {"name": "Siddharthnagar", "aliases": ["सिद्धार्थनगर", "वसद्धाथुनगर"]},
-      {"name": "Sitapur", "aliases": ["सीतापुर"]},
-      {"name": "Sonbhadra", "aliases": ["सोनभद्र"]},
-      {"name": "Sultanpur", "aliases": ["सुल्तानपुर"]},
-      {"name": "Unnao", "aliases": ["उन्नाव", "उन्नाि"]},
-      {"name": "Varanasi", "aliases": ["वाराणसी", "िाराणसी"]}
+      {
+        "name": "Agra",
+        "aliases": [
+          "आगरा"
+        ]
+      },
+      {
+        "name": "Aligarh",
+        "aliases": [
+          "अलीगढ़"
+        ]
+      },
+      {
+        "name": "Ambedkar Nagar",
+        "aliases": [
+          "अम्बेडकर नगर",
+          "अंबेडकर नगर"
+        ]
+      },
+      {
+        "name": "Amethi",
+        "aliases": [
+          "अमेठी"
+        ]
+      },
+      {
+        "name": "Amroha",
+        "aliases": [
+          "अमरोहा",
+          "ज्योतिबा फुले नगर",
+          "ज्योवतबा फुले नगर"
+        ]
+      },
+      {
+        "name": "Auraiya",
+        "aliases": [
+          "औरैया"
+        ]
+      },
+      {
+        "name": "Ayodhya",
+        "aliases": [
+          "अयोध्या",
+          "faizabad"
+        ]
+      },
+      {
+        "name": "Azamgarh",
+        "aliases": [
+          "आजमगढ़",
+          "आिमगढ़"
+        ]
+      },
+      {
+        "name": "Baghpat",
+        "aliases": [
+          "बागपत"
+        ]
+      },
+      {
+        "name": "Bahraich",
+        "aliases": [
+          "बहराइच",
+          "बहराईच"
+        ]
+      },
+      {
+        "name": "Ballia",
+        "aliases": [
+          "बलिया",
+          "बवलया"
+        ]
+      },
+      {
+        "name": "Balrampur",
+        "aliases": [
+          "बलरामपुर"
+        ]
+      },
+      {
+        "name": "Banda",
+        "aliases": [
+          "बांदा"
+        ]
+      },
+      {
+        "name": "Barabanki",
+        "aliases": [
+          "बाराबंकी"
+        ]
+      },
+      {
+        "name": "Bareilly",
+        "aliases": [
+          "बरेली"
+        ]
+      },
+      {
+        "name": "Basti",
+        "aliases": [
+          "बस्ती"
+        ]
+      },
+      {
+        "name": "Bijnor",
+        "aliases": [
+          "बिजनौर",
+          "वबजनौर",
+          "bijnaur"
+        ]
+      },
+      {
+        "name": "Budaun",
+        "aliases": [
+          "बदायूं",
+          "बदायूूँ",
+          "badaun"
+        ]
+      },
+      {
+        "name": "Bulandshahr",
+        "aliases": [
+          "बुलंदशहर",
+          "बुलन्दिहर"
+        ]
+      },
+      {
+        "name": "Chandauli",
+        "aliases": [
+          "चंदौली"
+        ]
+      },
+      {
+        "name": "Chitrakoot",
+        "aliases": [
+          "चित्रकूट",
+          "वचत्रकूि",
+          "chitrakut"
+        ]
+      },
+      {
+        "name": "Deoria",
+        "aliases": [
+          "देवरिया",
+          "देिररया"
+        ]
+      },
+      {
+        "name": "Etah",
+        "aliases": [
+          "एटा",
+          "एिा"
+        ]
+      },
+      {
+        "name": "Etawah",
+        "aliases": [
+          "इटावा",
+          "इिािा"
+        ]
+      },
+      {
+        "name": "Farrukhabad",
+        "aliases": [
+          "फर्रुखाबाद"
+        ]
+      },
+      {
+        "name": "Fatehpur",
+        "aliases": [
+          "फतेहपुर"
+        ]
+      },
+      {
+        "name": "Firozabad",
+        "aliases": [
+          "फिरोजाबाद",
+          "वफरोजाबाद"
+        ]
+      },
+      {
+        "name": "Gautam Buddha Nagar",
+        "aliases": [
+          "गौतमबुद्धनगर",
+          "गौतम बुद्ध नगर",
+          "noida"
+        ]
+      },
+      {
+        "name": "Ghaziabad",
+        "aliases": [
+          "गाजियाबाद",
+          "गावजयाबाद"
+        ]
+      },
+      {
+        "name": "Ghazipur",
+        "aliases": [
+          "गाजीपुर",
+          "गािीपुर"
+        ]
+      },
+      {
+        "name": "Gonda",
+        "aliases": [
+          "गोंडा"
+        ]
+      },
+      {
+        "name": "Gorakhpur",
+        "aliases": [
+          "गोरखपुर"
+        ]
+      },
+      {
+        "name": "Hamirpur",
+        "aliases": [
+          "हमीरपुर"
+        ]
+      },
+      {
+        "name": "Hapur",
+        "aliases": [
+          "हापुड",
+          "हापुड़"
+        ]
+      },
+      {
+        "name": "Hardoi",
+        "aliases": [
+          "हरदोई"
+        ]
+      },
+      {
+        "name": "Hathras",
+        "aliases": [
+          "हाथरस"
+        ]
+      },
+      {
+        "name": "Jalaun",
+        "aliases": [
+          "जालौन"
+        ]
+      },
+      {
+        "name": "Jaunpur",
+        "aliases": [
+          "जौनपुर"
+        ]
+      },
+      {
+        "name": "Jhansi",
+        "aliases": [
+          "झांसी",
+          "झाूँसी"
+        ]
+      },
+      {
+        "name": "Kannauj",
+        "aliases": [
+          "कन्नौज"
+        ]
+      },
+      {
+        "name": "Kanpur Dehat",
+        "aliases": [
+          "कानपुर देहात"
+        ]
+      },
+      {
+        "name": "Kanpur Nagar",
+        "aliases": [
+          "कानपुर नगर",
+          "कानपुर"
+        ]
+      },
+      {
+        "name": "Kasganj",
+        "aliases": [
+          "कासगंज",
+          "कांसगंज",
+          "कांशीराम नगर",
+          "कांिीराम नगर"
+        ]
+      },
+      {
+        "name": "Kaushambi",
+        "aliases": [
+          "कौशांबी",
+          "कौिांबी"
+        ]
+      },
+      {
+        "name": "Kushinagar",
+        "aliases": [
+          "कुशीनगर",
+          "कुिीनगर"
+        ]
+      },
+      {
+        "name": "Lakhimpur Kheri",
+        "aliases": [
+          "लखीमपुर खीरी",
+          "लखीमपुर"
+        ]
+      },
+      {
+        "name": "Lalitpur",
+        "aliases": [
+          "ललितपुर",
+          "लवलतपुर"
+        ]
+      },
+      {
+        "name": "Lucknow",
+        "aliases": [
+          "लखनऊ"
+        ]
+      },
+      {
+        "name": "Mahoba",
+        "aliases": [
+          "महोबा"
+        ]
+      },
+      {
+        "name": "Mahrajganj",
+        "aliases": [
+          "महराजगंज",
+          "महाराजगंज"
+        ]
+      },
+      {
+        "name": "Mainpuri",
+        "aliases": [
+          "मैनपुरी"
+        ]
+      },
+      {
+        "name": "Mathura",
+        "aliases": [
+          "मथुरा"
+        ]
+      },
+      {
+        "name": "Mau",
+        "aliases": [
+          "मऊ"
+        ]
+      },
+      {
+        "name": "Meerut",
+        "aliases": [
+          "मेरठ",
+          "मोदीपुरम"
+        ]
+      },
+      {
+        "name": "Mirzapur",
+        "aliases": [
+          "मिर्जापुर",
+          "वमिाुपुर"
+        ]
+      },
+      {
+        "name": "Moradabad",
+        "aliases": [
+          "मुरादाबाद"
+        ]
+      },
+      {
+        "name": "Muzaffarnagar",
+        "aliases": [
+          "मुजफ्फरनगर",
+          "मुिफ्फरनगर"
+        ]
+      },
+      {
+        "name": "Pilibhit",
+        "aliases": [
+          "पीलीभीत"
+        ]
+      },
+      {
+        "name": "Pratapgarh",
+        "aliases": [
+          "प्रतापगढ़"
+        ]
+      },
+      {
+        "name": "Prayagraj",
+        "aliases": [
+          "प्रयागराज",
+          "allahabad"
+        ]
+      },
+      {
+        "name": "Raebareli",
+        "aliases": [
+          "रायबरेली"
+        ]
+      },
+      {
+        "name": "Rampur",
+        "aliases": [
+          "रामपुर"
+        ]
+      },
+      {
+        "name": "Saharanpur",
+        "aliases": [
+          "सहारनपुर"
+        ]
+      },
+      {
+        "name": "Sambhal",
+        "aliases": [
+          "संभल"
+        ]
+      },
+      {
+        "name": "Sant Kabir Nagar",
+        "aliases": [
+          "संत कबीर नगर"
+        ]
+      },
+      {
+        "name": "Sant Ravidas Nagar",
+        "aliases": [
+          "संत रविदास नगर",
+          "भदोही",
+          "bhadohi"
+        ]
+      },
+      {
+        "name": "Shahjahanpur",
+        "aliases": [
+          "शाहजहांपुर",
+          "िाहजहाूँपुर"
+        ]
+      },
+      {
+        "name": "Shamli",
+        "aliases": [
+          "शामली",
+          "िामली"
+        ]
+      },
+      {
+        "name": "Shrawasti",
+        "aliases": [
+          "श्रावस्ती",
+          "श्रािस्ती"
+        ]
+      },
+      {
+        "name": "Siddharthnagar",
+        "aliases": [
+          "सिद्धार्थनगर",
+          "वसद्धाथुनगर"
+        ]
+      },
+      {
+        "name": "Sitapur",
+        "aliases": [
+          "सीतापुर"
+        ]
+      },
+      {
+        "name": "Sonbhadra",
+        "aliases": [
+          "सोनभद्र"
+        ]
+      },
+      {
+        "name": "Sultanpur",
+        "aliases": [
+          "सुल्तानपुर"
+        ]
+      },
+      {
+        "name": "Unnao",
+        "aliases": [
+          "उन्नाव",
+          "उन्नाि"
+        ]
+      },
+      {
+        "name": "Varanasi",
+        "aliases": [
+          "वाराणसी",
+          "िाराणसी"
+        ]
+      }
     ]
   }
 }
