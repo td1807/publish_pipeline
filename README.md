@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 30 tests, ~9s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 33 tests, ~9s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -201,7 +201,7 @@ which is what the 1024-d multilingual model is buying. A Hindi query
 | `taxonomy/vocab.py` | crop/district/topic vocabulary + alias resolution | **the only thing both branches share** |
 | `taxonomy/ids.py` | resource-id and point-id rules | why a reissue updates instead of duplicating |
 | `taxonomy/data/*.json` | the vocabulary itself | what we can and cannot recognise |
-| `ingest/pdf_text.py` | PDF → pages | ingestion, and when it refuses |
+| `ingest/document_text.py` | file → pages | ingestion, the formats it reads, and when it refuses |
 | `ingest/language.py` | script/language detection + encoding check | the multi-language story |
 | `ingest/passages.py` | pages → `Passage` (text **and** facets in one object) | **why 2a and 2b cannot drift** |
 | `beckn/models.py` | pydantic mirrors of `beckn.yaml` | spec conformance |
@@ -281,12 +281,13 @@ imports into another package.
    simultaneously a canonical topic name and a word any prose detector would
    flag.
 
-8. **A document we cannot stand behind is refused, not guessed at.** Two
-   cases reach the same answer: a PDF with no usable text layer (a scan), and
-   a bulletin from a state the vocabulary does not cover. Both raise
-   `UnusableDocument`, both print a `REFUSED` line naming the reason, and
-   neither stops the other documents in the run. The alternative is a resource
-   claiming coverage it cannot serve.
+8. **A document we cannot stand behind is refused, not guessed at.** Three
+   cases reach the same answer: a file no extractor can open, a document with
+   no usable text layer (a scan), and a bulletin from a state the vocabulary
+   does not cover. All three raise `UnusableDocument`, all three print a
+   `REFUSED` line naming the reason, and none of them stops the other
+   documents in the run. The alternative is a resource claiming coverage it
+   cannot serve.
 
 ---
 
@@ -307,6 +308,29 @@ imports into another package.
   contended straight after a test run. The table above gives ranges for that
   reason. Quote no single figure; measure on the target hardware, and expect a
   dedicated GPU to be both faster and far more consistent.
+
+* **PDF is what these bulletins arrive as, but not what the code is limited
+  to.** Ingestion goes through MuPDF, which reads **PDF, DOCX, TXT, HTML, EPUB
+  and XPS**; all of those reach the catalogue, and a DOCX bulletin is covered
+  by a test. Nothing downstream of `ingest/` knows what the file was — it
+  consumes pages of text with numbers on them — so format is owned by one
+  module. What does *not* read is the legacy `.doc` binary, spreadsheets and
+  archives; those are refused by name:
+
+  ```
+  REFUSED  old_bulletin.doc
+           Refusing to publish a catalogue from an unreadable document:
+           old_bulletin.doc could not be opened (...). PDF and DOCX are what
+           these bulletins arrive as; TXT, HTML, EPUB and XPS also read. The
+           legacy .doc binary format, spreadsheets and archives do not —
+           convert to PDF or DOCX and re-ingest.
+  ```
+
+  Reading a format and extracting it *well* are different questions. The
+  passage rules key off the IMD bulletin layout — `Major crops | Stage |
+  Pest/disease | Advisories` tables and district headings — not off the file
+  format. A DOCX laid out that way extracts at least as well as the PDF. A
+  spreadsheet of the same data would open and produce nonsense.
 
 * **Three states, and a fourth one is refused rather than guessed.**
   `_STATE_MARKERS` in `ingest/passages.py` knows Karnataka, Uttar Pradesh and

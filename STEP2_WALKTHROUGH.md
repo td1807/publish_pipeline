@@ -688,14 +688,18 @@ Honest gaps, so they come from me rather than from the room:
 #   → REFUSED: a scanned PDF publishes nothing rather than a resource
 #     claiming coverage we never read
 
-.venv/bin/python main.py --pdf <a bulletin from a fourth state>
+.venv/bin/python main.py --file <a bulletin from a fourth state>
 #   → REFUSED: the vocabulary covers three states, so an area code for a fourth
 #     would be invented. The run says so and carries on to the next document.
+
+.venv/bin/python main.py --file <anything.doc>
+#   → REFUSED: no extractor opens the legacy .doc binary. DOCX, TXT, HTML, EPUB
+#     and XPS do read, and go through exactly as a PDF does.
 
 EMBEDDING_BACKEND=lexical .venv/bin/python main.py --all --fresh
 #   → the whole flow in ~0.4s with no model. Branch 2a output is byte-identical;
 #     every retrieval result is stamped semantic=False.
 
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 30 passed, 9s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 33 passed, 9s
 .venv/bin/pytest tests/test_v4.py -q -m semantic        # 1 passed, 52s
 ```

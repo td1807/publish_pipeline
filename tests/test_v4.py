@@ -11,6 +11,7 @@ real model are marked `semantic` and skip unless it is installed:
 from __future__ import annotations
 
 import json
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -21,7 +22,7 @@ from ..beckn.envelope import build_envelope
 from ..config import DATA_DIR, EVIDENCE_DIR
 from ..ingest.language import check_devanagari_encoding, detect
 from ..ingest.passages import UnknownState, detect_state, extract
-from ..ingest.pdf_text import Document, Page, UnusableDocument, read_pdf
+from ..ingest.document_text import Document, Page, UnusableDocument, read_document
 from ..network_node import NetworkNode
 from ..publish import publish
 from ..taxonomy.ids import point_id_for, resource_id_for
@@ -46,7 +47,7 @@ def vocab():
 
 @pytest.fixture(scope="module")
 def karnataka(vocab):
-    doc = read_pdf(KARNATAKA)
+    doc = read_document(KARNATAKA)
     passages, report = extract(doc, vocab=vocab)
     return doc, passages, report
 
@@ -55,7 +56,7 @@ def karnataka(vocab):
 def envelope(vocab):
     catalogs = []
     for path in (KARNATAKA, UP, RAJASTHAN):
-        doc = read_pdf(path)
+        doc = read_document(path)
         passages, _ = extract(doc, vocab=vocab)
         code = detect_state(doc, vocab)
         catalogs.append(
@@ -77,7 +78,7 @@ def index(tmp_path_factory, vocab):
     idx.ensure_collection(recreate=True)
     all_passages = []
     for path in (KARNATAKA, UP, RAJASTHAN):
-        passages, _ = extract(read_pdf(path), vocab=vocab)
+        passages, _ = extract(read_document(path), vocab=vocab)
         idx.index_passages(passages)
         all_passages.extend(passages)
     yield idx, all_passages
@@ -189,7 +190,7 @@ def test_per_document_resources_json_is_self_contained(vocab):
     """Each per-PDF file must carry that document's resources and nothing else."""
     from ..scenario1 import Onboarding  # noqa: F401  (documents the shape)
 
-    doc = read_pdf(RAJASTHAN)
+    doc = read_document(RAJASTHAN)
     passages, report = extract(doc, vocab=vocab)
     code = detect_state(doc, vocab)
     catalog = build_catalog(
@@ -311,7 +312,7 @@ def test_point_id_is_deterministic():
 
 
 def test_extraction_is_deterministic(vocab):
-    doc = read_pdf(RAJASTHAN)
+    doc = read_document(RAJASTHAN)
     first, _ = extract(doc, vocab=vocab)
     second, _ = extract(doc, vocab=vocab)
     assert [p.resource_id for p in first] == [p.resource_id for p in second]
@@ -366,7 +367,7 @@ def test_real_model_matches_across_language_and_paraphrase(tmp_path):
     pytest.importorskip("sentence_transformers")
 
     vocab = load_vocabulary()
-    passages, _ = extract(read_pdf(KARNATAKA), vocab=vocab)
+    passages, _ = extract(read_document(KARNATAKA), vocab=vocab)
     idx = VectorIndex(
         get_embedder("local"),
         collection="semantic_test",
@@ -406,7 +407,7 @@ def test_state_language_profiles_differ(vocab):
     """The three bulletins are genuinely different language mixes."""
     profiles = {}
     for path in (KARNATAKA, UP, RAJASTHAN):
-        passages, report = extract(read_pdf(path), vocab=vocab)
+        passages, report = extract(read_document(path), vocab=vocab)
         profiles[path.name] = report.languages
 
     ka = profiles["imd_karnataka_agromet.pdf"]
@@ -418,7 +419,7 @@ def test_state_language_profiles_differ(vocab):
 
 
 def test_devanagari_encoding_is_measured_not_assumed():
-    doc = read_pdf(UP)
+    doc = read_document(UP)
     full = "\n".join(p.text for p in doc.pages)
     reading = check_devanagari_encoding(full)
     assert reading.devanagari_chars > 1000
@@ -433,7 +434,7 @@ def test_devanagari_encoding_is_measured_not_assumed():
 
 def test_scanned_pdf_is_refused(vocab):
     with pytest.raises(UnusableDocument) as exc:
-        read_pdf(SCANNED)
+        read_document(SCANNED)
     assert "unusable" in str(exc.value).lower()
     assert "ocr" in str(exc.value).lower()
 
@@ -441,7 +442,7 @@ def test_scanned_pdf_is_refused(vocab):
 def test_refused_document_publishes_nothing(vocab):
     """A refusal must stop before the catalogue, not produce an empty one."""
     with pytest.raises(UnusableDocument):
-        doc = read_pdf(SCANNED)
+        doc = read_document(SCANNED)
         extract(doc, vocab=vocab)
 
 
@@ -462,6 +463,91 @@ def test_document_from_an_uncovered_state_is_refused_not_crashed(vocab):
         detect_state(doc, vocab)
     assert "coverage" in str(exc.value)
     assert isinstance(exc.value, UnusableDocument)
+
+
+# --- 9b. formats other than PDF ----------------------------------------------
+#
+# Nothing downstream of ingest knows what the file was: it consumes pages of
+# text with numbers on them. These two tests pin both ends of that -- a format
+# MuPDF reads goes all the way through, and a format nothing reads is refused
+# the same way a scan is, rather than raising a library exception that would
+# end a multi-document run.
+
+
+def _docx(path: Path, paragraphs: list[str]) -> Path:
+    """Write a minimal but valid .docx. Built rather than checked in, so the
+    fixture cannot drift from what the test claims it contains."""
+    content_types = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+        '<Default Extension="xml" ContentType="application/xml"/>'
+        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-'
+        'officedocument.wordprocessingml.document.main+xml"/></Types>'
+    )
+    rels = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/'
+        'relationships/officeDocument" Target="word/document.xml"/></Relationships>'
+    )
+    doc_rels = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"/>'
+    )
+    body = "".join(f"<w:p><w:r><w:t>{t}</w:t></w:r></w:p>" for t in paragraphs)
+    document = (
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+        f"<w:body>{body}</w:body></w:document>"
+    )
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("[Content_Types].xml", content_types)
+        z.writestr("_rels/.rels", rels)
+        z.writestr("word/_rels/document.xml.rels", doc_rels)
+        z.writestr("word/document.xml", document)
+    return path
+
+
+def test_a_docx_bulletin_reads_and_extracts(tmp_path, vocab):
+    """A Word bulletin is readable, and reaches the catalogue like a PDF does."""
+    path = _docx(
+        tmp_path / "rajasthan_advisory.docx",
+        [
+            "Agromet Advisory Bulletin for Rajasthan",
+            "District: Jaipur. Wheat at tillering stage. Apply first irrigation "
+            "21 days after sowing.",
+            "Spray Mancozeb 75 WP at 2 g/litre if yellow rust appears on wheat leaves.",
+        ],
+    )
+    doc = read_document(path)
+    assert doc.page_count >= 1
+    assert "Rajasthan" in doc.pages[0].text
+
+    assert detect_state(doc, vocab) == "IN-RJ"
+    passages, _ = extract(doc, vocab=vocab)
+    assert passages, "a readable docx must produce passages like any other document"
+
+
+def test_an_unreadable_format_is_refused_not_crashed(tmp_path):
+    """The legacy .doc binary opens with nothing we ship, so it must refuse.
+
+    Before this, whatever pymupdf raised propagated out of ingest and ended the
+    run, so one bad file in a batch lost every document after it.
+    """
+    path = tmp_path / "bulletin.doc"
+    path.write_bytes(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1legacy word binary")
+    with pytest.raises(UnusableDocument) as exc:
+        read_document(path)
+    message = str(exc.value)
+    assert "could not be opened" in message
+    assert "DOCX" in message
+
+
+def test_a_missing_file_is_still_an_error_not_a_refusal(tmp_path):
+    """Absent is not unreadable. A typo in a filename should say so."""
+    with pytest.raises(FileNotFoundError):
+        read_document(tmp_path / "no_such_bulletin.pdf")
 
 
 # --- 10. round trip ----------------------------------------------------------
@@ -511,7 +597,7 @@ def test_all_districts_resolve_for_each_state(vocab):
     """Every district in the table is findable in its bulletin."""
     expected = {"IN-KA": 31, "IN-UP": 75, "IN-RJ": 32}
     for path in (KARNATAKA, UP, RAJASTHAN):
-        doc = read_pdf(path)
+        doc = read_document(path)
         code = detect_state(doc, vocab)
         _, report = extract(doc, vocab=vocab)
         assert report.districts == expected[code], (

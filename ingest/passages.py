@@ -25,7 +25,7 @@ from ..config import MAX_PASSAGE_CHARS, MIN_PASSAGE_CHARS, PROVIDER_ID, DOMAIN
 from ..taxonomy.ids import point_id_for, resource_id_for
 from ..taxonomy.vocab import Area, Subject, Vocabulary, category_for, load_vocabulary
 from . import language
-from .pdf_text import Document, UnusableDocument
+from .document_text import Document, UnusableDocument
 
 
 @dataclass(frozen=True)

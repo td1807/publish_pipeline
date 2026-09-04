@@ -16,13 +16,13 @@ import sys
 from pathlib import Path
 
 from .config import DATA_DIR, EVIDENCE_DIR, Settings
-from .ingest.pdf_text import UnusableDocument
+from .ingest.document_text import UnusableDocument
 from .scenario1 import onboard_all, publish_all
 from .taxonomy.vocab import load_vocabulary
 from .vectors.embeddings import get_embedder
 from .vectors.store import VectorIndex
 
-DEFAULT_PDFS = [
+DEFAULT_BULLETINS = [
     "imd_karnataka_agromet.pdf",
     "imd_up_agromet.pdf",
     "imd_rajasthan_agromet.pdf",
@@ -38,8 +38,20 @@ def _rule(title: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Scenario 1: onboard PDFs, publish to Beckn")
-    ap.add_argument("--pdf", action="append", default=[], help="filename in data/ or a path")
+    ap = argparse.ArgumentParser(
+        description="Scenario 1: onboard bulletins, publish to Beckn"
+    )
+    # --pdf is kept because it is what the walkthrough and the checked-in
+    # transcript use, but PDF is not the only readable format.
+    ap.add_argument(
+        "--file",
+        "--pdf",
+        dest="files",
+        action="append",
+        default=[],
+        metavar="NAME",
+        help="filename in data/ or a path (PDF, DOCX, TXT, HTML, EPUB, XPS)",
+    )
     ap.add_argument("--all", action="store_true", help="run all three state bulletins")
     ap.add_argument("--fresh", action="store_true", help="recreate the vector collection")
     ap.add_argument("--no-save", action="store_true", help="do not write evidence/")
@@ -51,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = ap.parse_args(argv)
 
-    names = args.pdf or (DEFAULT_PDFS if args.all else DEFAULT_PDFS[:1])
+    names = args.files or (DEFAULT_BULLETINS if args.all else DEFAULT_BULLETINS[:1])
     paths = [str(p if (p := Path(n)).exists() else DATA_DIR / n) for n in names]
 
     _rule("configuration")

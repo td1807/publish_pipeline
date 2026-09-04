@@ -29,7 +29,7 @@ from .beckn.envelope import build_envelope
 from .beckn.models import Catalog, PublishEnvelope
 from .config import DOMAIN, PROVIDER_ID
 from .ingest.passages import ExtractionReport, Passage, extract, detect_state
-from .ingest.pdf_text import Document, read_pdf
+from .ingest.document_text import Document, read_document
 from .publish import PublishResult, publish
 from .taxonomy.vocab import Vocabulary, load_vocabulary
 from .vectors.embeddings import Embedder, TokenReport, get_embedder
@@ -162,7 +162,7 @@ class Onboarding:
 
 
 def onboard(
-    pdf_path: str,
+    doc_path: str,
     *,
     index: VectorIndex,
     vocab: Vocabulary | None = None,
@@ -173,7 +173,7 @@ def onboard(
     vocab = vocab or load_vocabulary()
 
     # --- step 1 -------------------------------------------------------------
-    doc = read_pdf(pdf_path)
+    doc = read_document(doc_path)
     state_code = detect_state(doc, vocab)
     state_name = vocab.state(state_code).name
 
@@ -234,7 +234,7 @@ def onboard(
 
 
 def onboard_all(
-    pdf_paths: list[str],
+    doc_paths: list[str],
     *,
     embedder: Embedder | None = None,
     index: VectorIndex | None = None,
@@ -246,7 +246,7 @@ def onboard_all(
         index = VectorIndex(embedder or get_embedder())
     index.ensure_collection(recreate=fresh)
 
-    return [onboard(p, index=index, vocab=vocab) for p in pdf_paths], index
+    return [onboard(p, index=index, vocab=vocab) for p in doc_paths], index
 
 
 def publish_all(
