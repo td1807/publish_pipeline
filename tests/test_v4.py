@@ -466,6 +466,38 @@ def test_document_from_an_uncovered_state_is_refused_not_crashed(vocab):
     assert isinstance(exc.value, UnusableDocument)
 
 
+def test_one_crops_alias_never_matches_another_crops_name(vocab):
+    """'gram' was an alias for Bengal gram, and India grows five other grams.
+
+    It matched inside black gram, green gram, horse gram and red gram, so two
+    bulletins that never mention chickpea were published as covering it. A
+    wrong subject URI routes a farmer to a provider that cannot help, which is
+    worse than an unresolved one.
+    """
+    assert [s.name for s in vocab.subjects_in("black gram crop")] == ["Black gram"]
+    assert [s.name for s in vocab.subjects_in("green gram sowing")] == ["Green gram"]
+    assert [s.name for s in vocab.subjects_in("horse gram")] == ["Horse gram"]
+    # the full name still resolves, in English and Hindi
+    assert [s.name for s in vocab.subjects_in("bengal gram wilt")] == ["Bengal gram"]
+    assert [s.name for s in vocab.subjects_in("chana ki fasal")] == ["Bengal gram"]
+
+
+def test_every_crop_name_resolves_to_that_crop_and_no_other(vocab):
+    """The general rule, so the next alias added cannot reintroduce this.
+
+    Resolution is word-boundary aware, so 'tur' inside 'turmeric' was never a
+    problem; a whole-word alias like 'gram' inside 'black gram' was. The one
+    permitted overlap is containment between two real crops -- fodder sorghum
+    is sorghum -- which routes a consumer to a provider that can in fact help.
+    """
+    allowed = {("Fodder sorghum", "Sorghum")}
+    for subject in vocab.subject_by_slug.values():
+        resolved = [s.name for s in vocab.subjects_in(subject.name)]
+        assert subject.name in resolved, f"{subject.name} does not resolve to itself"
+        extra = {(subject.name, other) for other in resolved if other != subject.name}
+        assert extra <= allowed, f"{subject.name} also resolves to {sorted(extra)}"
+
+
 # --- 8b. chunking on crop boundaries -----------------------------------------
 
 

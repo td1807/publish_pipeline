@@ -56,7 +56,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 41 tests, ~15s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 43 tests, ~15s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
 
@@ -138,33 +138,33 @@ up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 | | Karnataka | Uttar Pradesh | Rajasthan |
 |---|---|---|---|
 | pages | 53 | 45 | 30 |
-| passages | 237 | 240 | 29 |
-| language mix | `en` 236 / `hi` 1 | `en` 84 / **`hi` 156** | `en` 2 / **`hi` 27** |
-| subjects resolved | **83.5%** | 56.7% | **24.1%** |
+| passages | 241 | 240 | 29 |
+| language mix | `en` 240 / `hi` 1 | `en` 100 / **`hi` 140** | `en` 2 / **`hi` 27** |
+| subjects resolved | **83.4%** | 56.7% | **24.1%** |
 | districts resolved | 31 / 31 | 75 / 75 | 32 / 32 |
 | passages placed in a district | 98.3% | 32.1% | 55.2% |
-| **2a** resources | **70** | 8 | 5 |
+| **2a** resources | **71** | 8 | 5 |
 | capability types | 4 | 4 | 4 |
-| **2b** vectors | 237 | 240 | 29 |
+| **2b** vectors | 241 | 240 | 29 |
 | max tokens / passage | 254 | 299 | 314 |
 | 2a time | ~0.01 s | ~0.01 s | ~0.02 s |
 | 2b time | 15–186 s | 22–154 s | 4–49 s |
 
 ```
-step 3   ACCEPTED — 3 catalogues, 83 resources, 161,767-byte payload
+step 3   ACCEPTED — 3 catalogues, 84 resources, 161,020-byte payload
          network layer holds resourceAttributes only:
-           83 resources · 52 subject URIs · 141 area codes · 13 topics
+           84 resources · 51 subject URIs · 141 area codes · 13 topics
            · 4 subject categories · 7 weather parameters · 2 languages
          and zero advisory text — checked against real sentences from the source
          round-trip verified: every field held exactly as published
 
-totals   506 passages · 83 resources · 506 vectors · 0 refused
+totals   510 passages · 84 resources · 510 vectors · 0 refused
 ```
 
 **Why the three states differ so much is the interesting part**, and it is real
 signal rather than a bug:
 
-* **Karnataka publishes 70 resources from 53 pages** because it is organised as
+* **Karnataka publishes 71 resources from 53 pages** because it is organised as
   per-district advisory sections (`Agromet Advisory for Koppal district`), so
   almost every passage lands in a district and becomes part of a district-level
   capability.
@@ -309,6 +309,20 @@ imports into another package.
   reason. Quote no single figure; measure on the target hardware, and expect a
   dedicated GPU to be both faster and far more consistent.
 
+* **An alias must not be a whole word inside another crop's name.** `gram` was
+  listed as an alias for Bengal gram, and India grows black gram, green gram,
+  horse gram and red gram. Resolution is word-boundary aware, so `tur` inside
+  `turmeric` was never a problem — but `gram` inside `black gram` was, and the
+  Karnataka and UP catalogues advertised Bengal gram coverage from bulletins
+  that never mention chickpea. That is the precise failure `crops.json` warns
+  about at the top of the file: a wrong subject URI routes a farmer to a
+  provider that cannot help, and nothing downstream can tell.
+
+  Removing the alias withdraws both false claims. A test now asserts the
+  general rule — every crop name resolves to that crop and no other — with one
+  documented exception, `fodder sorghum`, which also resolves to `sorghum`
+  because it genuinely is sorghum.
+
 * **Passages are cut on crop boundaries as well as on length.** An IMD advisory
   table runs one crop's advice into the next with no blank line between them, so
   splitting purely on size produced passages that were about two crops and
@@ -326,7 +340,8 @@ imports into another package.
 
   Measured across the three bulletins: passages 357 → 506, passages carrying a
   resolved subject **208 → 341**, and passages carrying more than one crop
-  **133 → 84**. Text coverage is unchanged (97–100%). Nothing was lost from the
+  **133 → 84** (counted before the `gram` alias fix below; the direction is
+  unchanged). Text coverage is unchanged (97–100%). Nothing was lost from the
   catalogue: same crops, same topics, same area codes per bulletin, and 74 → 83
   resources. The *percentage* placed in a district falls for UP and Rajasthan
   only because the denominator grew; the absolute counts are 76 → 77 and
@@ -340,12 +355,15 @@ imports into another package.
   green-gram passages scoring 0.797–0.807 — a near-tie shuffle, not a
   structural loss. **The demonstrated gain is in labelling, not ranking.**
 
-  Three of those 14 questions fail in *both* versions, and they are worth more
-  attention than the chunking: `okra yellow mosaic virus, what to spray`,
-  `pomegranate wilt disease treatment` and `how to protect livestock during
-  heavy rain` return nothing relevant in the top 5, while the *same questions
-  asked in Hindi* all rank first. English queries against Hindi passages are
-  the real retrieval weakness here, and no chunking rule addresses it.
+  An English question does **not** fail against this corpus, though an earlier
+  version of this section claimed it did — that was a measurement error, not a
+  finding. Scored against "did the farmer get correct advice", `okra yellow
+  mosaic virus, what to spray` and `how to protect livestock during heavy rain`
+  both return the right passage at rank 1. What they return is the *English*
+  advice from another state's bulletin rather than the local Hindi passage,
+  because nothing in a bare semantic query says which state the farmer is in.
+  In the real flow that is discovery's job: the consumer picks a provider by
+  area code, and the follow-up search is scoped with `resource_ids`.
 
 * **PDF is what these bulletins arrive as, but not what the code is limited
   to.** Ingestion goes through MuPDF, which reads **PDF, DOCX, TXT, HTML, EPUB

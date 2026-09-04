@@ -14,27 +14,27 @@
   },
   "extraction": {
     "pages": 53,
-    "passages": 237,
-    "subjectResolution": 0.8354,
+    "passages": 241,
+    "subjectResolution": 0.834,
     "districtsResolved": 31,
     "languages": {
       "hi": 1,
-      "en": 236
+      "en": 240
     },
     "categories": {
-      "Weather": 35,
-      "Crop": 103,
-      "Horticulture": 68,
+      "Weather": 36,
+      "Crop": 105,
+      "Horticulture": 69,
       "Livestock": 31
     },
     "warnings": []
   },
-  "resourceCount": 70,
+  "resourceCount": 71,
   "capabilityTypes": {
     "CropAdvisoryCapability": 22,
     "HorticultureAdvisoryCapability": 20,
     "LivestockAdvisoryCapability": 14,
-    "WeatherAdvisoryCapability": 14
+    "WeatherAdvisoryCapability": 15
   },
   "resources": [
     {
@@ -166,14 +166,6 @@
             "descriptor": {
               "code": "BANANA",
               "name": "Banana"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
             }
           },
           {
@@ -462,7 +454,7 @@
         "code": "CROP-IN-KA-BAGALKOTE",
         "name": "Crop advisory, Bagalkote",
         "shortDesc": "Crop advisory at district granularity for Bagalkote",
-        "longDesc": "Crop advisory capability covering Bagalkote, standing on 7 indexed passages (source pages 21-23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Bagalkote, standing on 5 indexed passages (source pages 21-22). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -483,22 +475,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "CITRUS",
-              "name": "Citrus"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/field-pea",
             "subjectType": "Crop",
@@ -550,7 +526,6 @@
         ],
         "topics": [
           "DiseaseManagement",
-          "Harvesting",
           "Irrigation",
           "NutrientManagement",
           "PestManagement",
@@ -563,10 +538,10 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 7,
+          "passageCount": 5,
           "pageRange": [
             21,
-            23
+            22
           ]
         },
         "updateFrequency": "P1D"
@@ -578,7 +553,7 @@
         "code": "HORTICULTURE-IN-KA-BAGALKOTE",
         "name": "Horticulture advisory, Bagalkote",
         "shortDesc": "Horticulture advisory at district granularity for Bagalkote",
-        "longDesc": "Horticulture advisory capability covering Bagalkote, standing on 3 indexed passages (source page 23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Horticulture advisory capability covering Bagalkote, standing on 4 indexed passages (source page 23). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/HorticultureAdvisoryCapability/v0.1/context.jsonld",
@@ -609,6 +584,14 @@
             }
           },
           {
+            "subjectId": "https://taxonomy.openagrinet.global/crop/citrus",
+            "subjectType": "Crop",
+            "descriptor": {
+              "code": "CITRUS",
+              "name": "Citrus"
+            }
+          },
+          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/grape",
             "subjectType": "Crop",
             "descriptor": {
@@ -635,7 +618,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 3,
+          "passageCount": 4,
           "pageRange": [
             23,
             23
@@ -784,14 +767,6 @@
         "geographicGranularity": "District",
         "agricultureSubjects": [
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
             "descriptor": {
@@ -888,14 +863,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/cowpea",
             "subjectType": "Crop",
@@ -1145,7 +1112,7 @@
         "code": "CROP-IN-KA-BIDAR",
         "name": "Crop advisory, Bidar",
         "shortDesc": "Crop advisory at district granularity for Bidar",
-        "longDesc": "Crop advisory capability covering Bidar, standing on 5 indexed passages (source pages 11-12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Bidar, standing on 7 indexed passages (source pages 11-12). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1166,14 +1133,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -1234,7 +1193,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 5,
+          "passageCount": 7,
           "pageRange": [
             11,
             12
@@ -1391,7 +1350,7 @@
         "code": "CROP-IN-KA-CHAMARAJANAGARA",
         "name": "Crop advisory, Chamarajanagara",
         "shortDesc": "Crop advisory at district granularity for Chamarajanagara",
-        "longDesc": "Crop advisory capability covering Chamarajanagara, standing on 3 indexed passages (source page 44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Chamarajanagara, standing on 5 indexed passages (source page 44). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1412,14 +1371,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -1472,7 +1423,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 3,
+          "passageCount": 5,
           "pageRange": [
             44,
             44
@@ -1584,7 +1535,7 @@
         "code": "CROP-IN-KA-CHIKKABALLAPURA",
         "name": "Crop advisory, Chikkaballapura",
         "shortDesc": "Crop advisory at district granularity for Chikkaballapura",
-        "longDesc": "Crop advisory capability covering Chikkaballapura, standing on 4 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Chikkaballapura, standing on 5 indexed passages (source pages 39-40). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -1605,14 +1556,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -1671,7 +1614,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 4,
+          "passageCount": 5,
           "pageRange": [
             39,
             40
@@ -2025,14 +1968,6 @@
         "geographicGranularity": "District",
         "agricultureSubjects": [
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/finger-millet",
             "subjectType": "Crop",
             "descriptor": {
@@ -2304,7 +2239,7 @@
         "code": "CROP-IN-KA-DAKSHINA-KANNADA",
         "name": "Crop advisory, Dakshina Kannada",
         "shortDesc": "Crop advisory at district granularity for Dakshina Kannada",
-        "longDesc": "Crop advisory capability covering Dakshina Kannada, standing on 3 indexed passages (source pages 8-10). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Dakshina Kannada, standing on 2 indexed passages (source page 8). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -2332,14 +2267,6 @@
         "geographicGranularity": "District",
         "agricultureSubjects": [
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/paddy",
             "subjectType": "Crop",
             "descriptor": {
@@ -2349,7 +2276,6 @@
           }
         ],
         "topics": [
-          "DiseaseManagement",
           "Irrigation",
           "LivestockCare",
           "NutrientManagement",
@@ -2360,10 +2286,10 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 3,
+          "passageCount": 2,
           "pageRange": [
             8,
-            10
+            8
           ]
         },
         "updateFrequency": "P1D"
@@ -2437,7 +2363,9 @@
           }
         ],
         "topics": [
+          "DiseaseManagement",
           "Drainage",
+          "NutrientManagement",
           "PestManagement",
           "Spraying",
           "WeedManagement"
@@ -2499,6 +2427,7 @@
         ],
         "topics": [
           "LivestockCare",
+          "PestManagement",
           "Spraying",
           "WeedManagement"
         ],
@@ -2576,7 +2505,7 @@
         "code": "CROP-IN-KA-DHARWAD",
         "name": "Crop advisory, Dharwad",
         "shortDesc": "Crop advisory at district granularity for Dharwad",
-        "longDesc": "Crop advisory capability covering Dharwad, standing on 7 indexed passages (source pages 24-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Dharwad, standing on 5 indexed passages (source pages 25-26). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -2609,14 +2538,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/cotton",
             "subjectType": "Crop",
@@ -2673,9 +2594,9 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 7,
+          "passageCount": 5,
           "pageRange": [
-            24,
+            25,
             26
           ]
         },
@@ -2828,6 +2749,7 @@
         ],
         "topics": [
           "DiseaseManagement",
+          "Harvesting",
           "LivestockCare",
           "PestManagement",
           "Spraying"
@@ -2843,6 +2765,65 @@
           ]
         },
         "updateFrequency": "P1D"
+      }
+    },
+    {
+      "id": "res-imd-agromet-agriculture-weather-in-ka-dharwad",
+      "descriptor": {
+        "code": "WEATHER-IN-KA-DHARWAD",
+        "name": "Weather advisory, Dharwad",
+        "shortDesc": "Weather forecast and warnings at district granularity for Dharwad",
+        "longDesc": "Weather advisory capability covering Dharwad, standing on 1 indexed passage (source page 25). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+      },
+      "resourceAttributes": {
+        "@context": "https://schemas.openagrinet.global/schema/WeatherAdvisoryCapability/v0.1/context.jsonld",
+        "@type": "openagrinet:WeatherAdvisoryCapability",
+        "subjectCategories": [
+          "Weather"
+        ],
+        "languages": [
+          "en"
+        ],
+        "coverageAreas": [
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-DHARWAD",
+            "areaLevel": "District",
+            "areaName": "Dharwad"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-BELAGAVI",
+            "areaLevel": "District",
+            "areaName": "Belagavi"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-HAVERI",
+            "areaLevel": "District",
+            "areaName": "Haveri"
+          }
+        ],
+        "geographicGranularity": "District",
+        "weatherParameters": [
+          "Rainfall"
+        ],
+        "topics": [
+          "SoilMoisture",
+          "WeedManagement"
+        ],
+        "evidence": {
+          "sourceDocuments": [
+            "imd_karnataka_agromet.pdf"
+          ],
+          "passageCount": 1,
+          "pageRange": [
+            25,
+            25
+          ]
+        },
+        "updateFrequency": "P1D",
+        "forecastHorizon": "P7D"
       }
     },
     {
@@ -3227,14 +3208,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -3754,7 +3727,7 @@
         "code": "CROP-IN-KA-KOLAR",
         "name": "Crop advisory, Kolar",
         "shortDesc": "Crop advisory at district granularity for Kolar",
-        "longDesc": "Crop advisory capability covering Kolar, standing on 2 indexed passages (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Kolar, standing on 3 indexed passages (source page 38). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -3775,14 +3748,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -3831,7 +3796,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 2,
+          "passageCount": 3,
           "pageRange": [
             38,
             38
@@ -4273,7 +4238,7 @@
         "code": "CROP-IN-KA-MYSURU",
         "name": "Crop advisory, Mysuru",
         "shortDesc": "Crop advisory at district granularity for Mysuru",
-        "longDesc": "Crop advisory capability covering Mysuru, standing on 7 indexed passages (source pages 45-46). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Mysuru, standing on 9 indexed passages (source pages 45-46). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -4300,14 +4265,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -4378,7 +4335,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 7,
+          "passageCount": 9,
           "pageRange": [
             45,
             46
@@ -4585,7 +4542,7 @@
         "code": "CROP-IN-KA-RAMANAGARA",
         "name": "Crop advisory, Ramanagara",
         "shortDesc": "Crop advisory at district granularity for Ramanagara",
-        "longDesc": "Crop advisory capability covering Ramanagara, standing on 3 indexed passages (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Ramanagara, standing on 4 indexed passages (source page 41). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -4606,14 +4563,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
@@ -4672,7 +4621,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 3,
+          "passageCount": 4,
           "pageRange": [
             41,
             41
@@ -5202,7 +5151,7 @@
         "code": "CROP-IN-KA-VIJAYAPURA",
         "name": "Crop advisory, Vijayapura",
         "shortDesc": "Crop advisory at district granularity for Vijayapura",
-        "longDesc": "Crop advisory capability covering Vijayapura, standing on 7 indexed passages (source pages 19-20). Advisory text itself is served by the provider node on direct request, not through this catalogue."
+        "longDesc": "Crop advisory capability covering Vijayapura, standing on 5 indexed passages (source pages 19-20). Advisory text itself is served by the provider node on direct request, not through this catalogue."
       },
       "resourceAttributes": {
         "@context": "https://schemas.openagrinet.global/schema/CropAdvisoryCapability/v0.1/context.jsonld",
@@ -5223,14 +5172,6 @@
         ],
         "geographicGranularity": "District",
         "agricultureSubjects": [
-          {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
           {
             "subjectId": "https://taxonomy.openagrinet.global/crop/groundnut",
             "subjectType": "Crop",
@@ -5273,7 +5214,6 @@
           }
         ],
         "topics": [
-          "DiseaseManagement",
           "NutrientManagement",
           "PestManagement",
           "Sowing",
@@ -5283,7 +5223,7 @@
           "sourceDocuments": [
             "imd_karnataka_agromet.pdf"
           ],
-          "passageCount": 7,
+          "passageCount": 5,
           "pageRange": [
             19,
             20

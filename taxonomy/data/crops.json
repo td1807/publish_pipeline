@@ -9,7 +9,12 @@
     "",
     "Aliases include Hindi (for the UP and Rajasthan bulletins) and the local",
     "English names Indian agromet bulletins actually use ('red gram' for tur,",
-    "'bengal gram' for chickpea, 'paddy' for rice)."
+    "'bengal gram' for chickpea, 'paddy' for rice).",
+    "",
+    "An alias must not be a substring of another crop's name. 'gram' was listed",
+    "for Bengal gram and matched inside black gram, green gram, horse gram and",
+    "red gram, so bulletins that never mention chickpea were published as",
+    "covering it -- exactly the wrong routing this file warns about above."
   ],
   "crops": [
     {"name": "Paddy", "slug": "paddy", "aliases": ["rice", "धान", "चावल", "ಭತ್ತ"]},
@@ -22,7 +27,7 @@
     {"name": "Red gram", "slug": "red-gram", "aliases": ["tur", "toor", "arhar", "pigeon pea", "pigeonpea", "अरहर", "तुअर", "तूर", "ತೊಗರಿ"]},
     {"name": "Green gram", "slug": "green-gram", "aliases": ["moong", "mung", "मूंग", "मूँग", "ಹೆಸರು"]},
     {"name": "Black gram", "slug": "black-gram", "aliases": ["urd", "urad", "उड़द", "उरद", "ಉದ್ದು"]},
-    {"name": "Bengal gram", "slug": "bengal-gram", "aliases": ["chickpea", "chana", "gram", "चना", "ಕಡಲೆ"]},
+    {"name": "Bengal gram", "slug": "bengal-gram", "aliases": ["chickpea", "chana", "चना", "ಕಡಲೆ"]},
     {"name": "Horse gram", "slug": "horse-gram", "aliases": ["kulthi", "कुल्थी", "ಹುರುಳಿ"]},
     {"name": "Cowpea", "slug": "cowpea", "aliases": ["lobia", "लोबिया", "ಅಲಸಂದೆ"]},
     {"name": "Moth bean", "slug": "moth-bean", "aliases": ["moth", "मोठ"]},

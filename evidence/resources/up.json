@@ -484,14 +484,6 @@
             }
           },
           {
-            "subjectId": "https://taxonomy.openagrinet.global/crop/bengal-gram",
-            "subjectType": "Crop",
-            "descriptor": {
-              "code": "BENGAL_GRAM",
-              "name": "Bengal gram"
-            }
-          },
-          {
             "subjectId": "https://taxonomy.openagrinet.global/crop/black-gram",
             "subjectType": "Crop",
             "descriptor": {
