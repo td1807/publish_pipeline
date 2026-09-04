@@ -96,7 +96,7 @@ without running anything:
 
 * [`evidence/SCENARIO_1_TRANSCRIPT.txt`](evidence/SCENARIO_1_TRANSCRIPT.txt)
 * [`evidence/publish_payload.json`](evidence/publish_payload.json) — the actual
-  `/catalog/publish` body (155 KB compact, 278 KB as pretty-printed here)
+  `/catalog/publish` body (161 KB as published, 280 KB pretty-printed here)
 * **[`evidence/resources/`](evidence/resources/) — one JSON file per bulletin**,
   each carrying that document's resources with their full `resourceAttributes`.
   Usually the more useful view: "what did *this* bulletin claim?" without
@@ -104,9 +104,9 @@ without running anything:
 
   | file | state | resources | size |
   |---|---|---|---|
-  | `karnataka.json` | IN-KA | 61 | 163 KB |
-  | `up.json` | IN-UP | 8 | 55 KB |
-  | `rajasthan.json` | IN-RJ | 4 | 14 KB |
+  | `karnataka.json` | IN-KA | 71 | 168 KB |
+  | `up.json` | IN-UP | 8 | 51 KB |
+  | `rajasthan.json` | IN-RJ | 5 | 17 KB |
 
 * [`evidence/message_update.reference.json`](evidence/message_update.reference.json) —
   the target shape, kept alongside so a test can diff against it
