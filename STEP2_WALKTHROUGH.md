@@ -589,13 +589,14 @@ advisory three ways:
 
 | query | rank of the correct passage | top score |
 |---|---|---|
-| `"pigeon pea flower drop remedy"` | **1** | 0.876 |
-| `"flower dropping in redgram due to cloudy weather"` | **1** | 0.805 |
-| `"my tur crop flowers are dropping, what do I do?"` | **3** | 0.823 (correct one: 0.810) |
+| `"pigeon pea flower drop remedy"` | **1** | 0.881 |
+| `"flower dropping in redgram due to cloudy weather"` | **1** | 0.810 |
+| `"my tur crop flowers are dropping, what do I do?"` | **3** | 0.815 (correct one: 0.807) |
 
 So the paraphrase does work — "tur" never appears in the bulletin and the right
 passage is still retrieved — but it **drops to rank 3**, and the top three
-scores sit within 1.6% of each other (0.823 / 0.819 / 0.810). Two consequences
+scores sit within 0.9% of each other (0.815 / 0.814 / 0.807), behind two other
+Koppal passages that also mention thrips and spraying. Two consequences
 worth stating rather than discovering later:
 
 * return **several** passages to the answering layer, not just the top one
@@ -791,7 +792,7 @@ Honest gaps, so they come from me rather than from the room:
 #     and XPS do read, and go through exactly as a PDF does.
 
 EMBEDDING_BACKEND=lexical .venv/bin/python main.py --all --fresh
-#   → the whole flow in ~0.4s with no model. Branch 2a output is byte-identical;
+#   → the whole flow in ~4s with no model. Branch 2a output is byte-identical
 #     every retrieval result is stamped semantic=False.
 
 .venv/bin/pytest tests/test_v4.py -q -m "not semantic"  # 43 passed, 15s

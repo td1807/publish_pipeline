@@ -422,6 +422,15 @@ imports into another package.
   `core-v2.0.0-lts`, even though `/catalog/publish` remains the documented
   publish path and the spec offers no replacement.
 
+* **Two documents cited throughout are not in this repository.** `beckn.yaml`
+  is the Beckn core spec (`core-v2.0.0-lts`), which the models in
+  `beckn/models.py` mirror by hand rather than vendor — so conformance here is
+  checked against those models, not machine-checked against the published
+  schema. `message_update.json` is the target payload this work was given to
+  match; it is checked in as
+  [`evidence/message_update.reference.json`](evidence/message_update.reference.json),
+  and a test diffs the built envelope against it.
+
 * **The schema URLs do not resolve.**
   `https://schemas.openagrinet.global/...` fails DNS today, and
   `OpenAgriNet/network-specs` contains only a 15-byte README. `@context` is
