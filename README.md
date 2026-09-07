@@ -140,6 +140,13 @@ confused for one another.
   | `up.json` | IN-UP | 8 | 51 KB |
   | `rajasthan.json` | IN-RJ | 6 | 19 KB |
 
+  Those are the **default run**, which is what is checked in — so Rajasthan
+  shows 6 resources here where the statistics table above shows 12 under
+  `--ocr`. Running with `--ocr` rewrites this one file to 12 resources and
+  45 KB; Karnataka and UP come back byte-identical. Do not commit that
+  version: `evidence/` reproduces without tesseract precisely because it is the
+  default run.
+
 * [`evidence/message_update.reference.json`](evidence/message_update.reference.json) —
   the target shape, kept alongside so a test can diff against it
 * [`docs_pdf/`](docs_pdf/) — this file and the walkthrough as PDF
