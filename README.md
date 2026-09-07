@@ -167,20 +167,35 @@ easiest way to mislead a room.
 Three real government bulletins, chosen because they differ in ways that show
 up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 
-| | Karnataka | Uttar Pradesh | Rajasthan |
-|---|---|---|---|
-| pages | 53 | 45 | 30 |
-| passages | 241 | 240 | 29 |
-| language mix | `en` 240 / `hi` 1 | `en` 100 / **`hi` 140** | `en` 2 / **`hi` 27** |
-| subjects resolved | **83.4%** | 56.7% | **24.1%** |
-| districts resolved | 31 / 31 | 75 / 75 | 41 / 41 |
-| passages placed in a district | 98.3% | 32.1% | 58.6% |
-| **2a** resources | **71** | 8 | 6 |
-| capability types | 4 | 4 | 4 |
-| **2b** vectors | 241 | 240 | 29 |
-| max tokens / passage | 254 | 299 | 314 |
-| 2a time | ~0.01 s | ~0.01 s | ~0.02 s |
-| 2b time | 15–186 s | 22–154 s | 4–49 s |
+| | Karnataka | Uttar Pradesh | Rajasthan | Rajasthan `--ocr` |
+|---|---|---|---|---|
+| pages | 53 | 45 | 30 | 30 |
+| passages | 241 | 240 | 29 | **103** |
+| chars per page in the text layer | 1,745 | 2,326 | 448 | — |
+| language mix | `en` 240 / `hi` 1 | `en` 100 / **`hi` 140** | `en` 2 / **`hi` 27** | `en` 2 / **`hi` 101** |
+| subjects resolved | **83.4%** | 56.7% | 24.1% | **61.2%** |
+| crops advertised | 40 | 38 | 8 | **26** |
+| districts resolved | 31 / 31 | 75 / 75 | 41 / 41 | 41 / 41 |
+| passages placed in a district | 98.3% | 32.1% | 58.6% | 55.3% |
+| **2a** resources | **71** | 8 | 6 | **12** |
+| capability types | 4 | 4 | 4 | 4 |
+| **2b** vectors | 241 | 240 | 29 | **103** |
+| max tokens / passage | 254 | 299 | 314 | 314 |
+| 2a time | ~0.01 s | ~0.01 s | ~0.02 s | ~0.01 s |
+| 2b time | 15–186 s | 22–154 s | 4–49 s | 12 s |
+
+**Read the last column as the honest coverage of the Rajasthan bulletin, and
+the one before it as what the pipeline can see without OCR.** 23 of that
+bulletin's 30 pages put a district heading in text above an advisory table that
+is a JPEG, so the default run is not measuring a thin bulletin — it is
+measuring a bulletin it cannot read. `--ocr` recovers 20 of the 24 pages the
+gate attempts and the file stops looking sparse: 8 crops become 26, subject
+resolution 24.1% → 61.2%, and district coverage stays at 41 / 41.
+
+OCR is **off by default** because it needs the `tesseract` binary, which `pip`
+cannot install, and because OCR'd advisory text can carry corrupted pesticide
+doses (see Known limits). Everything in `evidence/` is the default run, so it
+reproduces on a machine without tesseract.
 
 ```
 step 3   ACCEPTED — 3 catalogues, 85 resources, 164,720-byte payload
@@ -196,6 +211,20 @@ REFUSED  imd_karnataka_district_kannada.pdf
 
 totals   3 onboarded · 1 refused · 510 passages · 85 resources · 510 vectors
 ```
+
+The same command with `--ocr`, for comparison:
+
+```
+step 3   ACCEPTED — 3 catalogues, 91 resources, 181,733-byte payload
+         141,206 bytes of resourceAttributes held
+           91 resources · 51 subject URIs · 150 area codes · 13 topics
+
+totals   3 onboarded · 1 refused · 584 passages · 91 resources · 584 vectors
+```
+
+Six more resources, all Rajasthan. The subject-URI and area-code counts do not
+move, because the crops OCR recovers were already advertised by Karnataka or UP
+— what changes is that **this** provider can now be found for them.
 
 **Why the three states differ so much is the interesting part**, and it is real
 signal rather than a bug:
@@ -343,20 +372,45 @@ imports into another package.
   district heading in text above an advisory table that is a JPEG.** Ten
   characters is enough to clear the gate, so the document publishes — thinly,
   and with the `Crop coverage claims for this state are thin` warning that
-  points at the vocabulary rather than at the real cause. It is 477 extractable
-  characters per page against Karnataka's 1,834 and UP's 2,464.
+  points at the vocabulary rather than at the real cause. It is **448
+  extractable characters per page against Karnataka's 1,745 and UP's 2,326**.
 
   `ingest/ocr.py` recovers those pages. Measured: **29 → 103 passages, 24.1% →
-  61.2% subject resolution, 6 → 12 resources, 8 → 26 crops**, with district
-  coverage held at 41 — and every one of those crops was **already in
-  `crops.json`**. Characters recovered: 13,429 → 44,904 across 20 of 24 pages
-  the gate attempted. The vocabulary was never the
-  limit here; the text simply never reached it. Karnataka and UP are unchanged
-  to the passage.
+  61.2% subject resolution, 6 → 12 resources, 8 → 26 crops**, district coverage
+  held at 41 / 41, and 13,429 → 44,904 characters across the 20 of 24 attempted
+  pages the gate kept. **Every one of those 26 crops was already in
+  `crops.json`** — the vocabulary was never the limit here, the text simply
+  never reached it. Karnataka and UP are unchanged to the passage: UP has a
+  text layer on every page, and Karnataka's image pages are forecast grids the
+  gate correctly rejects.
 
-  It stays opt-in (`OCR_ENABLED=1`, or `--ocr`) because everything in
-  `evidence/` was produced without it and has to stay reproducible, and because
-  running one bulletin both ways demonstrates more than either run alone.
+  It stays opt-in (`OCR_ENABLED=1`, or `--ocr`) for two reasons. `tesseract` is
+  a system binary `pip` cannot install, so a default that needed it would fail
+  on a fresh clone. And OCR'd text carries the risk in the next entry.
+
+* **An OCR'd dose can be wrong, and a wrong dose is a farm-level harm.** This
+  is the one caveat to read before letting `--ocr` output reach anybody.
+  Tesseract on Devanagari damages exactly the tokens that matter most in an
+  advisory. Measured on page 9 of the Rajasthan bulletin:
+
+  ```
+  source     क्विनालफॉस 25 EC (1 लीटर/हेक्टेयर)
+  recovered  गस 25 50 (। लीटर/हेक्टेयर)
+  ```
+
+  The chemical name is destroyed and `25 EC` has become `25 50`. A farmer
+  acting on that sprays the wrong thing at the wrong strength.
+
+  The pipeline's answer is provenance, not confidence: every passage recovered
+  this way carries **`from_ocr: true`** in the vector payload, and `from_ocr`
+  is deliberately **absent from `facets()`** so it cannot leak into a published
+  coverage claim. **An answering layer built on this index must either withhold
+  `from_ocr` passages or show them with a verify-against-source marker and the
+  page citation — never hand a dose from one to a farmer as settled fact.**
+  Branch 2a needs no such guard: it publishes crop names, district names and
+  topics matched against a closed vocabulary, so OCR noise either resolves to
+  something that exists or resolves to nothing, and dosages are never published
+  at all.
 
 * **A district section used to swallow the districts a passage named.** Turning
   OCR on first *lost* 9 districts — Rajasthan fell 41 → 32 and the network's
@@ -376,21 +430,6 @@ imports into another package.
   new districts — a statewide crop-stage grid on page 6 that sits under a
   district heading now publishes the 13 districts it forecasts for, instead of
   none.
-
-* **OCR output is flagged, not trusted, and the flag only goes to 2b.**
-  Tesseract on Devanagari damages exactly the tokens that matter most in an
-  agricultural advisory: on page 9 of the Rajasthan bulletin
-  `क्विनालफॉस 25 EC (1 लीटर/हेक्टेयर)` came back as `गस 25 50 (। लीटर/हेक्टेयर)`.
-  A corrupted pesticide dose handed to a farmer is a real harm, so recovered
-  passages carry `from_ocr` in the vector payload and the answering layer
-  decides what to do with them.
-
-  `from_ocr` is deliberately **absent from `facets()`**, so branch 2a's
-  published payload is unchanged in shape. The catalogue carries crop names,
-  district names and topics, all matched against a closed vocabulary — OCR
-  noise resolves to a subject that exists or to nothing, and can never mint
-  one. Dosages are never published at all. 2a can take OCR text as-is; 2b is
-  the branch that has to be careful.
 
 * **The OCR accept gate is semantic, because every statistical version of it
   failed.** The first gate kept any page that gained vocabulary terms.
