@@ -164,6 +164,12 @@ class VectorIndex:
                         "text": p.text,
                         "document": p.document,
                         "page": p.page,
+                        # Provenance for the answering layer. A passage
+                        # transcribed from an image can be shown with a
+                        # "verify against source" marker, or withheld, because
+                        # OCR damages exactly the tokens that matter in an
+                        # advisory — see ingest/ocr.py.
+                        "from_ocr": p.from_ocr,
                         **p.facets(),
                     },
                 )

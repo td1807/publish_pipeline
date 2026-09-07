@@ -34,6 +34,11 @@ class UnusableDocument(RuntimeError):
 class Page:
     number: int  # 1-based, as a citation would print it
     text: str
+    # True when some of this page's text was recovered by OCR rather than read
+    # from a text layer. Carried through to the vector payload so a passage
+    # transcribed from an image can be told apart from one that was read; see
+    # ingest/ocr.py for why that distinction matters for dosages.
+    ocr: bool = False
 
 
 @dataclass(frozen=True)
@@ -49,6 +54,39 @@ class Document:
     @property
     def page_count(self) -> int:
         return len(self.pages)
+
+    @property
+    def ocr_pages(self) -> int:
+        return sum(1 for p in self.pages if p.ocr)
+
+    @property
+    def thin_pages(self) -> int:
+        """Pages that clear the scan gate but carry almost nothing.
+
+        The gate asks whether a page has ANY text, which is the right question
+        for a fully scanned file and the wrong one for a hybrid: a page holding
+        a district heading above an advisory table that is a JPEG passes at 10
+        characters. Counting them is how a document that is technically
+        readable but substantially unread becomes visible.
+        """
+        return sum(
+            1
+            for p in self.pages
+            if not p.ocr and MIN_CHARS_PER_PAGE <= len(p.text.strip()) < 150
+        )
+
+    def thin_warning(self) -> str:
+        """Empty unless enough of the document is unread to matter."""
+        unread = self.thin_pages + sum(
+            1 for p in self.pages if len(p.text.strip()) < MIN_CHARS_PER_PAGE
+        )
+        if not unread or unread / max(self.page_count, 1) < 0.4:
+            return ""
+        return (
+            f"{unread}/{self.page_count} pages carry little or no text and were "
+            "effectively not read. If they are images of tables, OCR will "
+            "recover them — see ingest/ocr.py (OCR_ENABLED=1 or --ocr)."
+        )
 
 
 def read_document(path: str | Path) -> Document:

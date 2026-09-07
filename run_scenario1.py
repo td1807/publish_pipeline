@@ -17,6 +17,7 @@ from pathlib import Path
 
 from .config import DATA_DIR, EVIDENCE_DIR, Settings
 from .ingest.document_text import UnusableDocument
+from .config import OCR_ENABLED
 from .scenario1 import onboard_all, publish_all
 from .taxonomy.vocab import load_vocabulary
 from .vectors.embeddings import get_embedder
@@ -62,6 +63,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--fresh", action="store_true", help="recreate the vector collection")
     ap.add_argument("--no-save", action="store_true", help="do not write evidence/")
     ap.add_argument(
+        "--ocr",
+        action="store_true",
+        help="read pages that are images of tables (needs tesseract; see ingest/ocr.py)",
+    )
+    ap.add_argument(
         "--show-resource",
         metavar="SUBSTRING",
         help="print one resource's full resourceAttributes to stdout, "
@@ -73,7 +79,11 @@ def main(argv: list[str] | None = None) -> int:
     paths = [str(p if (p := Path(n)).exists() else DATA_DIR / n) for n in names]
 
     _rule("configuration")
-    print(Settings().describe())
+    # The banner has to describe THIS run, not the environment it was imported
+    # in. --ocr is a CLI flag; Settings reads OCR_ENABLED at import. Printing
+    # the latter after passing the former made the banner say "off" for a run
+    # that did OCR on 20 pages — the one thing this banner exists to prevent.
+    print(Settings(ocr_enabled=args.ocr or OCR_ENABLED).describe())
 
     vocab = load_vocabulary()
     print(
@@ -91,7 +101,10 @@ def main(argv: list[str] | None = None) -> int:
     refused: list[tuple[str, str]] = []
     for path in paths:
         try:
-            done, index = onboard_all([path], index=index, fresh=args.fresh, vocab=vocab)
+            done, index = onboard_all(
+                [path], index=index, fresh=args.fresh, vocab=vocab,
+                ocr=args.ocr or OCR_ENABLED,
+            )
         except UnusableDocument as exc:
             # The refusal path, for both kinds of document we will not stand
             # behind: a scan we cannot read, and a state the vocabulary does

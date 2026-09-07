@@ -45,6 +45,13 @@ class Passage:
     weather_parameters: tuple[str, ...]
     resource_id: str
     point_id: str
+    # Provenance, NOT a facet. Deliberately absent from facets() so branch 2a's
+    # published payload is unchanged by OCR: the catalogue carries crop names,
+    # district names and topics, all matched against a closed vocabulary, so
+    # OCR noise resolves to a subject that exists or to nothing and can never
+    # mint one. Branch 2b is the branch that needs it, because 2b returns the
+    # passage text verbatim and OCR damages dosages. See ingest/ocr.py.
+    from_ocr: bool = False
 
     @property
     def citation(self) -> str:
@@ -355,6 +362,7 @@ def extract(
                     document=doc.path.name,
                     page=page.number,
                     ordinal=ordinal,
+                    from_ocr=page.ocr,
                     language=language.detect(block).language,
                     subjects=subjects,
                     area=area,

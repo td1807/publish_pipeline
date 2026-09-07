@@ -40,6 +40,37 @@ httpx>=0.24.0
 pytest>=7.0.0
 
 # ------------------------------------------------------------------------
+# OCR — optional, and deliberately NOT installed by default.
+#
+# The pipeline reads a text layer. A page that is a picture of a table has no
+# text layer, so it is silently read as empty and the catalogue advertises less
+# than the bulletin contains. The Rajasthan file is 23 of 30 pages that shape:
+# a district heading in text above an advisory table that is a JPEG.
+#
+# Turning OCR on recovers them. Measured on that bulletin: 29 → 104 passages,
+# 24.1% → 61.5% subject resolution, 8 → 26 crops visible — every one of which
+# was ALREADY in crops.json. The vocabulary was never the limit.
+#
+#     apt-get install tesseract-ocr tesseract-ocr-hin   # add -kan for Kannada
+#     pip install pytesseract
+#     OCR_ENABLED=1 .venv/bin/python main.py --all --fresh    # or --ocr
+#
+# Left commented for three reasons. The Python half is useless without the
+# tesseract binary, which pip cannot install. Everything in evidence/ was
+# produced without OCR and has to stay reproducible. And running one bulletin
+# both ways demonstrates more than either run alone.
+#
+# Absence is announced, never fatal: ocr_available() probes both halves and the
+# run continues without OCR, saying so in the config banner.
+#
+# Cost, so it is not a surprise: ~6 seconds per page at 300 DPI. 300 is a floor
+# for Devanagari — below it the matras blur into their consonants and the
+# output is confidently wrong rather than obviously broken.
+#
+# pytesseract>=0.3.10
+# ------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
 # EMBEDDINGS — this is the only heavy choice in the file.
 #
 # (a) local (the default, EMBEDDING_BACKEND=local). Real 1024-d multilingual

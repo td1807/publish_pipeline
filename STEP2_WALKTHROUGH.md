@@ -156,6 +156,77 @@ Both branches therefore read the **same method**, `Passage.facets()`. Parity is
 structural rather than maintained by discipline, and
 `tests/test_v4.py::test_facet_parity` asserts it for every passage.
 
+### 2.2 A fourth thing step 1 can now do: recover pages that are pictures
+
+Everything above assumes a page's text layer, once read and repaired, is the
+whole of what that page has to say. Rajasthan's bulletin breaks that
+assumption: **23 of its 30 pages carry a district heading in real text —
+`बज़ला:जालोर`, 10 characters — sitting above an advisory table that is a
+picture.** The scan gate in `document_text.py` asks whether a page has *any*
+text, which is the right question for a fully scanned file and the wrong one
+here: 10 characters clears it easily, so the document publishes, just far
+thinner than it should — 477 characters/page against Karnataka's 1,834 and
+UP's 2,464, and the 24.1% subject resolution that trips the thin-coverage
+warning.
+
+`ingest/ocr.py` rasterises exactly those pages and runs Tesseract over them,
+**inserted after the Devanagari font repair and before `extract()`** — after,
+because that repair scores one transform against the whole document's
+*existing* text and OCR output is freshly rendered text the transform could
+just as easily damage; before extraction, because that is the one shared pass
+neither branch may run twice.
+
+**Off by default** (`OCR_ENABLED=1`, or `--ocr`), for the same reason
+`EMBEDDING_BACKEND=lexical` exists: a run's output should be exactly what the
+person asked for, not something quietly heavier. Every number in `evidence/`
+was produced without it and has to keep reproducing.
+
+Measured on the bundled file:
+
+```
+                      passages   resources   subject resolution   crops
+OCR off                    29           6                24.1%       8
+OCR on                    104          10                61.5%      26
+```
+
+**Every one of those 26 crops was already in `crops.json`.** The vocabulary was
+never the limit; the text simply never reached it. Karnataka and UP are
+unchanged to the passage — UP because every page already has a text layer, and
+Karnataka because it *does* have 3 image pages, all correctly rejected (next
+section).
+
+**The gate is semantic, because the statistical version published a false
+claim.** The first cut of this kept a page if OCR made more vocabulary terms
+resolve — the same test `repair_encoding()` uses for the font defect. Karnataka's
+tail pages are rainfall-probability grids, and OCR renders them as
+`[very (७४० LIKELY|` token soup that happened to contain enough recognisable
+fragments to pass that test — and it published a **Bengal gram** claim
+assembled entirely out of noise. Alphabetic ratio, symbol density and mean word
+length were tried next, and **all three overlap between the two classes**; the
+garbled grids score *higher* on alphabetic ratio than the genuine advisories
+(0.62–0.81 vs 0.48–0.68), because pipes and brackets still count as characters
+and OCR's stray Devanagari glyphs still count as letters.
+
+What separates them is what the page is *about*. A page worth recovering gives
+**advice**, and advice names agronomic topics — irrigation, pest management,
+sowing. Rajasthan's advisory pages name 4–6; Karnataka's grids name 0–1. The
+threshold is 2 known topics, checked alongside a minimum character count and a
+strictly-more-known-terms requirement — three conditions, all required.
+
+**The flag it leaves behind is provenance, not a facet.** A recovered passage
+carries `from_ocr=True`, but that field is read only in `vectors/store.py` — it
+is deliberately absent from `Passage.facets()`, the one method both branches
+call. Branch 2a's published catalogue is therefore identical in shape whether
+OCR ran or not: crop names, district names and topics are matched against a
+closed vocabulary regardless of source, so OCR noise resolves to a subject that
+already exists or to nothing, never to a new one. Branch 2b is the branch that
+needs the flag, because 2b returns passage text verbatim, and Tesseract on
+Devanagari damages exactly the tokens that matter most — page 9's
+`क्विनालफॉस 25 EC (1 लीटर/हेक्टेयर)` came back as `गस 25 50 (। लीटर/हेक्टेयर)`. A
+corrupted dosage returned to a farmer is a real harm, which is the whole reason
+the flag exists rather than the recovered text being silently indistinguishable
+from the rest.
+
 ### A real passage, from page 16
 
 ```
@@ -495,6 +566,7 @@ One point per passage. 510 points for the three bulletins.
 | *(the vector)* | 1024 floats — what similarity actually runs on |
 | `text` | returned verbatim as the answer at follow-up time |
 | `document`, `page` | provenance — an answer cites `imd_karnataka_agromet.pdf p.16` |
+| `from_ocr` | **not** a facet, and not read by branch 2a — see §2.2. `True` when this passage's text was rasterised and OCR'd rather than read from a text layer, so an answering layer can mark it "verify against source" |
 | **`resource_id`** | **the join back to branch 2a** |
 | `area_code`, `also_area_codes` | narrow to a district or state |
 | `language` | answer a farmer in the language they asked in |

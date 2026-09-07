@@ -84,6 +84,51 @@ MAX_PASSAGE_CHARS = int(os.environ.get("MAX_PASSAGE_CHARS", "700"))
 LANG_MIN_CHARS = int(os.environ.get("LANG_MIN_CHARS", "15"))
 LANG_MIN_RATIO = float(os.environ.get("LANG_MIN_RATIO", "0.05"))
 
+# --- optional OCR ------------------------------------------------------------
+# OFF by default. A page that is a picture of a table has no text layer, so the
+# pipeline sees an empty page and publishes thinner coverage than the bulletin
+# actually contains — the Rajasthan file is 23 of 30 pages that shape. Turning
+# this on recovers them (measured: 8 crops visible → 26, all already in
+# crops.json).
+#
+# It stays opt-in for two reasons: everything in evidence/ was produced without
+# it and has to stay reproducible, and running one bulletin both ways is a
+# better demonstration than either run alone.
+#
+#     apt-get install tesseract-ocr tesseract-ocr-hin   (add -kan for Kannada)
+#     pip install pytesseract
+#     OCR_ENABLED=1 .venv/bin/python main.py --all --fresh
+#
+# Missing either half is announced, not fatal: the run continues without OCR.
+OCR_ENABLED = os.environ.get("OCR_ENABLED", "").strip().lower() in {"1", "true", "yes"}
+OCR_LANGS = os.environ.get("OCR_LANGS", "hin+eng")
+# 300 is the floor for Devanagari. At 150 the matras blur into their consonants
+# and the output is confidently wrong rather than obviously broken.
+OCR_DPI = int(os.environ.get("OCR_DPI", "300"))
+# A page under this many characters that also carries an image is treated as a
+# picture of text. Set above MIN_CHARS_PER_PAGE (40) on purpose: these pages
+# hold a real district heading, so they clear the scan gate while their content
+# is unreadable.
+OCR_PAGE_TEXT_FLOOR = int(os.environ.get("OCR_PAGE_TEXT_FLOOR", "150"))
+# Below this, whatever came back is speckle rather than a table.
+OCR_MIN_CHARS = int(os.environ.get("OCR_MIN_CHARS", "120"))
+# How many distinct agronomic topics an OCR'd page must name to be kept.
+#
+# This is the gate that works, and it is semantic rather than statistical: a
+# page worth recovering is one that gives ADVICE, and advice names irrigation,
+# pest management, sowing. Measured on the bundled bulletins — Rajasthan's
+# advisory pages name 4-6 topics; Karnataka's rainfall-probability grids name
+# 0-1.
+#
+# Three text-quality heuristics were tried first and all of them failed, which
+# is worth recording so nobody re-tries them: alphabetic ratio, symbol density,
+# and mean word length ALL overlap between the two classes, and the garbled
+# grids actually score HIGHER on alphabetic ratio than the real advisories
+# (0.62-0.81 vs 0.48-0.68). A version gated on that let the grids through and
+# published a Bengal gram claim assembled from OCR noise. Text statistics
+# cannot tell a mangled table from prose; asking what the page is ABOUT can.
+OCR_MIN_TOPICS = int(os.environ.get("OCR_MIN_TOPICS", "2"))
+
 # --- publish -----------------------------------------------------------------
 # Empty means "use the in-process NetworkNode stand-in". Set it to POST at a
 # real /catalog/publish endpoint.
@@ -111,10 +156,24 @@ class Settings:
     qdrant_url: str = QDRANT_URL
     collection: str = COLLECTION
     network_node_url: str = NETWORK_NODE_URL
+    ocr_enabled: bool = OCR_ENABLED
     visible_to: tuple[str, ...] = field(default_factory=lambda: tuple(VISIBLE_TO))
 
     def describe(self) -> str:
         node = self.network_node_url or "in-process NetworkNode stand-in"
+        # Say which it is either way. A run that silently did no OCR and a
+        # run that silently did some are not the same run, and the coverage
+        # percentages below differ because of it.
+        if self.ocr_enabled:
+            from .ingest.ocr import ocr_available  # noqa: PLC0415
+            ready, why = ocr_available()
+            ocr = (
+                f"ENABLED · tesseract · {OCR_LANGS} · {OCR_DPI}dpi"
+                if ready
+                else f"requested but UNAVAILABLE — {why}"
+            )
+        else:
+            ocr = "off — image-only pages are not read (set OCR_ENABLED=1 or --ocr)"
         store = "Qdrant embedded (in-process)" if self.qdrant_url == "local" else self.qdrant_url
         # EMBEDDING_MODEL is still set when the backend is `lexical`, so naming
         # it here would read as "e5 was used" when no model was loaded at all.
@@ -133,7 +192,8 @@ class Settings:
             f"domain        {self.domain}\n"
             f"embeddings    {embeddings}\n"
             f"vector store  {store} · collection={self.collection}\n"
-            f"network node  {node}"
+            f"network node  {node}\n"
+            f"ocr           {ocr}"
         )
 
 

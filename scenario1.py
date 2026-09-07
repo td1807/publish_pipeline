@@ -27,10 +27,11 @@ from dataclasses import dataclass
 from .beckn.catalog import build_catalog
 from .beckn.envelope import build_envelope
 from .beckn.models import Catalog, PublishEnvelope
-from .config import DOMAIN, PROVIDER_ID
+from .config import DOMAIN, OCR_ENABLED, PROVIDER_ID
 from .ingest.passages import ExtractionReport, Passage, extract, detect_state
 from .ingest.document_text import Document, Page, read_document
 from .ingest.language import RepairReading, repair_devanagari, score_terms
+from .ingest.ocr import OcrReading, augment_with_ocr
 from .publish import PublishResult, publish
 from .taxonomy.vocab import Vocabulary, load_vocabulary
 from .vectors.embeddings import Embedder, TokenReport, get_embedder
@@ -93,6 +94,7 @@ class Onboarding:
     tokens: TokenReport | None
     timing: BranchTiming
     repair: RepairReading
+    ocr: OcrReading | None = None
 
     def resources_json(self) -> dict:
         """This document's resources and their full resourceAttributes.
@@ -153,8 +155,13 @@ class Onboarding:
             f"                {n:>4}  {t}" for t, n in sorted(types.items())
         )
         tok = f"\n  2b tokens   {self.tokens.summary()}" if self.tokens else ""
+        ocr_line = (
+            f"\n  ocr          {self.ocr.summary()}"
+            if self.ocr is not None and (self.ocr.applied or not self.ocr.available)
+            else ""
+        )
         return (
-            f"{self.extraction.summary()}\n"
+            f"{self.extraction.summary()}{ocr_line}\n"
             f"  2a          {len(self.catalog.resources)} resources across "
             f"{len(types)} capability types\n{type_lines}\n"
             f"  2b          {self.index_result.points} vectors, "
@@ -190,6 +197,7 @@ def onboard(
     vocab: Vocabulary | None = None,
     provider_id: str = PROVIDER_ID,
     domain: str = DOMAIN,
+    ocr: bool = OCR_ENABLED,
 ) -> Onboarding:
     """Steps 1 and 2 for a single document."""
     vocab = vocab or load_vocabulary()
@@ -201,6 +209,16 @@ def onboard(
     # district names match. Both branches consume the result, so 2a's coverage
     # claims and 2b's vectors are built from the same repaired text.
     doc, repair = repair_encoding(doc, vocab)
+
+    # Then, optionally, the pages that are pictures of tables. AFTER the font
+    # repair on purpose: repair_encoding scores one transform across the whole
+    # document, and OCR output is freshly rendered Devanagari that the
+    # transform would damage. Letting the repair decide on text-layer content
+    # only keeps that decision clean.
+    ocr_reading: OcrReading | None = None
+    if ocr:
+        doc, ocr_reading = augment_with_ocr(doc, vocab)
+
     state_code = detect_state(doc, vocab)
     state_name = vocab.state(state_code).name
 
@@ -246,6 +264,7 @@ def onboard(
     return Onboarding(
         document=doc,
         repair=repair,
+        ocr=ocr_reading,
         passages=passages,
         extraction=report,
         state_code=state_code,
@@ -268,13 +287,14 @@ def onboard_all(
     index: VectorIndex | None = None,
     fresh: bool = False,
     vocab: Vocabulary | None = None,
+    ocr: bool = OCR_ENABLED,
 ) -> tuple[list[Onboarding], VectorIndex]:
     vocab = vocab or load_vocabulary()
     if index is None:
         index = VectorIndex(embedder or get_embedder())
     index.ensure_collection(recreate=fresh)
 
-    return [onboard(p, index=index, vocab=vocab) for p in doc_paths], index
+    return [onboard(p, index=index, vocab=vocab, ocr=ocr) for p in doc_paths], index
 
 
 def publish_all(

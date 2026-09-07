@@ -24,6 +24,7 @@ from ..scenario1 import repair_encoding
 from ..ingest.language import check_devanagari_encoding, detect, repair_devanagari, score_terms
 from ..ingest.passages import UnknownState, _split_on_crop_change, detect_state, extract
 from ..ingest.document_text import Document, Page, UnusableDocument, read_document
+from ..ingest.ocr import augment_with_ocr, ocr_available
 from ..network_node import NetworkNode
 from ..publish import publish
 from ..taxonomy.ids import point_id_for, resource_id_for
@@ -739,3 +740,120 @@ def test_all_districts_resolve_for_each_state(vocab):
         assert report.districts == expected[code], (
             f"{code}: resolved {report.districts} districts, expected {expected[code]}"
         )
+
+
+# ---------------------------------------------------------------------------
+# OCR — recovering pages that are pictures of tables
+# ---------------------------------------------------------------------------
+
+_ocr_ready, _ocr_why = ocr_available()
+needs_ocr = pytest.mark.skipif(not _ocr_ready, reason=f"OCR unavailable — {_ocr_why}")
+
+
+# Rasterising and reading 24 pages at 300 DPI costs ~150s for the Rajasthan
+# bulletin — about 6s a page, which is worth knowing for production planning as
+# well as here. Module-scoped so the four tests below share ONE pass per
+# document instead of paying for it each time.
+@pytest.fixture(scope="module")
+def ocr_rajasthan():
+    return augment_with_ocr(read_document(RAJASTHAN), load_vocabulary())
+
+
+@pytest.fixture(scope="module")
+def ocr_karnataka():
+    return augment_with_ocr(read_document(KARNATAKA), load_vocabulary())
+
+
+def test_ocr_is_off_by_default_so_evidence_stays_reproducible():
+    """Everything in evidence/ was produced without OCR.
+
+    If the default flipped, the saved transcript and the resource JSON would
+    silently stop matching a fresh run — and those files are the fallback when
+    a live run cannot be done.
+    """
+    from ..config import OCR_ENABLED
+
+    assert OCR_ENABLED is False
+
+
+def test_from_ocr_is_provenance_not_a_facet():
+    """Branch 2a's published payload must not change shape when OCR is on.
+
+    The catalogue carries crop names, district names and topics, all matched
+    against a closed vocabulary, so OCR noise resolves to a subject that exists
+    or to nothing. 2b is the branch that needs the flag, because 2b returns the
+    passage text verbatim and OCR damages dosages.
+    """
+    passages, _ = extract(read_document(KARNATAKA), vocab=load_vocabulary())
+    assert "from_ocr" in passages[0].__dataclass_fields__
+    assert "from_ocr" not in passages[0].facets()
+
+
+@pytest.mark.skipif(_ocr_ready, reason="tesseract is installed; this asserts the absent case")
+def test_ocr_missing_degrades_to_no_ocr_rather_than_failing():
+    """A run without tesseract installed must still publish, just with less."""
+    doc = read_document(RAJASTHAN)
+    out, reading = augment_with_ocr(doc, load_vocabulary())
+    assert reading.available is False
+    assert reading.reason
+    assert out is doc
+
+
+@needs_ocr
+@pytest.mark.ocr
+def test_ocr_recovers_the_image_only_pages_of_the_rajasthan_bulletin(ocr_rajasthan):
+    """23 of 30 pages are a district heading above an advisory table as a JPEG.
+
+    Every crop this recovers was already in crops.json. The vocabulary was
+    never the limit; the text simply never reached it.
+    """
+    vocab = load_vocabulary()
+    doc, reading = ocr_rajasthan
+    plain, plain_report = extract(read_document(RAJASTHAN), vocab=vocab)
+    recovered, report = extract(doc, vocab=vocab)
+
+    assert reading.applied
+    assert len(recovered) > 2 * len(plain)
+    assert report.subject_resolution > 2 * plain_report.subject_resolution
+    # And the gain is real coverage, not a longer list of the same crops.
+    before = {s.slug for p in plain for s in p.subjects}
+    after = {s.slug for p in recovered for s in p.subjects}
+    assert before <= after and len(after) >= 20
+
+
+@needs_ocr
+@pytest.mark.ocr
+def test_ocr_refuses_forecast_grids_rather_than_inventing_coverage(ocr_karnataka):
+    """The gate's real job. Karnataka's tail pages are rainfall-probability
+    grids; OCR renders them as `[very (७४० LIKELY|` token soup that once
+    resolved to a Bengal gram claim built entirely out of noise.
+
+    Text-quality statistics do NOT catch this — the garbled grids score higher
+    on alphabetic ratio than the genuine advisories. Asking whether the page
+    names agronomic topics does.
+    """
+    vocab = load_vocabulary()
+    doc, reading = ocr_karnataka
+    plain, _ = extract(read_document(KARNATAKA), vocab=vocab)
+    after, _ = extract(doc, vocab=vocab)
+
+    assert reading.pages_attempted > 0, "there are image pages to judge"
+    assert reading.pages_accepted == 0, "and none of them should have been kept"
+    assert len(after) == len(plain)
+    assert {s.slug for p in after for s in p.subjects} == {
+        s.slug for p in plain for s in p.subjects
+    }
+
+
+@needs_ocr
+@pytest.mark.ocr
+def test_ocr_errors_are_reported_separately_from_refusals(ocr_rajasthan):
+    """A crash must not wear the costume of a working safeguard.
+
+    An early version passed raw bytes to pytesseract, which raises TypeError.
+    A broad `except` caught it and reported 24 pages as REFUSED — a total
+    failure that read exactly like a gate doing its job.
+    """
+    _, reading = ocr_rajasthan
+    assert reading.pages_errored == 0, reading.summary()
+    assert "FAILED" not in reading.summary()

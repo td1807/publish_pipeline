@@ -37,6 +37,13 @@ consumer that fetched it, so advisory text placed inside it goes stale silently
 and there is no mechanism to recall it. Advice therefore has to be fetched live
 from the provider, which is exactly what branch 2b exists to serve.
 
+One bulletin arrives with some of its pages **photocopied rather than typed** —
+a district name in real text, sitting above a table of crop advice that is
+actually a picture. Both jobs above see an empty page there, because neither
+job can read a picture. An optional step can retype those pages first, but
+only if what comes back genuinely reads as advice rather than as a smudge —
+otherwise the safer choice is to leave that page uncatalogued, same as before.
+
 ---
 
 ## Run it
@@ -59,6 +66,24 @@ Then the tests:
 .venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 43 tests, ~15s
 .venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
 ```
+
+**Optional — recover pages that are pictures of tables.** Off by default,
+because the run above and everything in `evidence/` is meant to be reproduced
+exactly as saved. The Rajasthan bulletin is 23 of its 30 pages that shape — a
+district heading in text above an advisory table that is a JPEG:
+
+```bash
+brew install tesseract tesseract-lang        # macOS. apt-get on Linux.
+.venv/bin/pip install pytesseract
+
+.venv/bin/python main.py --all --fresh --ocr
+.venv/bin/pytest tests/test_v4.py -q -m ocr  # 3 tests, ~3 min — rasterises real pages
+```
+
+Run the plain command first, then the `--ocr` one, and diff the two — Karnataka
+and UP come back byte-identical; only Rajasthan changes (29 → 104 passages,
+24.1% → 61.5% subject resolution). See "Known limits" below for why, and for
+the false-positive it took two attempts to gate correctly.
 
 Three things about that first block are worth knowing, because each one
 produces a confusing error rather than an obvious one:
@@ -209,6 +234,7 @@ which is what the 1024-d multilingual model is buying. A Hindi query
 | `taxonomy/data/*.json` | the vocabulary itself | what we can and cannot recognise |
 | `ingest/document_text.py` | file → pages | ingestion, the formats it reads, and when it refuses |
 | `ingest/language.py` | script/language detection + encoding check | the multi-language story |
+| `ingest/ocr.py` | optional: pages that are pictures of tables | **why Rajasthan's coverage was thin** |
 | `ingest/passages.py` | pages → `Passage` (text **and** facets in one object) | **why 2a and 2b cannot drift** |
 | `beckn/models.py` | pydantic mirrors of `beckn.yaml` | spec conformance |
 | `beckn/resource_attributes.py` | facets → `resourceAttributes` | **the heart of 2a** |
@@ -221,8 +247,9 @@ which is what the 1024-d multilingual model is buying. A Hindi query
 | `publish.py` | step 3 | validate-then-deliver |
 | `scenario1.py` | `onboard()`, `publish_all()`, branch timings | the orchestration |
 | `run_scenario1.py` | runnable, narrated | just run it |
-| `tests/test_v4.py` | 43 tests | most claims above, as assertions |
+| `tests/test_v4.py` | 49 tests | most claims above, as assertions |
 | `tools/md2pdf.py` | optional doc → PDF renderer | regenerating `docs_pdf/` |
+| `tools/vocab_gaps.py` | optional: terms the vocabulary missed | triaging a new bulletin |
 
 Nothing here imports from `pipeline.*`, from `pipeline_beckn_v2` or from
 `publish_pipeline_beckn_v3`. The whole flow reads end to end without following
@@ -301,6 +328,65 @@ imports into another package.
 ---
 
 ## Known limits — read before demoing
+
+* **A page that is a picture of a table reads as an empty page, and OCR is off
+  by default.** The pipeline reads a text layer. The scan gate asks whether a
+  page has *any* text, which is the right question for a fully scanned file and
+  the wrong one for a hybrid: **23 of the Rajasthan bulletin's 30 pages carry a
+  district heading in text above an advisory table that is a JPEG.** Ten
+  characters is enough to clear the gate, so the document publishes — thinly,
+  and with the `Crop coverage claims for this state are thin` warning that
+  points at the vocabulary rather than at the real cause. It is 477 extractable
+  characters per page against Karnataka's 1,834 and UP's 2,464.
+
+  `ingest/ocr.py` recovers those pages. Measured: **29 → 104 passages, 24.1% →
+  61.5% subject resolution, 6 → 10 resources, 8 → 26 crops** — and every one of
+  those crops was **already in `crops.json`**. The vocabulary was never the
+  limit here; the text simply never reached it. Karnataka and UP are unchanged
+  to the passage.
+
+  It stays opt-in (`OCR_ENABLED=1`, or `--ocr`) because everything in
+  `evidence/` was produced without it and has to stay reproducible, and because
+  running one bulletin both ways demonstrates more than either run alone.
+
+* **OCR output is flagged, not trusted, and the flag only goes to 2b.**
+  Tesseract on Devanagari damages exactly the tokens that matter most in an
+  agricultural advisory: on page 9 of the Rajasthan bulletin
+  `क्विनालफॉस 25 EC (1 लीटर/हेक्टेयर)` came back as `गस 25 50 (। लीटर/हेक्टेयर)`.
+  A corrupted pesticide dose handed to a farmer is a real harm, so recovered
+  passages carry `from_ocr` in the vector payload and the answering layer
+  decides what to do with them.
+
+  `from_ocr` is deliberately **absent from `facets()`**, so branch 2a's
+  published payload is unchanged in shape. The catalogue carries crop names,
+  district names and topics, all matched against a closed vocabulary — OCR
+  noise resolves to a subject that exists or to nothing, and can never mint
+  one. Dosages are never published at all. 2a can take OCR text as-is; 2b is
+  the branch that has to be careful.
+
+* **The OCR accept gate is semantic, because every statistical version of it
+  failed.** The first gate kept any page that gained vocabulary terms.
+  Karnataka's tail pages are rainfall-probability grids that OCR renders as
+  `[very (७४० LIKELY|` token soup, and that soup gained three terms — enough to
+  be accepted, and enough to publish a **Bengal gram** claim assembled entirely
+  from noise. Alphabetic ratio, symbol density and mean word length were then
+  tried and **all three overlap between the two classes**; the garbled grids
+  actually score *higher* on alphabetic ratio than the genuine advisories
+  (0.62–0.81 vs 0.48–0.68).
+
+  What separates them is what the page is *about*: a page worth recovering
+  gives **advice**, and advice names agronomic topics. Rajasthan's advisory
+  pages name 4–6; Karnataka's grids name 0–1. The threshold is 2, and
+  Karnataka's three image pages are now correctly kept out
+  (`test_ocr_refuses_forecast_grids_rather_than_inventing_coverage`).
+
+* **An OCR crash once wore the costume of a working safeguard.** An early
+  version passed raw bytes to pytesseract, which raises `TypeError`. A broad
+  `except` caught it and reported *"OCR ran on 24 pages and was REFUSED on all
+  of them"* — a total failure that read exactly like a gate doing its job.
+  `OcrReading` now counts `pages_errored` separately from pages it judged and
+  rejected, because only one of those is a bug.
+
 
 * **Parallelism buys nothing measurable, and the run says so.** The two
   branches genuinely execute concurrently in a thread pool, but 2a costs ~10 ms
