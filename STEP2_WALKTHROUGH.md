@@ -28,7 +28,7 @@ for illustration. Re-run it yourself with:
    │ 241 passages → 71       │  │ 241 passages → 241 vectors     │
    │ resources               │  │ 1024-d, cosine                 │
    │ ~0.01 s                 │  │ 15-186 s (see §5)              │
-   │ ~159 KB, leaves the     │  │ stays with the provider,        │
+   │ ~161 KB, leaves the     │  │ stays with the provider,        │
    │ building                │  │ never leaves                    │
    └───────────┬─────────────┘  └────────────────────────────────┘
                ▼
@@ -51,7 +51,7 @@ with two different lifetimes.
 |---|---|---|
 | answers | "**who** can help me?" | "**what** should I do?" |
 | audience | the network layer, and every consumer app on it | this provider's own node, on direct request |
-| size | 159 KB for three states | 510 vectors × 1024 floats |
+| size | 161 KB for three states | 510 vectors × 1024 floats |
 | leaves the building? | **yes** — published | **no** — never published |
 | goes stale? | slowly (coverage changes rarely) | n/a — read live at answer time |
 | contains advisory text? | **never** | that is its entire job |
@@ -186,9 +186,9 @@ per-run `transactionId`, `messageId` and `timestamp`.
 Measured on the bundled file:
 
 ```
-                      passages   resources   subject resolution   crops
-OCR off                    29           6                24.1%       8
-OCR on                    104          12                61.5%      26
+                      passages   resources   subject resolution   crops   districts
+OCR off                    29           6                24.1%       8          41
+OCR on                    103          12                61.2%      26          41
 ```
 
 **Every one of those 26 crops was already in `crops.json`.** The vocabulary was
@@ -426,7 +426,7 @@ flag. Membership resolves that cleanly where a regex could not.
 **No prose.** Every remaining string is scanned for advisory markers (dosages,
 `ml/l`, `@ 4`, imperatives like "apply"/"carry out") and for sentence-length
 runs. If prose appears anywhere, the publish is refused rather than downgraded.
-`test_no_advisory_text_in_payload` greps the finished 159 KB payload for real
+`test_no_advisory_text_in_payload` greps the finished 161 KB payload for real
 sentences taken from the source bulletins — `"NAA"`, `"moisture stress"`,
 `"ml/litre"` — and all three are absent.
 

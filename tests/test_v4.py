@@ -724,6 +724,29 @@ def test_subject_uris_are_all_taxonomy_minted(envelope, vocab):
                 assert subj["subjectId"] in minted
 
 
+def test_a_section_does_not_swallow_the_districts_a_passage_names(vocab):
+    """An active district section must not discard explicit district mentions.
+
+    The Rajasthan annexure lists all 41 districts bilingually. A single AMFU
+    heading ten pages earlier stays in scope, and while `also_covers` was
+    `current_section[1:]` those 41 became 32 -- coverage the bulletin plainly
+    carries, dropped because a section was still open. Section order still wins
+    for the PRIMARY area; the named districts travel alongside it.
+    """
+    doc = read_document(DATA_DIR / "imd_rajasthan_agromet.pdf")
+    doc, _ = repair_encoding(doc, vocab)
+    passages, _ = extract(doc, vocab=vocab)
+
+    annexure = [p for p in passages if p.page in (26, 27)]
+    assert annexure, "the annexure pages must produce passages"
+    named = {a.code for p in annexure for a in (p.area,) + p.also_covers}
+    assert len(named) > 30, f"annexure resolved only {len(named)} areas"
+
+    # and no passage may list its own primary area twice
+    for p in passages:
+        assert p.area.code not in {a.code for a in p.also_covers}
+
+
 def test_all_districts_resolve_for_each_state(vocab):
     """Every district in the table is findable in its bulletin.
 

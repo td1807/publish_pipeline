@@ -295,6 +295,15 @@ def _blocks(text: str, vocab: Vocabulary) -> list[str]:
     return [b for b in out if len(b) >= MIN_PASSAGE_CHARS]
 
 
+
+def _dedupe(areas: list[Area]) -> list[Area]:
+    """Keep first occurrence per code, so section order still wins."""
+    seen: dict[str, Area] = {}
+    for a in areas:
+        seen.setdefault(a.code, a)
+    return list(seen.values())
+
+
 def extract(
     doc: Document,
     *,
@@ -342,8 +351,16 @@ def extract(
             # `also_covers` and end up in the resource's coverageAreas. Earlier
             # they were simply discarded, which left a consumer unable to narrow
             # by district on a bulletin that names all 75 of them.
+            # Case 1 keeps the section's primary district, but the districts a
+            # passage NAMES are coverage whether or not a section is active --
+            # the same argument the paragraph above makes for case 3. Dropping
+            # them here cost the Rajasthan annexure 9 districts as soon as one
+            # heading anywhere in the document became visible: it lists all 41
+            # bilingually, and every one of them was discarded because a
+            # section 10 pages earlier was still in scope.
             if current_section:
-                area, extra = current_section[0], current_section[1:]
+                area = current_section[0]
+                extra = _dedupe(current_section[1:] + mentioned)
             elif len(mentioned) == 1:
                 area, extra = mentioned[0], []
             else:

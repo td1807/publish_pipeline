@@ -1963,6 +1963,12 @@
             "areaCode": "IN-KA-DAVANAGERE",
             "areaLevel": "District",
             "areaName": "Davanagere"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-TUMAKURU",
+            "areaLevel": "District",
+            "areaName": "Tumakuru"
           }
         ],
         "geographicGranularity": "District",
@@ -5124,6 +5130,84 @@
             "areaCode": "IN-KA-UTTARA-KANNADA",
             "areaLevel": "District",
             "areaName": "Uttara Kannada"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-BENGALURU-URBAN",
+            "areaLevel": "District",
+            "areaName": "Bengaluru Urban"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-CHAMARAJANAGARA",
+            "areaLevel": "District",
+            "areaName": "Chamarajanagara"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-CHIKKAMAGALURU",
+            "areaLevel": "District",
+            "areaName": "Chikkamagaluru"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-CHITRADURGA",
+            "areaLevel": "District",
+            "areaName": "Chitradurga"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-DAVANAGERE",
+            "areaLevel": "District",
+            "areaName": "Davanagere"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-HASSAN",
+            "areaLevel": "District",
+            "areaName": "Hassan"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-KODAGU",
+            "areaLevel": "District",
+            "areaName": "Kodagu"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-KOLAR",
+            "areaLevel": "District",
+            "areaName": "Kolar"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-MANDYA",
+            "areaLevel": "District",
+            "areaName": "Mandya"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-MYSURU",
+            "areaLevel": "District",
+            "areaName": "Mysuru"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-RAMANAGARA",
+            "areaLevel": "District",
+            "areaName": "Ramanagara"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-SHIVAMOGGA",
+            "areaLevel": "District",
+            "areaName": "Shivamogga"
+          },
+          {
+            "codeScheme": "OPENAGRI-DISTRICT",
+            "areaCode": "IN-KA-TUMAKURU",
+            "areaLevel": "District",
+            "areaName": "Tumakuru"
           }
         ],
         "geographicGranularity": "District",

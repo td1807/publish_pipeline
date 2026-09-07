@@ -128,7 +128,7 @@ confused for one another.
 
 * [`evidence/SCENARIO_1_TRANSCRIPT.txt`](evidence/SCENARIO_1_TRANSCRIPT.txt)
 * [`evidence/publish_payload.json`](evidence/publish_payload.json) — the actual
-  `/catalog/publish` body (159 KB as published, 284 KB pretty-printed here)
+  `/catalog/publish` body (161 KB as published, 287 KB pretty-printed here)
 * **[`evidence/resources/`](evidence/resources/) — one JSON file per bulletin**,
   each carrying that document's resources with their full `resourceAttributes`.
   Usually the more useful view: "what did *this* bulletin claim?" without
@@ -136,7 +136,7 @@ confused for one another.
 
   | file | state | resources | size |
   |---|---|---|---|
-  | `karnataka.json` | IN-KA | 71 | 168 KB |
+  | `karnataka.json` | IN-KA | 71 | 170 KB |
   | `up.json` | IN-UP | 8 | 51 KB |
   | `rajasthan.json` | IN-RJ | 6 | 19 KB |
 
@@ -183,7 +183,7 @@ up in the output — `--all --fresh`, on Apple Silicon (`device=mps`):
 | 2b time | 15–186 s | 22–154 s | 4–49 s |
 
 ```
-step 3   ACCEPTED — 3 catalogues, 85 resources, 163,060-byte payload
+step 3   ACCEPTED — 3 catalogues, 85 resources, 164,720-byte payload
          network layer holds resourceAttributes only:
            85 resources · 51 subject URIs · 150 area codes · 13 topics
            · 4 subject categories · 7 weather parameters · 2 languages
@@ -346,15 +346,36 @@ imports into another package.
   points at the vocabulary rather than at the real cause. It is 477 extractable
   characters per page against Karnataka's 1,834 and UP's 2,464.
 
-  `ingest/ocr.py` recovers those pages. Measured: **29 → 104 passages, 24.1% →
-  61.5% subject resolution, 6 → 12 resources, 8 → 26 crops** — and every one of
-  those crops was **already in `crops.json`**. The vocabulary was never the
+  `ingest/ocr.py` recovers those pages. Measured: **29 → 103 passages, 24.1% →
+  61.2% subject resolution, 6 → 12 resources, 8 → 26 crops**, with district
+  coverage held at 41 — and every one of those crops was **already in
+  `crops.json`**. Characters recovered: 13,429 → 44,904 across 20 of 24 pages
+  the gate attempted. The vocabulary was never the
   limit here; the text simply never reached it. Karnataka and UP are unchanged
   to the passage.
 
   It stays opt-in (`OCR_ENABLED=1`, or `--ocr`) because everything in
   `evidence/` was produced without it and has to stay reproducible, and because
   running one bulletin both ways demonstrates more than either run alone.
+
+* **A district section used to swallow the districts a passage named.** Turning
+  OCR on first *lost* 9 districts — Rajasthan fell 41 → 32 and the network's
+  area codes 150 → 141. The cause was not OCR. `extract()` sets a passage's
+  primary area from the district section it is inside, and `also_covers` was
+  `current_section[1:]`, so the districts the passage explicitly named were
+  discarded. Page 16's heading is 74 characters of text above a JPEG table —
+  under `MIN_PASSAGE_CHARS`, so without OCR it was dropped and no section was
+  ever active in that bulletin. OCR made the page survive, the heading matched,
+  and it stayed in scope for the remaining 14 pages, including the annexure
+  that lists all 41 districts bilingually.
+
+  `also_covers` is now the section's other districts **plus** the ones the
+  passage names, deduplicated, section order first. That is the same argument
+  the case-3 comment already made. With it, `--ocr` holds 41/41. In the default
+  run it adds 14 area codes across two Karnataka resources and introduces no
+  new districts — a statewide crop-stage grid on page 6 that sits under a
+  district heading now publishes the 13 districts it forecasts for, instead of
+  none.
 
 * **OCR output is flagged, not trusted, and the flag only goes to 2b.**
   Tesseract on Devanagari damages exactly the tokens that matter most in an
