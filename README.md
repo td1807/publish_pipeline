@@ -119,6 +119,13 @@ for a newer revision.
 Saved output from a real run is checked in, so the walkthrough can be read
 without running anything:
 
+Everything in `evidence/` is the **default run** — `main.py --all --fresh`, no
+OCR. That is what makes the reproducibility claim below checkable: clone, run
+that one command, and `git status` should report nothing changed except the
+`transactionId`, `messageId` and `timestamp` that are fresh per run. Output
+from `--ocr` is deliberately **not** checked in, so the two can never be
+confused for one another.
+
 * [`evidence/SCENARIO_1_TRANSCRIPT.txt`](evidence/SCENARIO_1_TRANSCRIPT.txt)
 * [`evidence/publish_payload.json`](evidence/publish_payload.json) — the actual
   `/catalog/publish` body (159 KB as published, 284 KB pretty-printed here)
@@ -340,7 +347,7 @@ imports into another package.
   characters per page against Karnataka's 1,834 and UP's 2,464.
 
   `ingest/ocr.py` recovers those pages. Measured: **29 → 104 passages, 24.1% →
-  61.5% subject resolution, 6 → 10 resources, 8 → 26 crops** — and every one of
+  61.5% subject resolution, 6 → 12 resources, 8 → 26 crops** — and every one of
   those crops was **already in `crops.json`**. The vocabulary was never the
   limit here; the text simply never reached it. Karnataka and UP are unchanged
   to the passage.

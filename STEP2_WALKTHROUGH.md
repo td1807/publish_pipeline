@@ -178,15 +178,17 @@ neither branch may run twice.
 
 **Off by default** (`OCR_ENABLED=1`, or `--ocr`), for the same reason
 `EMBEDDING_BACKEND=lexical` exists: a run's output should be exactly what the
-person asked for, not something quietly heavier. Every number in `evidence/`
-was produced without it and has to keep reproducing.
+person asked for, not something quietly heavier. Every file in `evidence/` is
+the default run and has to keep reproducing from it — checkable by cloning,
+running `main.py --all --fresh`, and confirming `git status` reports only the
+per-run `transactionId`, `messageId` and `timestamp`.
 
 Measured on the bundled file:
 
 ```
                       passages   resources   subject resolution   crops
 OCR off                    29           6                24.1%       8
-OCR on                    104          10                61.5%      26
+OCR on                    104          12                61.5%      26
 ```
 
 **Every one of those 26 crops was already in `crops.json`.** The vocabulary was
