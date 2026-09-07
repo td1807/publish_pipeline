@@ -787,6 +787,55 @@ def ocr_karnataka():
     return augment_with_ocr(read_document(KARNATAKA), load_vocabulary())
 
 
+@pytest.mark.ocr
+def test_the_checked_in_ocr_artefact_still_matches_an_ocr_run(vocab):
+    """evidence/ocr/rajasthan.json is committed, and nothing regenerates it.
+
+    The default run writes evidence/resources/, never evidence/ocr/, so that
+    file can only be refreshed by hand -- exactly the shape of artefact that
+    goes stale and then misleads. This test is the thing that stops it: it
+    re-runs OCR and compares what the artefact claims against what the
+    pipeline now produces. Structure, not bytes, because a different tesseract
+    version will word things differently while still resolving the same crops.
+    """
+    artefact = json.loads(
+        (EVIDENCE_DIR / "ocr" / "rajasthan.json").read_text(encoding="utf-8")
+    )
+    doc, _ = repair_encoding(read_document(RAJASTHAN), vocab)
+    doc, reading = augment_with_ocr(doc, vocab)
+    assert reading.applied, "tesseract produced nothing; cannot verify the artefact"
+    passages, report = extract(doc, vocab=vocab)
+    catalog = build_catalog(
+        passages,
+        state_code=report.state_code,
+        state_name=report.state_name,
+        vocab=vocab,
+    )
+
+    def crops(resources, key):
+        return {
+            s["descriptor"]["name"]
+            for r in resources
+            for s in (r[key].get("agricultureSubjects") or [])
+        }
+
+    live = [
+        {"id": r.id, "resourceAttributes": r.resourceAttributes.model_dump(by_alias=True)}
+        for r in catalog.resources
+    ]
+    assert {r["id"] for r in live} == {r["id"] for r in artefact["resources"]}
+    assert crops(live, "resourceAttributes") == crops(artefact["resources"], "resourceAttributes")
+    assert artefact["extraction"]["passages"] == report.passages
+    assert round(artefact["extraction"]["subjectResolution"], 3) == round(
+        report.subject_resolution, 3
+    )
+    # and it must be the OCR side, not a copy of the default run
+    assert artefact["extraction"]["subjectResolution"] > 0.5
+    assert artefact["resourceCount"] > json.loads(
+        (EVIDENCE_DIR / "resources" / "rajasthan.json").read_text(encoding="utf-8")
+    )["resourceCount"]
+
+
 def test_ocr_is_off_by_default_so_evidence_stays_reproducible():
     """Everything in evidence/ was produced without OCR.
 

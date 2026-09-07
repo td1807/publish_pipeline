@@ -140,12 +140,30 @@ confused for one another.
   | `up.json` | IN-UP | 8 | 51 KB |
   | `rajasthan.json` | IN-RJ | 6 | 19 KB |
 
-  Those are the **default run**, which is what is checked in — so Rajasthan
-  shows 6 resources here where the statistics table above shows 12 under
-  `--ocr`. Running with `--ocr` rewrites this one file to 12 resources and
-  45 KB; Karnataka and UP come back byte-identical. Do not commit that
-  version: `evidence/` reproduces without tesseract precisely because it is the
-  default run.
+  Those are the **default run**, which is what `main.py --all --fresh`
+  reproduces on any machine — no tesseract needed. Running with `--ocr`
+  rewrites `rajasthan.json` to 12 resources and 45 KB; Karnataka and UP come
+  back byte-identical. Don't commit that version over the default one.
+
+* **[`evidence/ocr/rajasthan.json`](evidence/ocr/rajasthan.json) — the same
+  bulletin with `--ocr`**, checked in separately so the difference is
+  inspectable without installing tesseract. Diff it against
+  `evidence/resources/rajasthan.json` and the `extraction` block states the
+  case on its own:
+
+  | `extraction` | default | `evidence/ocr/` |
+  |---|---|---|
+  | `passages` | 29 | **103** |
+  | `subjectResolution` | 0.2414 | **0.6117** |
+  | `districtsResolved` | 41 | 41 |
+  | `resourceCount` | 6 | **12** |
+  | crops in `agricultureSubjects` | 8 | **26** |
+
+  Nothing regenerates this file — the default run writes `evidence/resources/`
+  and never touches `evidence/ocr/` — so an `ocr`-marked test re-runs OCR and
+  compares its resource ids, crop set, passage count and `subjectResolution`
+  against a live run. That is what stops a hand-made artefact from quietly
+  going stale.
 
 * [`evidence/message_update.reference.json`](evidence/message_update.reference.json) —
   the target shape, kept alongside so a test can diff against it
@@ -315,8 +333,9 @@ Reproduce either side:
 ```
 
 `evidence/` holds the default run, so it reproduces on a machine without
-tesseract. Nothing regenerates an `--ocr` copy, which is why the numbers above
-are stated here rather than checked in as a second artefact.
+tesseract. The `--ocr` output for this bulletin is checked in separately as
+[`evidence/ocr/rajasthan.json`](evidence/ocr/rajasthan.json), kept honest by an
+`ocr`-marked test that compares it against a live OCR run.
 
 ### And the retrieval works
 
