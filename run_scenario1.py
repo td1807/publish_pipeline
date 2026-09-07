@@ -154,6 +154,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     for h in hits:
         flag = "" if h.semantic else "   [semantic=False: spellings only, not meanings]"
+        # Same reason semantic=False is printed: a reader must not have to guess
+        # which of these came out of a picture.
+        if h.from_ocr:
+            flag += "   [from_ocr: transcribed from an image — verify doses]"
         print(f"  {h.score:.3f}  {h.citation:38s} {h.resource_id}{flag}")
         print(f"         {h.text[:150].replace(chr(10), ' ')}...")
 

@@ -497,9 +497,23 @@ imports into another package.
   acting on that sprays the wrong thing at the wrong strength.
 
   The pipeline's answer is provenance, not confidence: every passage recovered
-  this way carries **`from_ocr: true`** in the vector payload, and `from_ocr`
-  is deliberately **absent from `facets()`** so it cannot leak into a published
-  coverage claim. **An answering layer built on this index must either withhold
+  this way carries **`from_ocr: true`** on the stored point *and on every
+  `Hit` that `search()` returns*, so an answering layer can act on it without
+  reaching past the search API — it was payload-only until a farmer-question
+  test showed the flag never reached the caller. `from_ocr` is deliberately
+  **absent from `facets()`** so it cannot leak into a published coverage claim.
+
+  A dose question makes the risk concrete. Asked
+  *"फूल गिरने की समस्या के लिए कौन सी दवा और कितनी मात्रा"*, the top hit is an
+  OCR'd page whose text reads `25 मिली. प्रति .00 लीटर पानी` — the leading
+  digit of **100 litres** is gone — alongside `इमिडाबलोप्रिड 200 प्रतिशत`, a
+  concentration that cannot exist (the label is 17.8% SL). The retrieval is
+  correct; the transcription is not:
+
+  ```
+  0.872  imd_rajasthan_agromet.pdf p.7   from_ocr=True   ← verify before showing
+  0.843  imd_rajasthan_agromet.pdf p.12  from_ocr=False
+  ``` **An answering layer built on this index must either withhold
   `from_ocr` passages or show them with a verify-against-source marker and the
   page citation — never hand a dose from one to a farmer as settled fact.**
   Branch 2a needs no such guard: it publishes crop names, district names and

@@ -51,6 +51,14 @@ class Hit:
     resource_id: str
     language: str
     semantic: bool
+    # Whether this passage's text was transcribed from an image rather than
+    # read from a text layer. Stored on the point since OCR landed, but it was
+    # not carried out here -- so an answering layer calling search() could not
+    # act on it, which is the whole point of recording it. OCR damages doses:
+    # `.00 लीटर` for 100 litres, `200 प्रतिशत` for 17.8% SL. A caller showing
+    # advisory text to a farmer must check this and either withhold the dose or
+    # mark it for verification against the cited page.
+    from_ocr: bool = False
 
     @property
     def citation(self) -> str:
@@ -228,6 +236,7 @@ class VectorIndex:
                 resource_id=pt.payload.get("resource_id", ""),
                 language=pt.payload.get("language", ""),
                 semantic=self.embedder.semantic,
+                from_ocr=bool(pt.payload.get("from_ocr", False)),
             )
             for pt in result.points
         ]

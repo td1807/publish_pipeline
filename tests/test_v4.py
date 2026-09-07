@@ -788,6 +788,37 @@ def ocr_karnataka():
 
 
 @pytest.mark.ocr
+def test_a_search_result_says_whether_its_text_came_from_an_image(vocab):
+    """`from_ocr` has to reach the caller, not just the stored point.
+
+    It was written into the payload from the start but dropped by `search()`,
+    so an answering layer could not act on it -- and acting on it is the entire
+    reason it is recorded. OCR damages doses (`.00 लीटर` where 100 litres
+    belongs), so a consumer showing advisory text has to be able to tell.
+    """
+    doc, _ = repair_encoding(read_document(RAJASTHAN), vocab)
+    doc, reading = augment_with_ocr(doc, vocab)
+    assert reading.applied, "tesseract produced nothing; cannot verify the flag"
+    passages, _ = extract(doc, vocab=vocab)
+    assert any(p.from_ocr for p in passages), "expected some OCR'd passages"
+
+    idx = VectorIndex(get_embedder("lexical"), collection="ocr_flag", path=None)
+    idx.collection = "ocr_flag"
+    idx.ensure_collection(recreate=True)
+    try:
+        idx.index_passages(passages)
+        hits = idx.search("फूल गिरने की समस्या दवा मात्रा", limit=10)
+        assert hits
+        assert any(h.from_ocr for h in hits), "no hit reported from_ocr"
+        # and the flag must track the passage it came from, not be a constant
+        by_citation = {(p.document, p.page): p.from_ocr for p in passages}
+        for h in hits:
+            assert h.from_ocr == by_citation[(h.document, h.page)]
+    finally:
+        idx.close()
+
+
+@pytest.mark.ocr
 def test_the_checked_in_ocr_artefact_still_matches_an_ocr_run(vocab):
     """evidence/ocr/rajasthan.json is committed, and nothing regenerates it.
 
