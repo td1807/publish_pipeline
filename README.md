@@ -249,6 +249,75 @@ signal rather than a bug:
   mostly weather warnings, not crop advisories. The run prints that as a
   warning rather than letting a thin catalogue look complete.
 
+### What OCR changes for the Rajasthan bulletin
+
+Worth its own section, because it is the difference between *"this provider
+covers 8 crops"* and *"this provider covers 26"* — from the same file, on the
+same day, with no change to the vocabulary.
+
+The Rajasthan bulletin is not a thin bulletin. It is a bulletin the pipeline
+cannot read: 23 of its 30 pages put a district heading in text above an
+advisory table that is a **JPEG**. Reading the text layer alone yields 448
+characters per page against Karnataka's 1,745.
+
+```
+                                    default      --ocr
+passages                                 29        103
+passages resolved to a crop           24.1%      61.2%
+crops advertised                          8         26
+districts advertised                  41 / 41    41 / 41
+resources in rajasthan.json               6         12
+extractable characters               13,429     44,904
+```
+
+**What lands in `evidence/resources/rajasthan.json`.** The default run
+publishes four statewide resources plus two district ones:
+
+```
+crop-in-rj · horticulture-in-rj · livestock-in-rj · weather-in-rj
+weather-in-rj-jodhpur · weather-in-rj-khairthal-tijara
+```
+
+`--ocr` adds eight more, all of them district-level advisory capabilities that
+the text layer never revealed:
+
+```
+crop-in-rj-bikaner · crop-in-rj-churu · crop-in-rj-jodhpur
+crop-in-rj-pali · crop-in-rj-udaipur
+horticulture-in-rj-udaipur · livestock-in-rj-udaipur · weather-in-rj-udaipur
+```
+
+That is the shape of the gain: a consumer app can now find this provider for
+*crop advice in Bikaner*, where before it could only find *weather advice for
+Rajasthan*.
+
+**The 18 crops recovered**, every one of which was already in `crops.json`:
+
+> Barley, Black gram, Buffalo, Cattle, Chilli, Cluster bean, Cotton, Goat,
+> Green gram, Groundnut, Maize, Moth bean, Mustard, Paddy, Poultry, Sheep,
+> Soybean, Sugarcane
+
+Note `Buffalo`, `Cattle`, `Goat`, `Poultry` and `Sheep` — the entire livestock
+advisory of this bulletin was invisible without OCR.
+
+**The catch, and it is not small.** 76 of those 103 passages carry
+`from_ocr: true`, meaning their text was transcribed from a picture and can
+contain corrupted pesticide doses — see the dose entry under Known limits
+before letting any of them reach a farmer. Branch 2a is unaffected: crop and
+district names are matched against a closed vocabulary, and dosages are never
+published.
+
+Reproduce either side:
+
+```bash
+.venv/bin/python main.py --file imd_rajasthan_agromet.pdf --fresh            # default
+.venv/bin/python main.py --file imd_rajasthan_agromet.pdf --fresh --ocr      # needs tesseract
+```
+
+`evidence/` holds the default run, so it reproduces on a machine without
+tesseract. Nothing regenerates an `--ocr` copy, which is why the numbers above
+are stated here rather than checked in as a second artefact.
+
 ### And the retrieval works
 
 ```
