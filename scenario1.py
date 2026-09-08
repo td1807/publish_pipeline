@@ -32,7 +32,7 @@ from .ingest.passages import ExtractionReport, Passage, extract, detect_state
 from .ingest.document_text import Document, Page, read_document
 from .ingest.language import RepairReading, repair_devanagari, score_terms
 from .ingest.ocr import OcrReading, augment_with_ocr
-from .publish import PublishResult, publish
+from .publish import PublishResult, publish, record_publish
 from .taxonomy.vocab import Vocabulary, load_vocabulary
 from .vectors.embeddings import Embedder, TokenReport, get_embedder
 from .vectors.store import IndexResult, VectorIndex
@@ -299,8 +299,14 @@ def onboard_all(
 
 def publish_all(
     onboardings: list[Onboarding],
-) -> tuple[PublishEnvelope, PublishResult, "object"]:
-    """Step 3: one envelope carrying every catalogue, published together."""
+) -> tuple[PublishEnvelope, PublishResult, "object", dict]:
+    """Step 3: one envelope carrying every catalogue, published together.
+
+    Returns the ledger entry alongside the result: a provider needs to be able
+    to answer "what are we currently claiming, and did it change?" after the
+    fact, not only while the run is on screen.
+    """
     envelope = build_envelope([o.catalog for o in onboardings])
     result, node = publish(envelope)
-    return envelope, result, node
+    ledger = record_publish(envelope.to_wire(), result)
+    return envelope, result, node, ledger

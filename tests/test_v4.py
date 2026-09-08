@@ -681,6 +681,197 @@ def test_a_missing_file_is_still_an_error_not_a_refusal(tmp_path):
         read_document(tmp_path / "no_such_bulletin.pdf")
 
 
+# --- 11. surviving contact with a real deployment ----------------------------
+#
+# Three things a batch run needs that a demo does not: publishing that survives
+# a network hiccup, a record of what was claimed, and one bad document costing
+# one document.
+
+
+def test_only_transient_failures_are_worth_retrying():
+    """A 4xx is a verdict on the payload. Re-sending it is noise."""
+    import httpx
+
+    from ..publish import _is_retryable
+
+    def status(code):
+        req = httpx.Request("POST", "https://node.example/catalog/publish")
+        return httpx.HTTPStatusError(
+            "x", request=req, response=httpx.Response(code, request=req)
+        )
+
+    for code in (429, 500, 502, 503, 504):
+        assert _is_retryable(status(code)), f"{code} should be retried"
+    for code in (400, 401, 403, 404, 422):
+        assert not _is_retryable(status(code)), f"{code} must NOT be retried"
+    assert _is_retryable(httpx.ConnectError("refused"))
+    assert _is_retryable(httpx.ReadTimeout("slow"))
+    assert not _is_retryable(ValueError("not a transport problem"))
+
+
+def test_publish_retries_a_transient_failure_and_then_succeeds(monkeypatch, envelope):
+    """Two 503s must not end a run that would have worked on the third try."""
+    import httpx
+
+    from .. import publish as publish_mod
+
+    attempts = {"n": 0}
+
+    class FlakyClient:
+        def __init__(self, *a, **kw):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def post(self, url, json=None, headers=None):
+            attempts["n"] += 1
+            # The idempotency key must be the same on every attempt -- that is
+            # the whole point of it.
+            attempts.setdefault("keys", []).append(headers["Idempotency-Key"])
+            req = httpx.Request("POST", url)
+            if attempts["n"] < 3:
+                return httpx.Response(503, request=req)
+            return httpx.Response(200, json={}, request=req)
+
+    monkeypatch.setattr(httpx, "Client", FlakyClient)
+    monkeypatch.setattr(publish_mod, "PUBLISH_BACKOFF_SECONDS", 0.0)
+    ack = publish_mod._post("https://node.example", envelope.to_wire())
+
+    assert attempts["n"] == 3, "should have retried twice before succeeding"
+    assert len(set(attempts["keys"])) == 1, "retries must reuse one idempotency key"
+    assert ack.status == "ACCEPTED"
+
+
+def test_publish_gives_up_on_a_rejected_payload(monkeypatch, envelope):
+    """A 400 is answered once, not three times."""
+    import httpx
+
+    from .. import publish as publish_mod
+
+    attempts = {"n": 0}
+
+    class RejectingClient:
+        def __init__(self, *a, **kw):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def post(self, url, json=None, headers=None):
+            attempts["n"] += 1
+            req = httpx.Request("POST", url)
+            return httpx.Response(400, request=req)
+
+    monkeypatch.setattr(httpx, "Client", RejectingClient)
+    with pytest.raises(httpx.HTTPStatusError):
+        publish_mod._post("https://node.example", envelope.to_wire())
+    assert attempts["n"] == 1, "a 400 must not be retried"
+
+
+def test_the_ledger_records_a_publish_and_detects_an_unchanged_republish(
+    tmp_path, envelope
+):
+    """`claimsHash` has to answer "did our coverage change?", not "did we run?".
+
+    Every publish carries a fresh transactionId, messageId and timestamp, so a
+    hash over the raw envelope would differ every time and answer nothing. The
+    hash covers the catalogues with those and the validity window removed.
+    """
+    from ..publish import publish, record_publish
+
+    ledger = tmp_path / "state.json"
+    result, _ = publish(envelope)
+
+    first = record_publish(envelope.to_wire(), result, path=ledger)
+    assert first["changedSincePrevious"] is None, "nothing to compare against yet"
+    assert first["resources"] == result.ack.resources_indexed
+
+    # Same claims, published again: a new envelope, new uuids, new timestamp.
+    again = build_envelope([c for c in envelope.message.catalogs])
+    second = record_publish(again.to_wire(), result, path=ledger)
+    assert second["messageId"] != first["messageId"], "genuinely a second publish"
+    assert second["claimsHash"] == first["claimsHash"], "claims did not change"
+    assert second["changedSincePrevious"] is False
+
+    entries = json.loads(ledger.read_text())["publishes"]
+    assert len(entries) == 2
+
+
+def test_the_ledger_notices_when_coverage_actually_changes(tmp_path, envelope):
+    """Drop a catalogue and the hash must move."""
+    from ..publish import publish, record_publish
+
+    ledger = tmp_path / "state.json"
+    result, _ = publish(envelope)
+    before = record_publish(envelope.to_wire(), result, path=ledger)
+
+    fewer = build_envelope(list(envelope.message.catalogs)[:-1])
+    after = record_publish(fewer.to_wire(), result, path=ledger)
+    assert after["claimsHash"] != before["claimsHash"]
+    assert after["changedSincePrevious"] is True
+
+
+def test_a_corrupt_ledger_does_not_lose_the_current_entry(tmp_path, envelope):
+    """The publish already happened. Failing to read history is not a reason
+    to fail to record it."""
+    from ..publish import publish, record_publish
+
+    ledger = tmp_path / "state.json"
+    ledger.write_text("{ this is not json")
+    result, _ = publish(envelope)
+    entry = record_publish(envelope.to_wire(), result, path=ledger)
+    assert entry["claimsHash"]
+    assert len(json.loads(ledger.read_text())["publishes"]) == 1
+
+
+def test_one_crashing_document_costs_one_document(monkeypatch, tmp_path, capsys):
+    """A failure mid-batch must not discard the documents already ingested.
+
+    Before this, anything that was not UnusableDocument propagated out of the
+    loop and ended the run, so one malformed file meant every document already
+    processed went unpublished.
+    """
+    from .. import run_scenario1 as runner
+
+    real = runner.onboard_all
+    calls = {"n": 0}
+
+    def explode_on_the_second(paths, **kw):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            raise RuntimeError("simulated extractor blow-up")
+        return real(paths, **kw)
+
+    monkeypatch.setattr(runner, "onboard_all", explode_on_the_second)
+    monkeypatch.setattr(runner, "EVIDENCE_DIR", tmp_path)
+    monkeypatch.setattr(runner, "STATE_FILE", tmp_path / "state.json", raising=False)
+    monkeypatch.setenv("EMBEDDING_BACKEND", "lexical")
+    monkeypatch.setenv("QDRANT_PATH", str(tmp_path / "qdrant"))
+
+    code = runner.main(
+        [
+            "--file", str(DATA_DIR / "imd_rajasthan_agromet.pdf"),
+            "--file", str(DATA_DIR / "imd_up_agromet.pdf"),
+            "--file", str(DATA_DIR / "imd_karnataka_agromet.pdf"),
+            "--fresh", "--no-save",
+        ]
+    )
+    out = capsys.readouterr().out
+    assert "FAILED   imd_up_agromet.pdf" in out
+    assert "documents onboarded   2" in out, "the other two must still publish"
+    assert "documents failed      1" in out
+    # A refusal is a decision; a failure is a bug. The caller has to be able to
+    # tell without reading stdout.
+    assert code == 1
+
+
 # --- 10. round trip ----------------------------------------------------------
 
 
