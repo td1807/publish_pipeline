@@ -63,9 +63,16 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic and not ocr"   # 47 tests, ~55s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic and not ocr"   # 54 tests, ~55s
 .venv/bin/pytest tests/test_v4.py -q -m semantic                    # 1 test, needs the model
 ```
+
+**Publishing to a real node.** Set `BECKN_NETWORK_NODE_URL` and the run POSTs
+instead of using the in-process stand-in. It retries transient failures —
+`PUBLISH_MAX_ATTEMPTS` (3), `PUBLISH_BACKOFF_SECONDS` (1.0, doubling),
+`PUBLISH_TIMEOUT_SECONDS` (60) — and records every publish to `.v4_state.json`
+so you can tell whether your coverage claims actually changed. See
+[From here to production](#from-here-to-production) for what those two do.
 
 **Optional — recover pages that are pictures of tables.** Off by default,
 because the run above and everything in `evidence/` is meant to be reproduced
@@ -234,7 +241,7 @@ REFUSED  imd_karnataka_district_kannada.pdf
          has 0 of 1 pages with a text layer (0%, need 50%). This looks like
          a scan. Run OCR and re-ingest.
 
-totals   3 onboarded · 1 refused · 510 passages · 85 resources · 510 vectors
+totals   3 onboarded · 1 refused · 0 failed · 510 passages · 85 resources · 510 vectors
 ```
 
 The same command with `--ocr`, for comparison:
@@ -814,15 +821,22 @@ every inbound ack verified, and a consumer leg that authenticates before it
 scopes. `network_node.py` is a stand-in for the counterparty and would be
 replaced entirely, not extended.
 
-### 2. Publish reliability
+### 2. Publish reliability — **done on `production-changes`**
 
-`publish.py` sends one `httpx.post` with a 60-second timeout and
-`raise_for_status()`. There is no retry, no backoff, and no idempotency key, so
-a transient 503 ends the run with no record of which catalogues landed —
-and re-running may publish a duplicate of the ones that did.
+`publish.py` used to send one `httpx.post` and hope: a transient 503 ended the
+run with no record of which catalogues had landed.
 
-*Done looks like:* retry with backoff, an idempotency key per publish, and a
-persisted record of the attempt before the request goes out.
+It now retries with doubling backoff (`PUBLISH_MAX_ATTEMPTS`, default 3) and
+carries the envelope's own `messageId` as an **`Idempotency-Key`** header, so a
+retry is recognisably the *same* publish rather than a second one. Retries are
+deliberately narrow: 429 and 5xx are transient and worth repeating, while a
+4xx is the node's verdict on the payload and is raised on the first attempt —
+re-sending a catalogue the node has already rejected on its merits is noise.
+Every retry prints, because a run that quietly took three attempts and one that
+worked immediately are not the same run.
+
+*Still open:* nothing queues a failed publish for later. If all attempts fail
+the run exits non-zero and a human decides.
 
 ### 3. A vector store more than one process can open
 
@@ -836,29 +850,56 @@ quoted as production.
 is a config change. *Real part:* running that server, and re-declaring the
 payload indexes so filters stop scanning.
 
-### 4. Nothing records what was published
+### 4. A record of what was published — **done on `production-changes`**
 
-`STATE_FILE` is declared in `config.py` and **never read or written** — a
-dangling constant. So there is no catalogue version history, no diff between
-last week's claims and this week's, and no rollback. For a provider whose
-coverage claims are cached by every consumer that fetched them, that is a real
-gap rather than a convenience.
+`STATE_FILE` was declared in `config.py` and never read or written. It now
+holds a ledger: every publish appends its timestamp, `transactionId`,
+`messageId`, target, ack status, resource count, payload size and a
+**`claimsHash`**.
 
-Partly mitigated already: point ids are deterministic, so re-ingesting the same
-bulletin updates in place instead of duplicating
-(`test_reingest_is_idempotent`). That covers the index, not the published
-claim.
+`claimsHash` is the load-bearing field, and what it *excludes* is the point.
+Every envelope carries a fresh `transactionId`, `messageId`, `timestamp` and
+validity window by design, so a hash over the raw envelope would differ on
+every run and answer nothing. The hash covers the catalogues with those removed
+— so republishing unchanged coverage hashes the same, and a hash that moves
+means **the claims moved**. That is the difference between a log and a diff,
+and the run says which it was:
 
-*Done looks like:* each publish recorded with its envelope hash and timestamp,
-diffable against the previous one.
+```
+ledger        0af0f350abac2fce — coverage claims unchanged since the previous publish
+```
+
+The ledger is written *after* the ack, never before — an attempt that never
+reached the node is not a claim anybody holds. A failure to write it prints and
+is not fatal: the catalogue is already out there, and failing the publish over
+a local file would be the larger lie.
+
+*Still open:* no rollback. The ledger tells you *that* claims changed and lets
+you diff hashes; restoring a previous catalogue is still manual.
 
 ### 5. Batch processing and the model as a service
 
-`onboard_all` is a list comprehension over paths: one document at a time, in
-one process, with no resume. Document 40 of 200 failing loses everything after
-it. And e5-large is loaded per run, with **12× timing variance on identical
-input** — Karnataka measured 14.9 s, 33.5 s, 83.6 s and 186.2 s on the same
-laptop.
+One document at a time, in one process. And e5-large is loaded per run, with
+**12× timing variance on identical input** — Karnataka measured 14.9 s, 33.5 s,
+83.6 s and 186.2 s on the same laptop.
+
+**Partly addressed on `production-changes`:** a crashing document no longer
+takes the batch with it. Only `UnusableDocument` was caught before, so any
+other exception ended the run and every document already ingested went
+unpublished — one malformed file cost the whole batch. Failures are now caught
+per document, counted **separately from refusals**, and the run continues:
+
+```
+documents onboarded   3
+documents refused     1      ← a decision this pipeline made on purpose
+documents failed      0      ← a document that should have worked and did not
+```
+
+Keeping those two counts apart matters: collapsing them would hide a bug behind
+a message that reads like a safeguard working, which is the mistake `ocr.py`
+records having already made with its errored-vs-refused page counts. The exit
+code follows the same logic — a refusal exits 0, a failure exits **1**, so
+cron, a queue or CI can tell without parsing stdout.
 
 *Done looks like:* a queue with per-document retry so a crash costs one item,
 and embeddings behind a long-lived service. `EMBEDDING_BACKEND=remote` already
@@ -918,6 +959,6 @@ discovery → filter → answer path.
 ### What already holds
 
 Worth stating alongside the gaps, because it is what makes them safe to work
-against: **53 tests**, and every artefact in `evidence/` regenerates
+against: **60 tests**, and every artefact in `evidence/` regenerates
 byte-for-byte from `main.py --all --fresh`. The documentation can be checked by
 running one command rather than by trusting it.

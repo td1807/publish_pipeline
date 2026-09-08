@@ -142,6 +142,18 @@ DATA_DIR = PACKAGE_DIR / "data"
 EVIDENCE_DIR = PACKAGE_DIR / "evidence"
 STATE_FILE = PACKAGE_DIR / ".v4_state.json"
 
+# --- publishing to a real node -----------------------------------------------
+# Publishing is the one step that talks to somebody else's server, so it is the
+# one step that fails for reasons unrelated to this code. A 503 or a dropped
+# connection is not a bad payload and must not end the run: retry, waiting
+# longer each time so a struggling node is not hammered.
+#
+# Retries are ONLY for transient failures. A 4xx means the node rejected the
+# payload on its merits -- retrying an invalid catalogue just sends it again.
+PUBLISH_MAX_ATTEMPTS = int(os.environ.get("PUBLISH_MAX_ATTEMPTS", "3"))
+PUBLISH_BACKOFF_SECONDS = float(os.environ.get("PUBLISH_BACKOFF_SECONDS", "1.0"))
+PUBLISH_TIMEOUT_SECONDS = float(os.environ.get("PUBLISH_TIMEOUT_SECONDS", "60.0"))
+
 
 @dataclass(frozen=True)
 class Settings:

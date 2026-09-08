@@ -99,6 +99,7 @@ def main(argv: list[str] | None = None) -> int:
 
     onboardings = []
     refused: list[tuple[str, str]] = []
+    failed: list[tuple[str, str]] = []
     for path in paths:
         try:
             done, index = onboard_all(
@@ -112,6 +113,19 @@ def main(argv: list[str] | None = None) -> int:
             # resource claiming coverage we never read or never had.
             refused.append((Path(path).name, str(exc)))
             print(f"\nREFUSED  {Path(path).name}\n         {exc}")
+            continue
+        except Exception as exc:  # noqa: BLE001 — see the note below
+            # A document that CRASHED is not a document that was refused, and
+            # collapsing the two would hide a bug behind a message that reads
+            # like a safeguard doing its job -- the same mistake ocr.py records
+            # having made with its errored-vs-refused page counts.
+            #
+            # It also must not take the rest of the batch with it. Before this,
+            # any exception that was not UnusableDocument ended the run, so a
+            # single malformed file meant every document already ingested went
+            # unpublished. One bad file now costs one file.
+            failed.append((Path(path).name, f"{type(exc).__name__}: {exc}"))
+            print(f"\nFAILED   {Path(path).name}\n         {type(exc).__name__}: {exc}")
             continue
         args.fresh = False  # only the first document recreates the collection
         onboardings.extend(done)
@@ -130,8 +144,17 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     _rule("step 3 — /catalog/publish to the network layer")
-    envelope, result, node = publish_all(onboardings)
+    envelope, result, node, ledger = publish_all(onboardings)
     print(result.summary())
+    # Say whether this publish changed what the network holds. "Nothing
+    # changed" is useful information, not silence.
+    if ledger["changedSincePrevious"] is None:
+        verdict = "first recorded publish"
+    elif ledger["changedSincePrevious"]:
+        verdict = "coverage claims CHANGED since the previous publish"
+    else:
+        verdict = "coverage claims unchanged since the previous publish"
+    print(f"ledger        {ledger['claimsHash'][:16]} — {verdict}")
 
     print("\nwhat the network layer now holds (resourceAttributes only):")
     for k, v in node.facet_index().items():
@@ -164,6 +187,7 @@ def main(argv: list[str] | None = None) -> int:
     _rule("totals")
     print(f"documents onboarded   {len(onboardings)}")
     print(f"documents refused     {len(refused)}")
+    print(f"documents failed      {len(failed)}")
     print(f"passages extracted    {sum(len(o.passages) for o in onboardings)}")
     print(f"resources published   {sum(len(o.catalog.resources) for o in onboardings)}")
     print(f"vectors indexed       {index.count()}")
@@ -225,7 +249,10 @@ def main(argv: list[str] | None = None) -> int:
             )
 
     index.close()
-    return 0
+    # A refusal is a decision this pipeline made on purpose, so it exits 0. A
+    # FAILURE is a document that should have worked and did not, which a caller
+    # -- cron, a queue, CI -- has to be able to detect without parsing stdout.
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
