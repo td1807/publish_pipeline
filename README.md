@@ -63,8 +63,8 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic"   # 43 tests, ~15s
-.venv/bin/pytest tests/test_v4.py -q -m semantic         # 1 test, needs the model
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic and not ocr"   # 47 tests, ~55s
+.venv/bin/pytest tests/test_v4.py -q -m semantic                    # 1 test, needs the model
 ```
 
 **Optional — recover pages that are pictures of tables.** Off by default,
@@ -77,7 +77,7 @@ brew install tesseract tesseract-lang        # macOS. apt-get on Linux.
 .venv/bin/pip install pytesseract
 
 .venv/bin/python main.py --all --fresh --ocr
-.venv/bin/pytest tests/test_v4.py -q -m ocr  # 3 tests, ~3 min — rasterises real pages
+.venv/bin/pytest tests/test_v4.py -q -m ocr  # 5 tests, ~4 min — rasterises real pages
 ```
 
 Run the plain command first, then the `--ocr` one, and diff the two — Karnataka
@@ -784,3 +784,140 @@ imports into another package.
   proven is that branch 2b's index *can* answer one: `run_scenario1` ends with a
   retrieval smoke check, and `test_retrieval_can_be_scoped_to_advertised_resources`
   demonstrates the discovery→filter→answer path.
+
+---
+
+## From here to production
+
+Everything above describes what this repository *is*. This section is what it
+is **not yet**, ordered by what blocks what — written so the next person does
+not have to rediscover it.
+
+The distinction worth holding onto: **the design decisions carry forward, the
+plumbing does not.** Nothing below asks for a rewrite. The metadata/text split,
+the single extraction pass, the refuse-rather-than-guess discipline and the
+measured gates are all load-bearing and unchanged by scale. What changes is
+almost every piece of infrastructure underneath them.
+
+### 1. Signatures and registry — the blocker, not a task
+
+Without these the pipeline cannot join a real Beckn network at all, so nothing
+else on this list matters until they exist.
+
+`AuthorizationHeader`, `AckSignatureHeader` and `context.key` are unimplemented.
+A publish asserts it comes from IMD and nothing proves it; an ack asserts it
+comes from the network and nothing proves that either. Scoping a vector search
+by `resource_ids` **does not authenticate** the caller — those ids are public.
+
+*Done looks like:* every outbound message signed against a registry-held key,
+every inbound ack verified, and a consumer leg that authenticates before it
+scopes. `network_node.py` is a stand-in for the counterparty and would be
+replaced entirely, not extended.
+
+### 2. Publish reliability
+
+`publish.py` sends one `httpx.post` with a 60-second timeout and
+`raise_for_status()`. There is no retry, no backoff, and no idempotency key, so
+a transient 503 ends the run with no record of which catalogues landed —
+and re-running may publish a duplicate of the ones that did.
+
+*Done looks like:* retry with backoff, an idempotency key per publish, and a
+persisted record of the attempt before the request goes out.
+
+### 3. A vector store more than one process can open
+
+Embedded Qdrant takes an **exclusive lock** on `.qdrant/`, so ingestion and
+query cannot run at once — that is the `already accessed by another instance`
+error, not a bug. It also evaluates filters by scanning, which
+`VectorIndex.describe()` prints on every run precisely so its latency is never
+quoted as production.
+
+*Cheap part:* `VectorIndex` already takes `url`, so pointing at a Qdrant server
+is a config change. *Real part:* running that server, and re-declaring the
+payload indexes so filters stop scanning.
+
+### 4. Nothing records what was published
+
+`STATE_FILE` is declared in `config.py` and **never read or written** — a
+dangling constant. So there is no catalogue version history, no diff between
+last week's claims and this week's, and no rollback. For a provider whose
+coverage claims are cached by every consumer that fetched them, that is a real
+gap rather than a convenience.
+
+Partly mitigated already: point ids are deterministic, so re-ingesting the same
+bulletin updates in place instead of duplicating
+(`test_reingest_is_idempotent`). That covers the index, not the published
+claim.
+
+*Done looks like:* each publish recorded with its envelope hash and timestamp,
+diffable against the previous one.
+
+### 5. Batch processing and the model as a service
+
+`onboard_all` is a list comprehension over paths: one document at a time, in
+one process, with no resume. Document 40 of 200 failing loses everything after
+it. And e5-large is loaded per run, with **12× timing variance on identical
+input** — Karnataka measured 14.9 s, 33.5 s, 83.6 s and 186.2 s on the same
+laptop.
+
+*Done looks like:* a queue with per-document retry so a crash costs one item,
+and embeddings behind a long-lived service. `EMBEDDING_BACKEND=remote` already
+exists for the second half — but note its `token_report()` returns `None`,
+because the server's tokenizer cannot be inspected, so the truncation check
+switches off exactly where it cannot be observed.
+
+### 6. Reference data is the scaling wall, not throughput
+
+Coverage is authored, not discovered: `_STATE_MARKERS` names three states in
+source, and `districts.json` carries their districts written by hand. Adding a
+state is a code change plus authored vocabulary, not configuration.
+
+Rajasthan showed the cost concretely. It carried 32 districts for a long time —
+the ones the bundled bulletin happened to name — while the state has 41. The
+missing nine were published as no coverage at all, from a bulletin whose
+annexure lists every one of them bilingually.
+
+*Done looks like:* districts loaded from **LGD**, the official national
+register, with its numeric codes replacing `OPENAGRI-DISTRICT`. Emitting them
+is the two-field change in `taxonomy/vocab.py` noted under Known limits; the
+work is loading and reconciling the master, and handling reorganisations like
+Rajasthan's 33 → 50 → 41.
+
+**Throughput is bought with machines. This is bought with authoritative data,
+and it is the thing that actually limits a national deployment.**
+
+### 7. Enforce the OCR dose guard before farmers see anything
+
+The only item here with physical consequences, and the reason it is last is
+ordering, not priority — it gates *release*, not the work above it.
+
+OCR damages the tokens that matter most. A dose question returns, as its **top
+hit**, text reading `25 मिली. प्रति .00 लीटर` — the leading digit of 100 litres
+is gone — and `इमिडाबलोप्रिड 200 प्रतिशत`, a concentration that cannot exist.
+
+Every such passage carries `from_ocr` on the stored point *and* on every `Hit`
+that `search()` returns. But **nothing consumes it yet**, because the answering
+layer does not exist. Today the protection is a boolean and this paragraph.
+
+*Done looks like:* enforcement somewhere it cannot be bypassed — an answering
+layer that withholds `from_ocr` dosages, or surfaces them only beside the page
+citation and a verify-against-source marker. A `search(exclude_ocr=True)`
+parameter was considered and deliberately not added: with no consumer to say
+whether withholding or flagging is correct, it would bake a policy into the
+API, and for cotton and livestock questions the only Rajasthan answer *is* an
+OCR'd one — excluding it returns another state's advice instead.
+
+### And the half that is not built
+
+Scenario 2 — a farmer asks, the provider answers — is out of scope here, and no
+amount of the above substitutes for it. What is proven is that branch 2b's
+index *can* answer: the run ends with a retrieval smoke check, and
+`test_retrieval_can_be_scoped_to_advertised_resources` demonstrates the
+discovery → filter → answer path.
+
+### What already holds
+
+Worth stating alongside the gaps, because it is what makes them safe to work
+against: **53 tests**, and every artefact in `evidence/` regenerates
+byte-for-byte from `main.py --all --fresh`. The documentation can be checked by
+running one command rather than by trusting it.
