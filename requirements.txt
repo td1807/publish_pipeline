@@ -40,34 +40,47 @@ httpx>=0.24.0
 pytest>=7.0.0
 
 # ------------------------------------------------------------------------
-# OCR — optional, and deliberately NOT installed by default.
+# OCR — the Python half is installed; the engine is a system package.
 #
 # The pipeline reads a text layer. A page that is a picture of a table has no
 # text layer, so it is silently read as empty and the catalogue advertises less
 # than the bulletin contains. The Rajasthan file is 23 of 30 pages that shape:
 # a district heading in text above an advisory table that is a JPEG.
 #
-# Turning OCR on recovers them. Measured on that bulletin: 29 → 104 passages,
-# 24.1% → 61.5% subject resolution, 8 → 26 crops visible — every one of which
+# Turning OCR on recovers them. Measured on that bulletin: 29 → 103 passages,
+# 24.1% → 61.2% subject resolution, 8 → 26 crops visible — every one of which
 # was ALREADY in crops.json. The vocabulary was never the limit.
 #
-#     apt-get install tesseract-ocr tesseract-ocr-hin   # add -kan for Kannada
-#     pip install pytesseract
-#     OCR_ENABLED=1 .venv/bin/python main.py --all --fresh    # or --ocr
+# OCR needs TWO halves and pip can only install one of them:
 #
-# Left commented for three reasons. The Python half is useless without the
-# tesseract binary, which pip cannot install. Everything in evidence/ was
-# produced without OCR and has to stay reproducible. And running one bulletin
-# both ways demonstrates more than either run alone.
+#   1. pytesseract — a thin Python wrapper. Installed below. It was commented
+#      out at first on the grounds that it is useless without the engine, but
+#      that reasoning made `--ocr` fail on machines where the engine was ALREADY
+#      present, for want of a package whose only dependency (Pillow) pdfplumber
+#      already pulls in. The marginal cost is a few KB; leaving it out cost a
+#      working feature.
 #
-# Absence is announced, never fatal: ocr_available() probes both halves and the
-# run continues without OCR, saying so in the config banner.
+#   2. tesseract — the OCR engine itself, a C++ program. There is no PyPI
+#      package for it: `pip install tesseract` does not install an OCR engine.
+#      It comes from the system package manager:
+#
+#        brew install tesseract tesseract-lang            # macOS
+#        apt-get install tesseract-ocr tesseract-ocr-hin  # Debian/Ubuntu
+#                                                         # add -kan for Kannada
+#
+# So after `pip install -r requirements.txt`, `--ocr` works if the engine is on
+# PATH and says exactly which half is missing if not. Absence is announced,
+# never fatal: ocr_available() probes both and the run continues without OCR.
+#
+# Still OFF by default (`OCR_ENABLED=1`, or `--ocr`), which is about output and
+# not about installation: everything in evidence/ is the default run and has to
+# keep reproducing from it, and running one bulletin both ways demonstrates
+# more than either run alone.
 #
 # Cost, so it is not a surprise: ~6 seconds per page at 300 DPI. 300 is a floor
 # for Devanagari — below it the matras blur into their consonants and the
 # output is confidently wrong rather than obviously broken.
-#
-# pytesseract>=0.3.10
+pytesseract>=0.3.10
 # ------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------

@@ -95,16 +95,44 @@ class OcrReading:
         )
 
 
+# The engine is a system package, so the fix depends on the platform. Naming
+# the wrong command is worse than naming none: it sends someone to a package
+# manager they do not have.
+_ENGINE_INSTALL = {
+    "darwin": "brew install tesseract tesseract-lang",
+    "linux": "apt-get install tesseract-ocr tesseract-ocr-hin  # or your distro's equivalent",
+    "win32": "install the UB-Mannheim tesseract build and put it on PATH",
+}
+
+
 def ocr_available() -> tuple[bool, str]:
-    """Probe rather than assume. Both halves have to be present."""
+    """Probe rather than assume. Both halves have to be present.
+
+    Says which half is missing and what to run, because "OCR unavailable" on
+    its own sends a reader to search for an answer this function already knows.
+    """
+    import sys  # noqa: PLC0415
+
     try:
         import pytesseract  # noqa: PLC0415
     except ImportError:
-        return False, "pytesseract is not installed (`pip install pytesseract`)"
+        # requirements.txt installs this, so reaching here usually means the
+        # venv predates that change rather than that anything is misconfigured.
+        return False, (
+            "the pytesseract package is missing — run "
+            "`.venv/bin/pip install -r requirements.txt`"
+        )
     try:
         pytesseract.get_tesseract_version()
     except Exception as exc:  # noqa: BLE001 — pytesseract raises its own type
-        return False, f"the tesseract binary is not on PATH ({exc})"
+        how = _ENGINE_INSTALL.get(
+            sys.platform, "install tesseract from your system package manager"
+        )
+        return False, (
+            f"the tesseract ENGINE is not on PATH — the Python wrapper is "
+            f"installed but the OCR program itself is a system package that "
+            f"pip cannot provide. Install it with:  {how}    ({exc})"
+        )
     return True, ""
 
 

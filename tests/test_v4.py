@@ -1058,6 +1058,29 @@ def test_the_checked_in_ocr_artefact_still_matches_an_ocr_run(vocab):
     )["resourceCount"]
 
 
+def test_a_missing_ocr_engine_names_the_command_for_this_platform():
+    """"OCR unavailable" alone sends a reader searching for what this function
+    already knows: which half is missing, and what to run.
+
+    Not marked `ocr` -- it asserts the message, so it must run everywhere,
+    including where tesseract is absent.
+    """
+    import sys
+
+    from ..ingest.ocr import _ENGINE_INSTALL, ocr_available
+
+    ok, why = ocr_available()
+    if ok:
+        assert why == ""
+        return
+    # Whichever half is missing, the message has to be actionable.
+    if "pytesseract package is missing" in why:
+        assert "requirements.txt" in why
+    else:
+        assert "ENGINE is not on PATH" in why
+        assert _ENGINE_INSTALL.get(sys.platform, "package manager").split()[0] in why
+
+
 def test_ocr_is_off_by_default_so_evidence_stays_reproducible():
     """Everything in evidence/ was produced without OCR.
 

@@ -63,7 +63,7 @@ python3.11 -m venv .venv                      # any Python >= 3.10
 Then the tests:
 
 ```bash
-.venv/bin/pytest tests/test_v4.py -q -m "not semantic and not ocr"   # 54 tests, ~55s
+.venv/bin/pytest tests/test_v4.py -q -m "not semantic and not ocr"   # 55 tests, ~57s
 .venv/bin/pytest tests/test_v4.py -q -m semantic                    # 1 test, needs the model
 ```
 
@@ -79,13 +79,22 @@ because the run above and everything in `evidence/` is meant to be reproduced
 exactly as saved. The Rajasthan bulletin is 23 of its 30 pages that shape — a
 district heading in text above an advisory table that is a JPEG:
 
+`requirements.txt` already installed the Python wrapper. What it cannot install
+is the OCR **engine** — that is a C++ program, and there is no PyPI package for
+it (`pip install tesseract` does not give you an OCR engine). One system
+command:
+
 ```bash
-brew install tesseract tesseract-lang        # macOS. apt-get on Linux.
-.venv/bin/pip install pytesseract
+brew install tesseract tesseract-lang               # macOS
+# apt-get install tesseract-ocr tesseract-ocr-hin   # Debian/Ubuntu, -kan for Kannada
 
 .venv/bin/python main.py --all --fresh --ocr
 .venv/bin/pytest tests/test_v4.py -q -m ocr  # 5 tests, ~4 min — rasterises real pages
 ```
+
+If the engine is missing, the run says so and names the command for your
+platform rather than failing — OCR being unavailable is never fatal, the run
+just proceeds without it.
 
 Run the plain command first, then the `--ocr` one, and diff the two — Karnataka
 and UP come back byte-identical; only Rajasthan changes (29 → 104 passages,
@@ -960,6 +969,6 @@ discovery → filter → answer path.
 ### What already holds
 
 Worth stating alongside the gaps, because it is what makes them safe to work
-against: **60 tests**, and every artefact in `evidence/` regenerates
+against: **61 tests**, and every artefact in `evidence/` regenerates
 byte-for-byte from `main.py --all --fresh`. The documentation can be checked by
 running one command rather than by trusting it.
