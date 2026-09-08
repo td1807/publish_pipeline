@@ -796,9 +796,10 @@ imports into another package.
 
 ## From here to production
 
-Everything above describes what this repository *is*. This section is what it
-is **not yet**, ordered by what blocks what — written so the next person does
-not have to rediscover it.
+Everything above describes what this repository *is*. This section is the
+distance to production, ordered by what blocks what — written so the next
+person does not have to rediscover it. Three items are **done**, and say what
+remains open underneath them; the rest are not started.
 
 The distinction worth holding onto: **the design decisions carry forward, the
 plumbing does not.** Nothing below asks for a rewrite. The metadata/text split,
@@ -821,7 +822,7 @@ every inbound ack verified, and a consumer leg that authenticates before it
 scopes. `network_node.py` is a stand-in for the counterparty and would be
 replaced entirely, not extended.
 
-### 2. Publish reliability — **done on `production-changes`**
+### 2. Publish reliability — **done**
 
 `publish.py` used to send one `httpx.post` and hope: a transient 503 ended the
 run with no record of which catalogues had landed.
@@ -850,7 +851,7 @@ quoted as production.
 is a config change. *Real part:* running that server, and re-declaring the
 payload indexes so filters stop scanning.
 
-### 4. A record of what was published — **done on `production-changes`**
+### 4. A record of what was published — **done**
 
 `STATE_FILE` was declared in `config.py` and never read or written. It now
 holds a ledger: every publish appends its timestamp, `transactionId`,
@@ -883,7 +884,7 @@ One document at a time, in one process. And e5-large is loaded per run, with
 **12× timing variance on identical input** — Karnataka measured 14.9 s, 33.5 s,
 83.6 s and 186.2 s on the same laptop.
 
-**Partly addressed on `production-changes`:** a crashing document no longer
+**Partly done:** a crashing document no longer
 takes the batch with it. Only `UnusableDocument` was caught before, so any
 other exception ended the run and every document already ingested went
 unpublished — one malformed file cost the whole batch. Failures are now caught
